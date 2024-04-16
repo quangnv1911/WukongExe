@@ -1,48 +1,20 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// Chakra imports
 import {
-  Avatar,
   Box,
-  Flex,
-  FormLabel,
   Icon,
-  Select,
+  Input,
   SimpleGrid,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 // Assets
-import Usa from "assets/img/dashboards/usa.png";
 // Custom components
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
-  MdAddTask,
   MdAttachMoney,
   MdBarChart,
-  MdFileCopy,
 } from "react-icons/md";
 import CheckTable from "views/admin/default/components/CheckTable";
 import ComplexTable from "views/admin/default/components/ComplexTable";
@@ -57,15 +29,54 @@ import {
 } from "views/admin/default/variables/columnsData";
 import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+import InputField from "components/fields/InputField";
 
 export default function UserReports() {
+  // Bearpo: statics
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [errorProperties, setErrorProperties] = useState({});
+
+  useEffect(() => {
+    if((fromDate !== '' && toDate !== '' && fromDate > toDate) && (!errorProperties || !errorProperties.borderColor)) {
+      console.log('setState');
+      setErrorProperties({
+        borderColor: 'red'
+      })
+    } else if((fromDate !== '' && toDate !== '' && fromDate < toDate) && !errorProperties.variant){
+      setErrorProperties({
+        variant: 'main'
+      })
+    }
+  }, [fromDate, toDate])
+  
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
-        columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
+        columns={{ base: 1, md: 2 }}
+        gap='20px'
+      >
+        <InputField 
+          label='Từ ngày' 
+          type='date' 
+          {...errorProperties}
+          onChange={(e) => {setFromDate(e.target.value)}} 
+          />
+         
+        <InputField 
+          label='Đến ngày' 
+          type='date'  
+          {...errorProperties}
+          onChange={(e) => {setToDate(e.target.value)}} 
+          />
+      </SimpleGrid>
+      <SimpleGrid
+        columns={{ base: 1, md: 2, lg: 3, "2xl": 3 }}
         gap='20px'
         mb='20px'>
         <MiniStatistics
@@ -79,7 +90,7 @@ export default function UserReports() {
               }
             />
           }
-          name='Earnings'
+          name='Doanh thu'
           value='$350.4'
         />
         <MiniStatistics
@@ -93,11 +104,12 @@ export default function UserReports() {
               }
             />
           }
-          name='Spend this month'
+          name='Lợi nhuận'
+          growth='+23%'
           value='$642.39'
         />
-        <MiniStatistics growth='+23%' name='Sales' value='$574.34' />
-        <MiniStatistics
+        <MiniStatistics growth='+23%' name='Số lượng đơn hàng' value='$574.34' />
+        {/* <MiniStatistics
           endContent={
             <Flex me='-16px' mt='10px'>
               <FormLabel htmlFor='balance'>
@@ -143,7 +155,7 @@ export default function UserReports() {
           }
           name='Total Projects'
           value='2935'
-        />
+        /> */}
       </SimpleGrid>
 
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
