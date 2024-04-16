@@ -1,8 +1,11 @@
 import React from 'react'
+import DefaultTemplate from '../layouts/DefaultTemplate'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <DefaultTemplate>
+      
+    </DefaultTemplate>
   )
 }
 
