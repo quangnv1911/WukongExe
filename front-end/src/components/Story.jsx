@@ -5,9 +5,10 @@ import { SiZalo } from "react-icons/si";
 import banana from '../assets/banana.png';
 import apple from '../assets/apple.png'
 import { FormControl } from 'react-bootstrap';
+import ListCarousel from './ListCarousel';
 function Story() {
     return (
-        <div className='row d-flex py-4' style={{height: "65%" }}>
+        <div className='row d-flex py-4' style={{height: "55%"}}>
             <div className='col-sm-6'>
                 <div className='row h-50'>
                     <div className='col-sm-3 position-relative px-0'>
@@ -59,9 +60,9 @@ function Story() {
                     </div>
                 </div>
             </div>
-            <div className='col-sm-6'>
-                <div className='bg-secondary h-100'>
-
+            <div className='col-sm-6' >
+                <div>
+                    <ListCarousel/>
                 </div>
             </div>
         </div>

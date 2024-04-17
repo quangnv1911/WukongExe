@@ -1,6 +1,15 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+} */
+/* .carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(243, 243, 243, 0.866); 
+} */
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover{
+    background-color: rgba(213, 213, 213, 0.54); 
 }

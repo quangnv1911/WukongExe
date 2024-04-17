@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from './NavBar'
-import Story from '../components/Story'
-import Category from '../components/Category'
+import Footer from './Footer'
+
 
 function DefaultTemplate({children}) {
   return (
@@ -9,8 +9,8 @@ function DefaultTemplate({children}) {
         <div className='row h-50'>
             <div className='col'>
                 <NavBar/>
-                <Story/>
-                <Category/>
+                {children}
+                <Footer/>
             </div>
         </div>
     </div>
