@@ -6,7 +6,7 @@ import { CiSearch } from "react-icons/ci";
 import { Form, FormControl, Button } from 'react-bootstrap';
 function NavBar() {
     return (
-        <div className='row d-flex justify-content-center align-items-center h-20 py-4' style={{ borderBottom: "1px solid black" }}>
+        <div className='row d-flex justify-content-center align-items-center h-20 py-4 sticky-top bg-white'>
             <div className='col-sm-4 text-center'>
                 <img src={logoCopy} className='img-fluid ' alt="Example Image" />
             </div>
