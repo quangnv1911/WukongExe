@@ -8,7 +8,7 @@ import { FormControl } from 'react-bootstrap';
 import ListCarousel from './ListCarousel';
 function Story() {
     return (
-        <div className='row d-flex py-4' style={{height: "55%"}}>
+        <div className='row d-flex py-4' style={{height: "45em"}}>
             <div className='col-sm-6'>
                 <div className='row h-50'>
                     <div className='col-sm-3 position-relative px-0'>

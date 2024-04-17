@@ -7,7 +7,7 @@ import zalo from '../assets/zalo.png'
 import tele from '../assets/tele.png'
 function Footer() {
     return (
-        <div className='row d-flex p-4' style={{ height: "20%", backgroundColor: "#057130", border: "1px solid black" }}>
+        <div className='row d-flex p-4' style={{ height: "20em", backgroundColor: "#057130", border: "1px solid black" }}>
             <div className='col-sm-3 text-center'>
                 <img src={logo} width={240} className='img-fuild' />
             </div>

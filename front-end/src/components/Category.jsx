@@ -8,7 +8,7 @@ function Category() {
         backgroundColor: "#057130",
     }
     return (
-        <div className='row text-white p-2' style={{ backgroundColor: "#057130", height:"20%" }}>
+        <div className='row text-white p-2' style={{ backgroundColor: "#057130", height:"16em" }}>
             <div className='col'>
                 <div className='row my-3 text-center'>
                     <div className='col-sm'>
@@ -19,23 +19,23 @@ function Category() {
                     <div className='col-sm d-flex justify-content-center align-items-center'>
                         <div className='text-center mx-4' style={itemStyle}>
                             <img src={man} width={100} className="rounded-circle img-fluid" alt="Card image" />
-                            <h5 className='my-2'>Title</h5>
+                            <p className='my-2'>VỊ NGỌT</p>
                         </div>
                         <div className='text-center mx-4' style={itemStyle}>
                             <img src={ngot} width={100} className="rounded-circle img-fluid" alt="Card image" />
-                            <h5 className='my-2'>Title</h5>
+                            <p className='my-2'>VỊ CAY</p>
                         </div>
                         <div className='text-center mx-4' style={itemStyle}>
                             <img src={chua} width={100} className="rounded-circle img-fluid" alt="Card image" />
-                            <h5 className='my-2'>Title</h5>
+                            <p className='my-2'>VỊ CHUA</p>
                         </div>
                         <div className='text-center mx-4' style={itemStyle}>
                             <img src={cay} width={100} className="rounded-circle img-fluid" alt="Card image" />
-                            <h5 className='my-2'>Title</h5>
+                            <p className='my-2'>VỊ MẶN</p>
                         </div>
                         <div className='text-center mx-4' style={itemStyle}>
                             <img src={man} width={100} className="rounded-circle img-fluid" alt="Card image" />
-                            <h5 className='my-2'>Title</h5>
+                            <p className='my-2'>VỊ ĐẮNG</p>
                         </div>
                     </div>
                 </div>
