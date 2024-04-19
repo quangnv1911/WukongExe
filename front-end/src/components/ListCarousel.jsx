@@ -10,6 +10,7 @@ function ListCarousel() {
             <Carousel.Item>
                 <img
                     className="d-block w-50 img-fluid mx-auto rounded-5"
+                    style={{objectFit:"cover", objectPosition:"center"}}
                     src={image1}
                     alt="First slide"
                 />
