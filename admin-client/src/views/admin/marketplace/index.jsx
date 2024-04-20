@@ -1,26 +1,4 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-import React from "react";
+import React, { useRef } from "react";
 
 // Chakra imports
 import {
@@ -32,6 +10,7 @@ import {
   Text,
   useColorModeValue,
   SimpleGrid,
+  Icon,
 } from "@chakra-ui/react";
 
 // Custom components
@@ -54,11 +33,26 @@ import Avatar3 from "assets/img/avatars/avatar3.png";
 import Avatar4 from "assets/img/avatars/avatar4.png";
 import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
 import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
+import SunEditor from "suneditor-react";
+import 'suneditor/dist/css/suneditor.min.css';
+import { MdUpload } from "react-icons/md";
+import Dropzone from "views/admin/profile/components/Dropzone";
 
 export default function Marketplace() {
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
+
+
+  const editor = useRef();
+  // The sunEditor parameter will be set to the core suneditor instance when this function is called
+  const getSunEditorInstance = (sunEditor) => {
+    editor.current = sunEditor;
+  };
+
+
+
+
   return (
     <Box pt={{ base: "180px", md: "80px", xl: "80px" }}>
       {/* Main Fields */}
@@ -70,9 +64,9 @@ export default function Marketplace() {
         <Flex
           flexDirection='column'
           gridArea={{ xl: "1 / 1 / 2 / 3", "2xl": "1 / 1 / 2 / 2" }}>
-          <Banner />
+          {/* <Banner /> */}
           <Flex direction='column'>
-            <Flex
+            {/* <Flex
               mt='45px'
               mb='20px'
               justifyContent='space-between'
@@ -111,8 +105,8 @@ export default function Marketplace() {
                   Sports
                 </Link>
               </Flex>
-            </Flex>
-            <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
+            </Flex> */}
+            {/* <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
               <NFT
                 name='Abstract Colors'
                 author='By Esthera Jackson'
@@ -164,7 +158,7 @@ export default function Marketplace() {
                 currentbid='0.91 ETH'
                 download='#'
               />
-            </SimpleGrid>
+            </SimpleGrid> */}
             <Text
               mt='45px'
               mb='36px'
@@ -172,13 +166,13 @@ export default function Marketplace() {
               fontSize='2xl'
               ms='24px'
               fontWeight='700'>
-              Recently Added
+              Title
             </Text>
             <SimpleGrid
-              columns={{ base: 1, md: 3 }}
+              columns={{ base: 1, md: 1 }}
               gap='20px'
               mb={{ base: "20px", xl: "0px" }}>
-              <NFT
+              {/* <NFT
                 name='Swipe Circles'
                 author='By Peter Will'
                 bidders={[
@@ -228,11 +222,91 @@ export default function Marketplace() {
                 image={Nft6}
                 currentbid='0.91 ETH'
                 download='#'
+              /> */}
+              <SunEditor
+                setOptions={{
+                  buttonList: [
+                    ['font', 'fontSize', 'formatBlock'],
+                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                    ['fontColor'],
+                    ['undo', 'redo']
+                  ],
+                  fontColorList: [
+                    '#000000', '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff',
+                  ]
+                }}
+                getSunEditorInstance={getSunEditorInstance}
               />
+              <Button onClick={() => { console.log(editor.current.getContents()); }}>Test</Button>
+            </SimpleGrid>
+            <Text
+              mt='45px'
+              mb='36px'
+              color={textColor}
+              fontSize='2xl'
+              ms='24px'
+              fontWeight='700'>
+              Content
+            </Text>
+            <SimpleGrid
+              columns={{ base: 1, md: 1 }}
+              gap='20px'
+              mb={{ base: "20px", xl: "0px" }}>
+              <SunEditor
+                setOptions={{
+                  buttonList: [
+                    ['font', 'fontSize', 'formatBlock'],
+                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                    ['fontColor'],
+                    ['undo', 'redo']
+                  ],
+                  fontColorList: [
+                    '#000000', '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff',
+                  ]
+                }}
+                getSunEditorInstance={getSunEditorInstance}
+              />
+              <Button onClick={() => { console.log(editor.current.getContents()); }}>Test</Button>
+            </SimpleGrid>
+            <Text
+              mt='45px'
+              mb='36px'
+              color={textColor}
+              fontSize='2xl'
+              ms='24px'
+              fontWeight='700'>
+              Image
+            </Text>
+            <SimpleGrid
+              columns={{ base: 1, md: 1 }}
+              gap='20px'
+              mb={{ base: "20px", xl: "0px" }}>
+              <Flex minH='300px' direction={{ base: "column", "2xl": "row" }}>
+                <Dropzone
+                  w={{ base: "100%", "2xl": "268px" }}
+                  me='36px'
+                  maxH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+                  minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+                  content={
+                    <Box>
+                      <Icon as={MdUpload} w='80px' h='80px' color={textColorBrand} />
+                      <Flex justify='center' mx='auto' mb='12px'>
+                        <Text fontSize='xl' fontWeight='700' color={textColorBrand}>
+                          Upload Files
+                        </Text>
+                      </Flex>
+                      <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
+                        PNG, JPG and GIF files are allowed
+                      </Text>
+                    </Box>
+                  }
+                />
+              </Flex>
+
             </SimpleGrid>
           </Flex>
         </Flex>
-        <Flex
+        {/* <Flex
           flexDirection='column'
           gridArea={{ xl: "1 / 3 / 2 / 4", "2xl": "1 / 2 / 2 / 3" }}>
           <Card px='0px' mb='20px'>
@@ -297,7 +371,7 @@ export default function Marketplace() {
               price='0.91 ETH'
             />
           </Card>
-        </Flex>
+        </Flex> */}
       </Grid>
       {/* Delete Product */}
     </Box>

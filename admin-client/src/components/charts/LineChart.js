@@ -12,8 +12,28 @@ class LineChart extends React.Component {
   }
 
   componentDidMount() {
+    this.updateChart();
+  }
+
+  componentDidUpdate(prevProps) {
+    // Kiểm tra nếu prop chartData thay đổi so với giá trị trước đó
+    if ((prevProps.revenues !== this.props.revenues) || (prevProps.profits !== this.props.profits)) {
+      this.updateChart();
+    }
+  }
+
+  updateChart() {
     this.setState({
-      chartData: this.props.chartData,
+      chartData: [
+        {
+          name: "Revenue",
+          data: this.props.revenues,
+        },
+        {
+          name: "Profit",
+          data: this.props.profits,
+        },
+      ],
       chartOptions: this.props.chartOptions,
     });
   }

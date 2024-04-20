@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import Voucher from "./Voucher";
-import Product from "./Product";
-import Order from "./Order";
+import Product from "./Product.js";
+import Order from "./Order.js";
 
 const orderDetailSchema = new Schema({
     product: {
@@ -18,7 +17,17 @@ const orderDetailSchema = new Schema({
         type: Number,
         required: true,
         min: 1
+    },
+    importPrice: {
+        type: Number,
+        required: true
+    },
+    sellPrice: {
+        type: Number,
+        required: true
     }
+}, {
+    timestamps: true
 });
 
 const OrderDetail = mongoose.model('orderDetails', orderDetailSchema);

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import Voucher from "./Voucher";
+import Voucher from "./Voucher.js";
 
 const orderSchema = new Schema({
     customerName: {
@@ -21,6 +21,9 @@ const orderSchema = new Schema({
         type: String,
     },
     total: {
+        type: Number,
+    },
+    totalProfit: {
         type: Number,
     },
     status: {
