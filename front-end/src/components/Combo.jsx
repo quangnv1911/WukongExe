@@ -58,9 +58,9 @@ function Combo() {
             <div className='row h-auto pb-4 d-flex justify-content-center'>
                 <div className='col-sm-10'>
                     <div className='row w-100' >
-                        {listCombo.map((c) => {
+                        {listCombo.map((c, index) => {
                             return (
-                                <div className="col-sm-2 mb-4" style={{height:"17em"}}>
+                                <div className="col-sm-2 mb-4" style={{height:"17em"}} key={index}>
                                     <div className="card w-100 mx-auto border-0" style={{height:"100%"}}>
                                         <img src={c.image} style={{ width: "10em" }} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
                                         <div className="card-body">

@@ -3,10 +3,8 @@ import alley from '../assets/alley.png'
 import { IoPricetagOutline } from "react-icons/io5";
 import { GrSubtractCircle } from "react-icons/gr";
 import { GrAddCircle } from "react-icons/gr";
-{/* <GrSubtractCircle /> */ }
-{/* <IoAddCircleOutline /> */ }
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../redux/ProductReducer';
+import { addProduct, subProduct } from '../redux/ProductReducer';
 function ListProduct() {
   const listProduct = [
     {
@@ -56,11 +54,36 @@ function ListProduct() {
   const listCart = useSelector(state => state.product.products);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
+  const [quantities, setQuantities] = useState([]);
+  useEffect(() => {
+    const lsQuantity = listCart.map(c => ({ _id: c._id, quantity: c.quantity }));
+    setQuantities(lsQuantity);
+  }, [listCart]);
+
   const handleAddProduct = (p, quantity) => {
-    const aProduct = { ...p, quantity };
+    const exists = quantities?.find(q => q._id === p._id);
+    if(exists){
+      setQuantity(exists.quantity);
+    }
+    console.log(quantity);
+    const aProduct = { ...p, quantity }
     dispatch(addProduct(aProduct));
   }
-  console.log(listCart);
+  const handleSubProduct = (p) => {
+    const aProduct = { ...p};
+    dispatch(subProduct(aProduct));
+  }
+
+  const handleChangeQuantity = (productId, newQuantity) => {
+    const updatedQuantities = quantities.map(item => {
+      if (item._id === productId) {
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+    setQuantities(updatedQuantities);
+  }
+
   // const [filteredProducts, setFilteredProducts] = useState([]);
   // useEffect(() => {
   //   if (searchProduct) {
@@ -72,7 +95,7 @@ function ListProduct() {
   //   }
   // }, [searchProduct]);
   // console.log(searchProduct);
-console.log(quantity);
+  // console.log(quantity);
   return (
     <>
       <div className='row h-auto '>
@@ -85,11 +108,10 @@ console.log(quantity);
           {listProduct.length === 0 ? <div className='text-center display-6'>Không có sản phẩm nào</div> :
             <div className='row'>
               {listProduct.map(p => {
+                const startQuantity = 1;
                 const isInCart = listCart.some(c => c._id === p._id);
-                const cartItem = listCart.find(c => c._id === p._id);
-                {/* if(isInCart){
-                  setQuantity(cartItem.quantity);
-                } */}
+                {/* const cartItem = listCart.find(c => c._id === p._id); */ }
+                const quantityInCart = quantities.find(item => item._id === p._id)?.quantity;
                 return (
                   <div className="col-sm-3 mb-4" key={p._id}>
                     <div className="card w-100 mx-auto border-0">
@@ -103,30 +125,29 @@ console.log(quantity);
                         </p>
                         <div className='row d-flex justify-content-center align-items-center'>
                           <div className='col-sm-8 p-0 d-flex justify-content-center'>
-                          {isInCart ? (
-                            <>
-                              <GrSubtractCircle color='#057130' size={24} />
-                              <input
-                                onChange={(e) => setQuantity(parseInt(e.target.value))}
-                                type='number'
-                                value={cartItem.quantity}
-                                // value={3}
-                                style={{ width: "40%" }}
-                                className='px-1 text-center border-0 border-bottom'
-                                onKeyDown={(e) => {
-                                  const value = e.target.value;
-                                  if (e.key === '-' || (value === '' && e.key === '0')) {
-                                    e.preventDefault();
-                                  }
-                                }}
-                                onFocus={(e) => e.target.classList.add('no-outline')}
-                                onBlur={(e) => e.target.classList.remove('no-outline')}
-                              />
-                              <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantity)} color='#057130' size={24} />
-                            </>
-                          ) : (
-                            <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantity)} color='#057130' size={24} />
-                          )}
+                            {isInCart ? (
+                              <>
+                                <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(p, quantity)} color='#057130' size={24} />
+                                <input
+                                  onChange={(e) => handleChangeQuantity(p._id, parseInt(e.target.value))}
+                                  type='number'
+                                  value={quantityInCart}
+                                  style={{ width: "40%" }}
+                                  className='px-1 text-center border-0 border-bottom'
+                                  onKeyDown={(e) => {
+                                    const value = e.target.value;
+                                    if (e.key === '-' || (value === '' && e.key === '0')) {
+                                      e.preventDefault();
+                                    }
+                                  }}
+                                  onFocus={(e) => e.target.classList.add('no-outline')}
+                                  onBlur={(e) => e.target.classList.remove('no-outline')}
+                                />
+                                <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
+                              </>
+                            ) : (
+                              <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
+                            )}
 
                           </div>
                         </div>

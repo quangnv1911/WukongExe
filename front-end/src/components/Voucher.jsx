@@ -39,9 +39,9 @@ function Voucher() {
             <div className='row h-auto pb-4 d-flex justify-content-center'>
                 <div className='col-sm-10'>
                     <div className='row w-100'>
-                        {listVoucher.map((c) => {
+                        {listVoucher.map((c, index) => {
                             return (
-                                <div className="col-sm-4 mb-4">
+                                <div className="col-sm-4 mb-4" key={index}>
                                     <div className="card w-100 mx-auto border-0 bg-transparent">
                                         <img style={{width:"95%"}} src={c.image} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
                                         <div className="card-body">
