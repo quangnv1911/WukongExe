@@ -13,3 +13,17 @@
 .carousel-control-next-icon:hover{
     background-color: rgba(213, 213, 213, 0.54); 
 }
+.no-outline:focus {
+  outline: none;
+}
+/* Ẩn nút lên xuống */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}

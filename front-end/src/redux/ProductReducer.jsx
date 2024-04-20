@@ -11,10 +11,14 @@ const ProductSlide = createSlice({
             state.search = action.payload;
         },
         addProduct: (state, action) => {
-            state.products.push(action.payload);
+            const { _id, image, name, price, category, quantity } = action.payload;
+            const indexP = state.products.findIndex(sp => sp._id === _id);
+            state.products.length === 0 || indexP === -1
+                ? state.products.push(action.payload)
+                : state.products[indexP].quantity = state.products[indexP].quantity + quantity;
         }
-        
+
     }
 })
-export const { addProduct,addKeySearch} = ProductSlide.actions;
+export const { addProduct, addKeySearch } = ProductSlide.actions;
 export default ProductSlide.reducer;
