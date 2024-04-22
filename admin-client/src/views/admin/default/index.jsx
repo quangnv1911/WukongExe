@@ -31,9 +31,9 @@ import {
 import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import InputField from "components/fields/InputField";
-import axios from "axios";
 import { BACK_END_HOST } from "utils/AppConfig";
 import moment from "moment";
+import api from "utils/Services";
 
 export default function UserReports() {
   // Bearpo: statics
@@ -64,7 +64,7 @@ export default function UserReports() {
 
   useEffect(() => {
     if (fromDate && toDate && (fromDate <= toDate)) {
-      axios.get(`${BACK_END_HOST}/orderDetail/static/${fromDate}/${toDate}`)
+      api.get(`${BACK_END_HOST}/orderDetail/static/${fromDate}/${toDate}`)
         .then(res => {
           const data = res.data;
 

@@ -2,7 +2,6 @@ import { orderDetailService, orderService } from "../services/index.js";
 const dashboardStatic = async (req, res) => {
     try {
         const {fromDate, toDate} =  req.params;
-        console.log('dashboardStatic param',  req.params);
 
         if(!fromDate || !toDate || (fromDate !== '' && toDate === '') || (fromDate === '' && toDate !== '') || fromDate > toDate ) {
             return res.status(200).json({

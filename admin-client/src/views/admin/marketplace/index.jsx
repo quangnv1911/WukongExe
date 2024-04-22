@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 // Chakra imports
 import {
@@ -37,20 +37,112 @@ import SunEditor from "suneditor-react";
 import 'suneditor/dist/css/suneditor.min.css';
 import { MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
+import { BACK_END_HOST } from "utils/AppConfig";
+import { Bounce, toast } from "react-toastify";
+import api from "utils/Services";
 
 export default function Marketplace() {
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
+  const bg = useColorModeValue("gray.100", "navy.700");
+  const borderColor = useColorModeValue("secondaryGray.100", "whiteAlpha.100");
 
+  const editorTitle = useRef();
+  const editorContent = useRef();
+  const [previewImages, setPreviewImages] = useState([]);
+  const [base64Array, setBase64Array] = useState([]);
 
-  const editor = useRef();
   // The sunEditor parameter will be set to the core suneditor instance when this function is called
-  const getSunEditorInstance = (sunEditor) => {
-    editor.current = sunEditor;
+  const getSunEditorInstanceTitle = (sunEditor) => {
+    editorTitle.current = sunEditor;
+  };
+  const getSunEditorInstanceContent = (sunEditor) => {
+    editorContent.current = sunEditor;
+  };
+
+  const convertToBase64 = () => {
+    const promises = previewImages.map(image => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    });
+
+    Promise.all(promises)
+      .then(results => {
+        setBase64Array(results);
+      })
+      .catch(error => console.error('Error converting images to base64:', error));
   };
 
 
+  const handleSubmit = () => {
+    convertToBase64(); // convert image to base64
+
+    if (editorTitle.current.getText().trim().length <= 0 ||
+      editorContent.current.getText().trim().length <= 0 ||
+      base64Array.length <= 0
+    ) {
+      toast.error('Không được để trống title, content và image', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } else if (base64Array.length > 5) {
+      toast.error('Số lượng ảnh không được nhiều hơn 5', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } else {
+      var title = editorTitle.current.getContents();
+      var content = editorContent.current.getContents();
+
+      api.post(`${BACK_END_HOST}/homePageInfo/update`, {
+        title,
+        content,
+        images: base64Array
+      })
+        .then(res => {
+          // reset Form
+          editorTitle.current.setContents('');
+          editorContent.current.setContents('');
+          setPreviewImages([]);
+          setBase64Array([]);
+
+          // display success toast
+          toast.success('Cập nhật thành công', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        })
+        .catch(error => {
+          console.error('submit error:', error);
+        })
+    }
+  }
 
 
   return (
@@ -235,9 +327,8 @@ export default function Marketplace() {
                     '#000000', '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff',
                   ]
                 }}
-                getSunEditorInstance={getSunEditorInstance}
+                getSunEditorInstance={getSunEditorInstanceTitle}
               />
-              <Button onClick={() => { console.log(editor.current.getContents()); }}>Test</Button>
             </SimpleGrid>
             <Text
               mt='45px'
@@ -264,9 +355,9 @@ export default function Marketplace() {
                     '#000000', '#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff',
                   ]
                 }}
-                getSunEditorInstance={getSunEditorInstance}
+                getSunEditorInstance={getSunEditorInstanceContent}
               />
-              <Button onClick={() => { console.log(editor.current.getContents()); }}>Test</Button>
+
             </SimpleGrid>
             <Text
               mt='45px'
@@ -278,15 +369,19 @@ export default function Marketplace() {
               Image
             </Text>
             <SimpleGrid
-              columns={{ base: 1, md: 1 }}
+              columns={{ base: 1, md: 3 }}
               gap='20px'
-              mb={{ base: "20px", xl: "0px" }}>
+              mb={{ base: "20px", xl: "0px" }}
+              maxHeight='100%'
+              height='100%'
+            >
               <Flex minH='300px' direction={{ base: "column", "2xl": "row" }}>
                 <Dropzone
                   w={{ base: "100%", "2xl": "268px" }}
                   me='36px'
                   maxH={{ base: "60%", lg: "50%", "2xl": "100%" }}
                   minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+                  setPreviewImages={setPreviewImages}
                   content={
                     <Box>
                       <Icon as={MdUpload} w='80px' h='80px' color={textColorBrand} />
@@ -296,14 +391,48 @@ export default function Marketplace() {
                         </Text>
                       </Flex>
                       <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
-                        PNG, JPG and GIF files are allowed
+                        PNG, JPG files are allowed
                       </Text>
                     </Box>
                   }
                 />
               </Flex>
+              {previewImages.map((file, index) => (
+                <Flex
+                  key={index}
+                  align='center'
+                  justify='center'
+                  bg={bg}
+                  border='1px dashed'
+                  borderColor={borderColor}
+                  borderRadius='16px'
+                  w='100%'
+                  // h='max-content'
+                  height='500px'
+                  maxHeight='400px'
+                  cursor='pointer'
+                  overflow='hidden'
+                >
+                  <img src={file.preview} alt={`Preview ${index}`} style={{ width: '100%' }} />
+                </Flex>
 
+              ))}
             </SimpleGrid>
+            <Flex
+              justify='center'
+            >
+              <Button
+                w='140px'
+                minW='140px'
+                mt={{ base: "20px", "2xl": "auto" }}
+                variant='brand'
+                fontWeight='500'
+                onClick={() => handleSubmit()}
+              >
+                Apply
+              </Button>
+            </Flex>
+
           </Flex>
         </Flex>
         {/* <Flex

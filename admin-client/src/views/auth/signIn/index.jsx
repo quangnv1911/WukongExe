@@ -1,27 +1,6 @@
-/* eslint-disable */
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
 
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
 
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -47,6 +26,9 @@ import illustration from "assets/img/auth/auth.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { BACK_END_HOST } from "utils/AppConfig";
+import { Bounce, toast } from "react-toastify";
+import api from "utils/Services";
 
 function SignIn() {
   // Chakra color mode
@@ -67,6 +49,34 @@ function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    api.post(`${BACK_END_HOST}/account/login`, {
+      username,
+      password
+    })
+      .then(res => {
+        var token = `token=${res.data.accessToken}; path=/`
+        document.cookie = token;
+        window.location.href = '/admin'
+      })
+      .catch(error => {
+        toast.error(error.response.data.message ? error.response.data.message : 'Lỗi gì đó đã xảy ra', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      })
+  }
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
       <Flex
@@ -127,7 +137,7 @@ function SignIn() {
             </Text>
             <HSeparator />
           </Flex>
-          <FormControl>
+          <form onSubmit={handleLogin}>
             <FormLabel
               display='flex'
               ms='4px'
@@ -147,6 +157,8 @@ function SignIn() {
               mb='24px'
               fontWeight='500'
               size='lg'
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
             />
             <FormLabel
               ms='4px'
@@ -165,6 +177,8 @@ function SignIn() {
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
               <InputRightElement display='flex' alignItems='center' mt='4px'>
                 <Icon
@@ -207,10 +221,12 @@ function SignIn() {
               fontWeight='500'
               w='100%'
               h='50'
-              mb='24px'>
+              mb='24px'
+              type="submit"
+            >
               Sign In
             </Button>
-          </FormControl>
+          </form>
           <Flex
             flexDirection='column'
             justifyContent='center'

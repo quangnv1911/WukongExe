@@ -19,6 +19,7 @@ import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
 import { BACK_END_HOST } from "utils/AppConfig";
+import api from "utils/Services";
 import {
   lineChartDataTotalSpent,
   lineChartOptionsTotalSpent,
@@ -55,7 +56,7 @@ export default function TotalSpent(props) {
   }
 
   useEffect(() => {
-    axios.get(`${BACK_END_HOST}/order/static/${staticYear}`)
+    api.get(`${BACK_END_HOST}/order/static/${staticYear}`)
       .then(res => {
         var data = res.data;
         if( !data.messages || !data.messages === 'Error') {
@@ -71,6 +72,7 @@ export default function TotalSpent(props) {
   return (
     <Card
       justifyContent='center'
+      center='endcolumn and err '
       align='center'
       direction='column'
       w='100%'
