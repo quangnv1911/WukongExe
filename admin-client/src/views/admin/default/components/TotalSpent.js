@@ -4,17 +4,22 @@ import {
   Button,
   Flex,
   Icon,
+  Select,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import axios from "axios";
 // Custom components
 import Card from "components/card/Card.js";
 import LineChart from "components/charts/LineChart";
-import React from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
+import { BACK_END_HOST } from "utils/AppConfig";
+import api from "utils/Services";
 import {
   lineChartDataTotalSpent,
   lineChartOptionsTotalSpent,
@@ -38,9 +43,36 @@ export default function TotalSpent(props) {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.100" }
   );
+  const [staticYear, setStaticYear] = useState(moment().year());
+  const [revenues, setRevenues] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [profits, setProfits] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+  // Caculate year
+  var yearNow = moment().year();
+  var years = []; 
+  var i = 2024;
+  while (i <= yearNow) {
+    years.push(i++);
+  }
+
+  useEffect(() => {
+    api.get(`${BACK_END_HOST}/order/static/${staticYear}`)
+      .then(res => {
+        var data = res.data;
+        if( !data.messages || !data.messages === 'Error') {
+          setProfits(data.profits);
+          setRevenues(data.revenues);
+        }
+      })
+      .catch(err => {
+        console.log('order/static err', err);
+      })
+  }, [staticYear])
+
   return (
     <Card
       justifyContent='center'
+      center='endcolumn and err '
       align='center'
       direction='column'
       w='100%'
@@ -59,7 +91,26 @@ export default function TotalSpent(props) {
               color={textColorSecondary}
               me='4px'
             />
-            This month
+            <Select
+              fontSize='sm'
+              variant='subtle'
+              defaultValue='monthly'
+              width='unset'
+              fontWeight='700'
+              value={staticYear}
+              onChange={(e) => setStaticYear(e.target.value)}
+              >
+              {
+                years && years.map(year => (
+                  <option 
+                    value={year}
+                    selected={yearNow === year}
+                    >
+                      {year}
+                  </option>
+                ))
+              }
+            </Select>
           </Button>
           <Button
             ms='auto'
@@ -79,7 +130,7 @@ export default function TotalSpent(props) {
         </Flex>
       </Flex>
       <Flex w='100%' flexDirection={{ base: "column", lg: "row" }}>
-        <Flex flexDirection='column' me='20px' mt='28px'>
+        {/* <Flex flexDirection='column' me='20px' mt='28px'>
           <Text
             color={textColor}
             fontSize='34px'
@@ -111,10 +162,11 @@ export default function TotalSpent(props) {
               On track
             </Text>
           </Flex>
-        </Flex>
-        <Box minH='260px' minW='75%' mt='auto'>
+        </Flex> */}
+        <Box minH='260px' minW='100%' mt='auto'>
           <LineChart
-            chartData={lineChartDataTotalSpent}
+            revenues={revenues}
+            profits={profits}
             chartOptions={lineChartOptionsTotalSpent}
           />
         </Box>

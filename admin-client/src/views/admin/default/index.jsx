@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import {
   MdAttachMoney,
   MdBarChart,
+  MdOutlineShoppingCart,
 } from "react-icons/md";
 import CheckTable from "views/admin/default/components/CheckTable";
 import ComplexTable from "views/admin/default/components/ComplexTable";
@@ -30,6 +31,9 @@ import {
 import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import InputField from "components/fields/InputField";
+import { BACK_END_HOST } from "utils/AppConfig";
+import moment from "moment";
+import api from "utils/Services";
 
 export default function UserReports() {
   // Bearpo: statics
@@ -37,23 +41,45 @@ export default function UserReports() {
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
 
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
+  const [fromDate, setFromDate] = useState(moment().startOf('month').format('YYYY-MM-DD'));
+  const [toDate, setToDate] = useState(moment().endOf('month').format('YYYY-MM-DD'));
   const [errorProperties, setErrorProperties] = useState({});
 
+  const [revenue, setRevenue] = useState(0);
+  const [profit, setProfit] = useState(0);
+  const [numberOrder, setNumberOrder] = useState(0);
+  const [staticOfProduct, setStaticOfProduct] = useState([]);
+
   useEffect(() => {
-    if((fromDate !== '' && toDate !== '' && fromDate > toDate) && (!errorProperties || !errorProperties.borderColor)) {
-      console.log('setState');
+    if ((fromDate !== '' && toDate !== '' && fromDate > toDate) && (!errorProperties || !errorProperties.borderColor)) {
       setErrorProperties({
         borderColor: 'red'
       })
-    } else if((fromDate !== '' && toDate !== '' && fromDate < toDate) && !errorProperties.variant){
+    } else if ((fromDate !== '' && toDate !== '' && fromDate <= toDate) && !errorProperties.variant) {
       setErrorProperties({
         variant: 'main'
       })
     }
   }, [fromDate, toDate])
-  
+
+  useEffect(() => {
+    if (fromDate && toDate && (fromDate <= toDate)) {
+      api.get(`${BACK_END_HOST}/orderDetail/static/${fromDate}/${toDate}`)
+        .then(res => {
+          const data = res.data;
+
+          if (!(data.messages === 'Error')) {
+            setRevenue(data.revenue);
+            setProfit(data.profit);
+            setNumberOrder(data.numberOrder);
+            setStaticOfProduct(data.staticOfProduct);
+          }
+        })
+        .catch(err => {
+          console.log('dashboard static error:', err);
+        })
+    }
+  }, [fromDate, toDate])
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -61,19 +87,21 @@ export default function UserReports() {
         columns={{ base: 1, md: 2 }}
         gap='20px'
       >
-        <InputField 
-          label='Từ ngày' 
-          type='date' 
+        <InputField
+          label='Từ ngày'
+          type='date'
+          value={fromDate}
           {...errorProperties}
-          onChange={(e) => {setFromDate(e.target.value)}} 
-          />
-         
-        <InputField 
-          label='Đến ngày' 
-          type='date'  
+          onChange={(e) => { setFromDate(e.target.value) }}
+        />
+
+        <InputField
+          label='Đến ngày'
+          type='date'
+          value={toDate}
           {...errorProperties}
-          onChange={(e) => {setToDate(e.target.value)}} 
-          />
+          onChange={(e) => { setToDate(e.target.value) }}
+        />
       </SimpleGrid>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 3 }}
@@ -91,7 +119,7 @@ export default function UserReports() {
             />
           }
           name='Doanh thu'
-          value='$350.4'
+          value={`$${revenue}`}
         />
         <MiniStatistics
           startContent={
@@ -106,9 +134,22 @@ export default function UserReports() {
           }
           name='Lợi nhuận'
           growth='+23%'
-          value='$642.39'
+          value={`$${profit}`}
         />
-        <MiniStatistics growth='+23%' name='Số lượng đơn hàng' value='$574.34' />
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <Icon w='32px' h='32px' as={MdOutlineShoppingCart} color={brandColor} />
+              }
+            />
+          }
+          growth='+23%'
+          name='Số lượng đơn hàng'
+          value={`${numberOrder}`} />
         {/* <MiniStatistics
           endContent={
             <Flex me='-16px' mt='10px'>
@@ -160,13 +201,26 @@ export default function UserReports() {
 
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         <TotalSpent />
-        <WeeklyRevenue />
+        <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px'>
+          <PieCard 
+            staticOfProduct={ staticOfProduct } 
+            sum={revenue} 
+            isRevenue={true} 
+            text='Tỉ lệ doanh thu/sản phẩm'/>
+          <PieCard 
+            staticOfProduct={ staticOfProduct } 
+            sum={profit}
+            isRevenue={false} 
+            text='Tỉ lệ lợi nhuận/sản phẩm'
+            />
+        </SimpleGrid>
+        {/* <WeeklyRevenue /> */}
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
         <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
           <DailyTraffic />
-          <PieCard />
+          {/* <PieCard staticOfProduct={ staticOfProduct } sum={revenue}/> */}
         </SimpleGrid>
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
