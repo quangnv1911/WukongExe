@@ -5,16 +5,13 @@ import Category from '../components/Category'
 import ListProduct from '../components/ListProduct'
 import Combo from '../components/Combo'
 import Voucher from '../components/Voucher'
-const HomePage = () => {
+import FormCheckout from '../components/FormCheckout'
+function Checkout() {
   return (
     <DefaultTemplate>
-      <Story />
-      <Category />
-      <ListProduct />
-      <Combo/>
-      <Voucher/>
+        <FormCheckout/>
     </DefaultTemplate>
   )
 }
 
-export default HomePage
+export default Checkout
