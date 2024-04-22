@@ -18,14 +18,17 @@ const ProductSlide = createSlice({
                 : state.products[indexP].quantity = quantity + 1;
         },
         subProduct: (state, action) => {
-            const { _id, image, name, price, category} = action.payload;
+            const { _id, image, name, price, category } = action.payload;
             const indexP = state.products.findIndex(sp => sp._id === _id);
             (state.products[indexP].quantity - 1 < 1)
                 ? state.products.splice(indexP, 1)
                 : state.products[indexP].quantity -= 1;
+        },
+        clearProduct: (state, action) => {
+            state.products = [];
         }
 
     }
 })
-export const { addProduct, addKeySearch, subProduct } = ProductSlide.actions;
+export const { addProduct, addKeySearch, subProduct, clearProduct} = ProductSlide.actions;
 export default ProductSlide.reducer;

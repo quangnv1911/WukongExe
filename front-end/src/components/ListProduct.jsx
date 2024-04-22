@@ -62,15 +62,15 @@ function ListProduct() {
 
   const handleAddProduct = (p, quantity) => {
     const exists = quantities?.find(q => q._id === p._id);
-    if(exists){
+    if (exists) {
       setQuantity(exists.quantity);
     }
-    console.log(quantity);
+    // console.log(quantity);
     const aProduct = { ...p, quantity }
     dispatch(addProduct(aProduct));
   }
   const handleSubProduct = (p) => {
-    const aProduct = { ...p};
+    const aProduct = { ...p };
     dispatch(subProduct(aProduct));
   }
 
@@ -110,11 +110,12 @@ function ListProduct() {
               {listProduct.map(p => {
                 const startQuantity = 1;
                 const isInCart = listCart.some(c => c._id === p._id);
-                {/* const cartItem = listCart.find(c => c._id === p._id); */ }
                 const quantityInCart = quantities.find(item => item._id === p._id)?.quantity;
+                {/* const cartItem = listCart.find(c => c._id === p._id); */ }
                 return (
                   <div className="col-sm-3 mb-4" key={p._id}>
                     <div className="card w-100 mx-auto border-0">
+                      <p style={{backgroundColor:"#50CD89", width:"45%", position:"absolute", top:"10px"}} className="text-light ms-2 rounded-1 text-center">Giảm giá 5%</p>
                       <img src={p.image} style={{ width: "12em" }} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
                       <div className="card-body">
                         <h5 className="card-title" style={{ lineHeight: "20px", height: "40px", fontSize: "18px", overflow: "hidden", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2 }}>{p.name}</h5>
@@ -122,6 +123,7 @@ function ListProduct() {
                           <IoPricetagOutline style={{ color: "#057130" }} />
                           <span className='fw-bold' style={{ color: "#057130" }}> {p.price}</span>
                           <span className='text-black-50'> VND</span>
+
                         </p>
                         <div className='row d-flex justify-content-center align-items-center'>
                           <div className='col-sm-8 p-0 d-flex justify-content-center'>
@@ -144,6 +146,7 @@ function ListProduct() {
                                   onBlur={(e) => e.target.classList.remove('no-outline')}
                                 />
                                 <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
+
                               </>
                             ) : (
                               <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
