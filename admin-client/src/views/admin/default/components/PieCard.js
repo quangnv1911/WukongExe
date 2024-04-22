@@ -3,12 +3,12 @@ import { Box, Flex, Text, Select, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
 import PieChart from "components/charts/PieChart";
-import { pieChartData, pieChartOptions } from "variables/charts";
+import { pieChartData } from "variables/charts";
 import { VSeparator } from "components/separator/Separator";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Conversion(props) {
-  const { ...rest } = props;
+  const { staticOfProduct, sum, isRevenue, text, ...rest } = props;
 
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -17,18 +17,38 @@ export default function Conversion(props) {
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
     "unset"
   );
+  const [labels, setLables] = useState([]);
+  const [pieChartData, setPieChartData] = useState([]);
+
+  useEffect(async() => {
+    var temp = [];
+    var ratio = [];
+
+    await staticOfProduct && staticOfProduct.forEach(product => {
+      temp.push(product.name);
+      if(isRevenue) {
+        ratio.push(Math.round((product.revenue/sum)*100));
+      } else {
+        ratio.push(Math.round((product.profit/sum)*100));
+      }
+    });
+
+    setLables(temp);
+    setPieChartData(ratio);
+
+  }, [staticOfProduct]);
   return (
     <Card p='20px' align='center' direction='column' w='100%' {...rest}>
       <Flex
         px={{ base: "0px", "2xl": "10px" }}
-        justifyContent='space-between'
-        alignItems='center'
+        justifyContent='center'
+        // alignItems='center'
         w='100%'
         mb='8px'>
         <Text color={textColor} fontSize='md' fontWeight='600' mt='4px'>
-          Your Pie Chart
+          {text ? text : 'Biểu đồ'}
         </Text>
-        <Select
+        {/* <Select
           fontSize='sm'
           variant='subtle'
           defaultValue='monthly'
@@ -37,16 +57,16 @@ export default function Conversion(props) {
           <option value='daily'>Daily</option>
           <option value='monthly'>Monthly</option>
           <option value='yearly'>Yearly</option>
-        </Select>
+        </Select> */}
       </Flex>
 
       <PieChart
         h='100%'
         w='100%'
         chartData={pieChartData}
-        chartOptions={pieChartOptions}
+        labels={labels}
       />
-      <Card
+      {/* <Card
         bg={cardColor}
         flexDirection='row'
         boxShadow={cardShadow}
@@ -86,7 +106,7 @@ export default function Conversion(props) {
             25%
           </Text>
         </Flex>
-      </Card>
+      </Card> */}
     </Card>
   );
 }
