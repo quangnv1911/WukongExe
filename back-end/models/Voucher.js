@@ -15,6 +15,9 @@ const voucherSchema = new Schema({
     expiryDate: {
         type: Date,
     },
+    description: {
+        type: String,
+    }
 }, {
     timestamps: true
 });
