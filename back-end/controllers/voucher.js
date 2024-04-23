@@ -1,6 +1,6 @@
-import * as voucherService from "../services/voucher.js";
+import voucherService from "../services/voucher.js";
 
-export const createVoucher = async (req, res, next) => {
+const createVoucher = async (req, res, next) => {
     try {
         const voucher = await voucherService.createVoucher(req.body);
         res.status(201).json(voucher);
@@ -9,7 +9,7 @@ export const createVoucher = async (req, res, next) => {
     }
 };
 
-export const getAllVouchers = async (req, res, next) => {
+const getAllVouchers = async (req, res, next) => {
     try {
         const vouchers = await voucherService.getAllVouchers();
         res.status(200).json(vouchers);
@@ -18,7 +18,7 @@ export const getAllVouchers = async (req, res, next) => {
     }
 };
 
-export const getVoucherByCode = async (req, res, next) => {
+const getVoucherByCode = async (req, res, next) => {
     try {
         const { code } = req.params;
         const voucher = await voucherService.getVoucherByCode(code);
@@ -31,7 +31,7 @@ export const getVoucherByCode = async (req, res, next) => {
     }
 };
 
-export const updateVoucher = async (req, res, next) => {
+const updateVoucher = async (req, res, next) => {
     try {
         const { code } = req.params;
         const voucher = await voucherService.updateVoucher(code, req.body);
@@ -44,7 +44,7 @@ export const updateVoucher = async (req, res, next) => {
     }
 };
 
-export const deleteVoucher = async (req, res, next) => {
+const deleteVoucher = async (req, res, next) => {
     try {
         const { code } = req.params;
         const voucher = await voucherService.deleteVoucher(code);
@@ -56,3 +56,11 @@ export const deleteVoucher = async (req, res, next) => {
         next(error);
     }
 };
+
+export default {
+    createVoucher,
+    getAllVouchers,
+    getVoucherByCode,
+    updateVoucher,
+    deleteVoucher
+}

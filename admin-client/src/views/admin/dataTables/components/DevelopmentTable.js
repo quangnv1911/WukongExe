@@ -64,7 +64,7 @@ export default function DevelopmentTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Development Table
+          Sản phẩm
         </Text>
         <Menu />
       </Flex>
@@ -164,6 +164,12 @@ export default function DevelopmentTable(props) {
                           value={cell.value}
                         />
                       </Flex>
+                    );
+                  } else {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
                     );
                   }
                   return (

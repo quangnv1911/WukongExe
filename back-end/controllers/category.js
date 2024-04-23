@@ -1,6 +1,6 @@
-import * as categoryService from "../services/category.js";
+import categoryService from "../services/category.js";
 
-export const createCategory = async (req, res, next) => {
+const createCategory = async (req, res, next) => {
     try {
         const category = await categoryService.createCategory(req.body);
         res.status(201).json(category);
@@ -9,7 +9,7 @@ export const createCategory = async (req, res, next) => {
     }
 };
 
-export const getAllCategories = async (req, res, next) => {
+const getAllCategories = async (req, res, next) => {
     try {
         const categories = await categoryService.getAllCategories();
         res.status(200).json(categories);
@@ -18,7 +18,7 @@ export const getAllCategories = async (req, res, next) => {
     }
 };
 
-export const getCategoryById = async (req, res, next) => {
+const getCategoryById = async (req, res, next) => {
     try {
         const { categoryId } = req.params;
         const category = await categoryService.getCategoryById(categoryId);
@@ -31,7 +31,7 @@ export const getCategoryById = async (req, res, next) => {
     }
 };
 
-export const updateCategory = async (req, res, next) => {
+const updateCategory = async (req, res, next) => {
     try {
         const { categoryId } = req.params;
         const category = await categoryService.updateCategory(categoryId, req.body);
@@ -44,7 +44,7 @@ export const updateCategory = async (req, res, next) => {
     }
 };
 
-export const deleteCategory = async (req, res, next) => {
+const deleteCategory = async (req, res, next) => {
     try {
         const { categoryId } = req.params;
         const category = await categoryService.deleteCategory(categoryId);
@@ -56,3 +56,11 @@ export const deleteCategory = async (req, res, next) => {
         next(error);
     }
 };
+
+export default {
+    createCategory,
+    getAllCategories,
+    getCategoryById,
+    updateCategory,
+    deleteCategory
+}

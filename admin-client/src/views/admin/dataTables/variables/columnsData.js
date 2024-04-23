@@ -1,20 +1,41 @@
 export const columnsDataDevelopment = [
   {
-    Header: "NAME",
+    Header: "Tên",
     accessor: "name",
   },
   {
-    Header: "TECH",
-    accessor: "tech",
+    Header: "Ảnh",
+    accessor: "image",
   },
   {
-    Header: "DATE",
-    accessor: "date",
+    Header: "Loại",
+    accessor: "category",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
+    Header: "Giá nhập (đồng)",
+    accessor: "importPrice",
   },
+  {
+    Header: "Giá bán (đồng)",
+    accessor: "sellPrice",
+  },
+  {
+    Header: "Giảm giá",
+    accessor: "discount",
+  },
+  {
+    Header: "Ngày hết hạn giảm giá",
+    accessor: "discountTime",
+  },
+  {
+    Header: "Combo",
+    accessor: "isCombo",
+  },
+  {
+    Header: "Hành động",
+    accessor: "action",
+  }
+  
 ];
 
 export const columnsDataCheck = [

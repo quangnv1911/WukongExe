@@ -1,5 +1,5 @@
 import express from 'express';
-import * as voucherController from "../controllers/voucher.js";
+import voucherController from "../controllers/voucher.js";
 
 const router = express.Router();
 router.post("/", voucherController.createVoucher);
