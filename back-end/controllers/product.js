@@ -42,4 +42,4 @@ export default {
     updateProduct,
     deleteProduct,
     getAllProduct
-};
+}

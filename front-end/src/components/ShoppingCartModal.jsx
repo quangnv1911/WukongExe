@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 function ShoppingCartModal({ show, handleClose }) {
     const listCart = useSelector(state => state.product.products);
     const total = listCart.reduce((acc, product) => {
-        return acc + (product.quantity * product.sellPrice);
+        return acc + (product.quantity * product.sellPrice - (product.sellPrice * (product.discount / 100)));
     }, 0).toFixed(3);
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
@@ -89,7 +89,7 @@ function ShoppingCartModal({ show, handleClose }) {
                                                     onBlur={(e) => e.target.classList.remove('no-outline')}
                                                 />
                                                 <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={24} /></td>
-                                            <td><p>{(product.sellPrice * product.quantity).toFixed(3)}</p></td>
+                                            <td><p>{(product.sellPrice - (product.sellPrice * (product.discount / 100)) * product.quantity).toFixed(3)}</p></td>
                                         </tr>
                                     );
                                 })}

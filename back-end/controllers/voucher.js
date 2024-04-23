@@ -1,4 +1,4 @@
-import * as voucherService from "../services/voucher.js";
+import voucherService from "../services/voucher.js";
 
 const createVoucher = async (req, res, next) => {
     try {

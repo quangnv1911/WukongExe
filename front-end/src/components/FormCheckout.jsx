@@ -10,15 +10,63 @@ import { GrSubtractCircle } from "react-icons/gr";
 import { GrAddCircle } from "react-icons/gr";
 import { RiCoupon3Line } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
+import { ADDRESS_HOST } from '../utils/AppConfig';
+
 function FormCheckout() {
     const costShip = 13.5.toFixed(3);
     const listCart = useSelector(state => state.product.products);
     const total = listCart.reduce((acc, product) => {
-        return acc + (product.quantity * product.price);
+        return acc + (product.quantity * (product.sellPrice - (product.sellPrice * (product.discount / 100))))
     }, 0).toFixed(3);
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
     const [quantities, setQuantities] = useState([]);
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [communes, setCommunes] = useState([]);
+    const [communesCopy, setCommunesCopy] = useState([]);
+    const [idDistrict, setIdDistrict] = useState("");
+    const filterCommunesByDistrict = (idDis) => {
+        const arrCommune = communes.filter(commune => commune.idDistrict === idDis);
+        setCommunesCopy(arrCommune);
+    }
+    const handleClickArea = (e) => {
+        const idDis = e.target.value;
+        setIdDistrict(idDis);
+    };
+
+    useEffect(() => {
+        filterCommunesByDistrict(idDistrict);
+    }, [idDistrict]);
+
+
+    // const handleClickArea = (e) => {
+    //     const idDis = e.target.value;
+    //     setIdDistrict(idDis);
+    //     filterCommunesByDistrict(idDis);
+    // };
+
+
+    useEffect(() => {
+        fetch(`${ADDRESS_HOST}province`)
+            .then(res => res.json())
+            .then(data => setProvinces(data))
+            .catch(err => console.log(err.message));
+    }, []);
+    useEffect(() => {
+        fetch(`${ADDRESS_HOST}district`)
+            .then(res => res.json())
+            .then(data => setDistricts(data))
+            .catch(err => console.log(err.message));
+    }, []);
+    useEffect(() => {
+        fetch(`${ADDRESS_HOST}commune`)
+            .then(res => res.json())
+            .then(data => setCommunes(data))
+            .catch(err => console.log(err.message));
+    }, []);
+   
+
     useEffect(() => {
         const lsQuantity = listCart.map(c => ({ _id: c._id, quantity: c.quantity }));
         setQuantities(lsQuantity);
@@ -71,11 +119,11 @@ function FormCheckout() {
                             <div className='row my-3'>
                                 <div className="form-group col-sm-6">
                                     <label htmlFor="exampleInputEmail1">Họ và tên<sup className='text-danger'>*</sup></label>
-                                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" />
+                                    <input required type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" />
                                 </div>
                                 <div className="form-group col-sm-6">
                                     <label htmlFor="exampleInputPassword1">Số điện thoại<sup className='text-danger'>*</sup></label>
-                                    <input type="number" className="form-control" id="exampleInputPassword1" placeholder="" />
+                                    <input required type="number" className="form-control" id="exampleInputPassword1" placeholder="" />
                                 </div>
                             </div>
                             <div className="row form-group mt-3 fw-medium">
@@ -98,27 +146,28 @@ function FormCheckout() {
                             <div className='row my-3'>
                                 <div className="form-group col-sm-6">
                                     <label htmlFor='area'>Khu vực<sup className='text-danger'>*</sup></label>
-                                    <select className="form-control" id='area'>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select className="form-control" id='area' onChange={handleClickArea}>
+                                        {provinces.map(p => {
+                                            return districts.filter(d => d.idProvince === p.idProvince).map(d => (
+                                                <option key={d.idDistrict} value={d.idDistrict}>{p.name} - {d.name}</option>
+                                            ));
+                                        })}
                                     </select>
                                 </div>
                                 <div className="form-group col-sm-6">
                                     <label htmlFor='district'>Phường xã<sup className='text-danger'>*</sup></label>
                                     <select className="form-control" id='district'>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
+                                        {communesCopy.map(c => (<option value={c.name}>{c.name}</option>))}
+                                        {/* <option value="1" selected>One</option>
                                         <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option value="3">Three</option> */}
                                     </select>
                                 </div>
                             </div>
                             <div className='row'>
                                 <div className="form-group my-3">
                                     <label htmlFor='address'>Địa chỉ nhận hàng<sup className='text-danger'>*</sup></label>
-                                    <input type="password" className="form-control" id="address" placeholder="" />
+                                    <input required type="text" className="form-control" id="address" placeholder="" />
                                 </div>
                             </div>
                             <div className="row form-group mt-3 fw-medium border-bottom">
@@ -145,7 +194,7 @@ function FormCheckout() {
                                 <div className='table col-sm-12'>
                                     <thead>
                                         <tr>
-                                            <th colSpan={3} style={{ width: "60%" }}>Sản phẩm đã chọn (0)</th>
+                                            <th colSpan={3} style={{ width: "60%" }}>Sản phẩm đã chọn ({totalQuantity})</th>
                                             <th><span><MdEdit /> Chỉnh sửa</span></th>
                                         </tr>
                                     </thead>
@@ -175,19 +224,19 @@ function FormCheckout() {
                                                         />
                                                         <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={20} />
                                                     </div></td>
-                                                    <td className='text-center'><p>{(product.price * product.quantity).toFixed(3)}</p></td>
+                                                    <td className='text-center'><p>{((product.sellPrice - (product.sellPrice * (product.discount / 100))).toFixed(3) * product.quantity).toFixed(3)}</p></td>
                                                 </tr>
                                             );
                                         })}
-                                        <tr className='table-success'>
+                                        {/* <tr className='table-success'>
                                             <td colSpan={2}>Phí vận chuyển</td>
                                             <td></td>
                                             <td className='text-center'>{costShip}</td>
-                                        </tr>
-                                        <tr>
+                                        </tr> */}
+                                        <tr className='table-success'>
                                             <td colSpan={2}>Tạm tính ({totalQuantity})</td>
                                             <td></td>
-                                            <td className='text-center'>{(parseFloat(total) + parseFloat(costShip)).toFixed(3)}</td>
+                                            <td className='text-center'>{parseFloat(total).toFixed(3)}</td>
                                         </tr>
                                     </tbody>
                                 </div>
@@ -220,7 +269,7 @@ function FormCheckout() {
                                             <h5 className='mx-2'>Thành tiền</h5>
                                         </div>
                                         <div className='col-md-4'>
-                                            <h5 className='mx-2 text-center'>{(parseFloat(total) + parseFloat(costShip)).toFixed(3)} đ</h5>
+                                            <h5 className='mx-2 text-center'>{parseFloat(total).toFixed(3)} đ</h5>
                                         </div>
                                     </div>
                                     <div className='col-sm-12'>

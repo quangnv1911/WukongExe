@@ -1,11 +1,4 @@
 import Product from "../models/Product.js";
-const getAllProduct = async () => {
-    try {
-        return await Product.find({});
-    } catch (error) {
-        throw new Error(error);
-    }
-};
 const createProduct = async (productData) => {
     try {
         return await Product.create(productData);
@@ -29,5 +22,18 @@ const deleteProduct = async (productId) => {
         throw new Error(error);
     }
 };
-export default {createProduct, updateProduct, deleteProduct, getAllProduct}
 
+const getAllProduct = async () => {
+    try {
+        return await Product.find({});
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+export default {
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    getAllProduct
+}

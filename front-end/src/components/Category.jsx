@@ -4,9 +4,13 @@ import image1 from '../assets/chua.png'
 import image2 from '../assets/ngot.png'
 import image3 from '../assets/cay.png'
 import image4 from '../assets/ngot.png'
-import {BACK_END_HOST} from '../utils/AppConfig'
+import { BACK_END_HOST } from '../utils/AppConfig'
+import { useDispatch } from 'react-redux'
+import { setCategoryId } from '../redux/ProductReducer'
 function Category() {
-    const imagePaths = [image0, image1, image2, image3, image4];
+    // const imagePaths = [image0, image1, image2, image3, image4];
+
+    const dispatch = useDispatch();
     const itemStyle = {
         backgroundColor: "#057130",
     }
@@ -21,6 +25,9 @@ function Category() {
                 console.log(err.message);
             })
     }, []);
+    const handleSetCategory = (categoryId) => {
+        dispatch(setCategoryId(categoryId));
+    };
     return (
         <div className='row text-white p-2' style={{ backgroundColor: "#057130", height: "16em" }}>
             <div className='col'>
@@ -32,8 +39,8 @@ function Category() {
                 <div className='row mt-4'>
                     <div className='col-sm d-flex justify-content-center align-items-center'>
                         {categories.map((c, index) => (
-                            <div className='text-center mx-4' style={itemStyle}>
-                                <img src={imagePaths[index]} width={100} className="rounded-circle img-fluid" alt="Card image" />
+                            <div key={index} className='text-center mx-4' style={itemStyle}>
+                                <img onClick={() => handleSetCategory(c._id)} src={c.image} width={100} className="rounded-circle img-fluid" alt="Card image" />
                                 <p className='my-2'>{c.name}</p>
                             </div>
                         ))}

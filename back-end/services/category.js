@@ -40,4 +40,10 @@ const deleteCategory = async (categoryId) => {
     }
 };
 
-export default { createCategory, getAllCategories, getCategoryById, updateCategory, deleteCategory }
+export default {
+    createCategory,
+    getAllCategories,
+    getCategoryById,
+    updateCategory,
+    deleteCategory
+}

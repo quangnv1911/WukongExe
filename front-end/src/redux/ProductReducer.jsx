@@ -4,12 +4,17 @@ const ProductSlide = createSlice({
     name: "product",
     initialState: {
         search: "",
+        categoryId:"",
         products: []
     },
     reducers: {
         addKeySearch: (state, action) => {
             state.search = action.payload;
         },
+        setCategoryId: (state, action) => {
+            state.categoryId = action.payload;
+        }
+        ,
         addProduct: (state, action) => {
             const { _id, name, importPrice, sellPrice, discount, discountTime, image, category, quantity } = action.payload;
             const indexP = state.products.findIndex(sp => sp._id === _id);
@@ -30,5 +35,5 @@ const ProductSlide = createSlice({
 
     }
 })
-export const { addProduct, addKeySearch, subProduct, clearProduct} = ProductSlide.actions;
+export const { addProduct, addKeySearch, subProduct, clearProduct, setCategoryId} = ProductSlide.actions;
 export default ProductSlide.reducer;

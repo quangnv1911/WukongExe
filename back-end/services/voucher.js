@@ -39,4 +39,11 @@ import Voucher from "../models/Voucher.js";
         throw new Error(error);
     }
 };
-export default {createVoucher, getAllVouchers, getVoucherByCode, updateVoucher, deleteVoucher}
+
+export default {
+    createVoucher,
+    getAllVouchers,
+    getVoucherByCode,
+    updateVoucher,
+    deleteVoucher
+}
