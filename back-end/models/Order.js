@@ -34,6 +34,9 @@ const orderSchema = new Schema({
     voucher: {
         type: Schema.Types.ObjectId,
         ref: Voucher,
+    },
+    note: {
+        type: String,
     }
 }, {
     timestamps: true

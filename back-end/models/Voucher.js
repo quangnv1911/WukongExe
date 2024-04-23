@@ -1,6 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
 const voucherSchema = new Schema({
+    code: {
+        type: String,
+        required: true,
+        unique: true
+    },
     name: {
         type: String,
         required: true
@@ -15,6 +20,9 @@ const voucherSchema = new Schema({
     expiryDate: {
         type: Date,
     },
+    description: {
+        type: String,
+    }
 }, {
     timestamps: true
 });

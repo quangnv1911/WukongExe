@@ -2,6 +2,9 @@ import express from 'express';
 import { config } from 'dotenv';
 import mongoose from 'mongoose';
 import routes from './routes/index.js';
+import productRouter from './routes/product.js'
+import categoryRouter from './routes/category.js';
+import voucherRouter from "./routes/voucher.js";
 import bodyParser from 'body-parser';
 import cors from 'cors';
 config();
@@ -18,9 +21,16 @@ async function main() {
     app.use(cors());
 
 
-    app.use(bodyParser.json({limit: '10mb'}));
+    app.use(bodyParser.json());
     routes(app);
 
+    //crud products
+    app.use("/api/products", productRouter);
+    //crud categoty
+    app.use("/api/categories", categoryRouter);
+    //crud vouchers
+    app.use("/api/vouchers", voucherRouter);
+  
 
     app.listen(PORT, () => {
       console.log('Bearpo running on port ' + PORT);
