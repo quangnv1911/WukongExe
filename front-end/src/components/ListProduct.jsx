@@ -5,6 +5,7 @@ import { GrSubtractCircle } from "react-icons/gr";
 import { GrAddCircle } from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, subProduct } from '../redux/ProductReducer';
+import {BACK_END_HOST} from '../utils/AppConfig'
 function ListProduct() {
   // const listProduct = [
   //   {
@@ -52,7 +53,7 @@ function ListProduct() {
   // ];
   const [listProduct, setListProduct] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3008/api/products")
+    fetch(`${BACK_END_HOST}api/products`)
       .then(res => res.json())
       .then(data => setListProduct(data))
       .catch(err => {

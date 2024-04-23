@@ -4,6 +4,7 @@ import image1 from '../assets/chua.png'
 import image2 from '../assets/ngot.png'
 import image3 from '../assets/cay.png'
 import image4 from '../assets/ngot.png'
+import {BACK_END_HOST} from '../utils/AppConfig'
 function Category() {
     const imagePaths = [image0, image1, image2, image3, image4];
     const itemStyle = {
@@ -11,7 +12,7 @@ function Category() {
     }
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:3008/api/categories')
+        fetch(`${BACK_END_HOST}api/categories`)
             .then(res => res.json())
             .then(data => {
                 setCategories(data);
