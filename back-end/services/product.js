@@ -1,6 +1,12 @@
 import Product from "../models/Product.js";
-
-export const createProduct = async (productData) => {
+const getAllProduct = async () => {
+    try {
+        return await Product.find({});
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+const createProduct = async (productData) => {
     try {
         return await Product.create(productData);
     } catch (error) {
@@ -8,7 +14,7 @@ export const createProduct = async (productData) => {
     }
 };
 
-export const updateProduct = async (productId, productData) => {
+const updateProduct = async (productId, productData) => {
     try {
         return await Product.findByIdAndUpdate(productId, productData, { new: true });
     } catch (error) {
@@ -16,11 +22,12 @@ export const updateProduct = async (productId, productData) => {
     }
 };
 
-export const deleteProduct = async (productId) => {
+const deleteProduct = async (productId) => {
     try {
         return await Product.findByIdAndDelete(productId);
     } catch (error) {
         throw new Error(error);
     }
 };
+export default {createProduct, updateProduct, deleteProduct, getAllProduct}
 

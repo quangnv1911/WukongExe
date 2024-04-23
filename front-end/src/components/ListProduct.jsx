@@ -6,50 +6,61 @@ import { GrAddCircle } from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, subProduct } from '../redux/ProductReducer';
 function ListProduct() {
-  const listProduct = [
-    {
-      _id: 0,
-      image: alley,
-      name: "Trà sữa alley 3 vị",
-      price: "19.99",
-      category: 0
-    },
-    {
-      _id: 1,
-      image: alley,
-      name: "Bingsu alley 3 vị",
-      price: "19.99",
-      category: 1
-    },
-    {
-      _id: 2,
-      image: alley,
-      name: "Trà sữa alley 3 vị",
-      price: "19.99",
-      category: 0
-    },
-    {
-      _id: 3,
-      image: alley,
-      name: "Trà sữa alley 3 vị",
-      price: "19.99",
-      category: 1
-    },
-    {
-      _id: 4,
-      image: alley,
-      name: "Trà sữa alley 3 vị",
-      price: "19.99",
-      category: 1
-    },
-    {
-      _id: 5,
-      image: alley,
-      name: "Trà sữa alley 3 vị",
-      price: "19.99",
-      category: 0
-    }
-  ];
+  // const listProduct = [
+  //   {
+  //     _id: 0,
+  //     image: alley,
+  //     name: "Trà sữa alley 3 vị",
+  //     price: "19.99",
+  //     category: 0
+  //   },
+  //   {
+  //     _id: 1,
+  //     image: alley,
+  //     name: "Bingsu alley 3 vị",
+  //     price: "19.99",
+  //     category: 1
+  //   },
+  //   {
+  //     _id: 2,
+  //     image: alley,
+  //     name: "Trà sữa alley 3 vị",
+  //     price: "19.99",
+  //     category: 0
+  //   },
+  //   {
+  //     _id: 3,
+  //     image: alley,
+  //     name: "Trà sữa alley 3 vị",
+  //     price: "19.99",
+  //     category: 1
+  //   },
+  //   {
+  //     _id: 4,
+  //     image: alley,
+  //     name: "Trà sữa alley 3 vị",
+  //     price: "19.99",
+  //     category: 1
+  //   },
+  //   {
+  //     _id: 5,
+  //     image: alley,
+  //     name: "Trà sữa alley 3 vị",
+  //     price: "19.99",
+  //     category: 0
+  //   }
+  // ];
+  const [listProduct, setListProduct] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3008/api/products")
+      .then(res => res.json())
+      .then(data => setListProduct(data))
+      .catch(err => {
+        console.log(err.message);
+      })
+  }, [])
+  console.log(listProduct);
+
   const searchProduct = useSelector(state => state.product.search);
   const listCart = useSelector(state => state.product.products);
   const dispatch = useDispatch();
@@ -115,13 +126,14 @@ function ListProduct() {
                 return (
                   <div className="col-sm-3 mb-4" key={p._id}>
                     <div className="card w-100 mx-auto border-0">
-                      <p style={{backgroundColor:"#50CD89", width:"45%", position:"absolute", top:"10px"}} className="text-light ms-2 rounded-1 text-center">Giảm giá 5%</p>
+
+                      {p.discount !== 0 && <p style={{ backgroundColor: "#50CD89", width: "45%", position: "absolute", top: "10px" }} className="text-light ms-2 rounded-1 text-center">Giảm giá {p.discount}%</p>}
                       <img src={p.image} style={{ width: "12em" }} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
                       <div className="card-body">
                         <h5 className="card-title" style={{ lineHeight: "20px", height: "40px", fontSize: "18px", overflow: "hidden", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2 }}>{p.name}</h5>
                         <p className="card-text" style={{ fontSize: "16px" }}>
                           <IoPricetagOutline style={{ color: "#057130" }} />
-                          <span className='fw-bold' style={{ color: "#057130" }}> {p.price}</span>
+                          <span className='fw-bold' style={{ color: "#057130" }}> {p.discount !== 0 ? (p.sellPrice - (p.sellPrice * (p.discount / 100))).toFixed(3) : p.sellPrice.toFixed(3)}</span>
                           <span className='text-black-50'> VND</span>
 
                         </p>

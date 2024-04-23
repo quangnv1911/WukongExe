@@ -1,6 +1,14 @@
-import * as productService from "../services/product.js";
+import productService from "../services/product.js";
+const getAllProduct = async (req, res, next) => {
+    try {
+        const products = await productService.getAllProduct(req.body);
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
+}
 
-export const createProduct = async (req, res, next) => {
+const createProduct = async (req, res, next) => {
     try {
         const product = await productService.createProduct(req.body);
         res.status(201).json(product);
@@ -9,7 +17,7 @@ export const createProduct = async (req, res, next) => {
     }
 };
 
-export const updateProduct = async (req, res, next) => {
+const updateProduct = async (req, res, next) => {
     try {
         const { productId } = req.params;
         const product = await productService.updateProduct(productId, req.body);
@@ -19,7 +27,7 @@ export const updateProduct = async (req, res, next) => {
     }
 };
 
-export const deleteProduct = async (req, res, next) => {
+const deleteProduct = async (req, res, next) => {
     try {
         const { productId } = req.params;
         await productService.deleteProduct(productId);
@@ -27,4 +35,11 @@ export const deleteProduct = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+
+export default {
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    getAllProduct
 };

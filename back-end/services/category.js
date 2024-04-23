@@ -1,6 +1,6 @@
 import Category from "../models/Category.js";
 
-export const createCategory = async (categoryData) => {
+const createCategory = async (categoryData) => {
     try {
         return await Category.create(categoryData);
     } catch (error) {
@@ -8,7 +8,7 @@ export const createCategory = async (categoryData) => {
     }
 };
 
-export const getAllCategories = async () => {
+const getAllCategories = async () => {
     try {
         return await Category.find();
     } catch (error) {
@@ -16,7 +16,7 @@ export const getAllCategories = async () => {
     }
 };
 
-export const getCategoryById = async (categoryId) => {
+const getCategoryById = async (categoryId) => {
     try {
         return await Category.findById(categoryId);
     } catch (error) {
@@ -24,7 +24,7 @@ export const getCategoryById = async (categoryId) => {
     }
 };
 
-export const updateCategory = async (categoryId, categoryData) => {
+const updateCategory = async (categoryId, categoryData) => {
     try {
         return await Category.findByIdAndUpdate(categoryId, categoryData, { new: true });
     } catch (error) {
@@ -32,10 +32,12 @@ export const updateCategory = async (categoryId, categoryData) => {
     }
 };
 
-export const deleteCategory = async (categoryId) => {
+const deleteCategory = async (categoryId) => {
     try {
         return await Category.findByIdAndDelete(categoryId);
     } catch (error) {
         throw new Error(error);
     }
 };
+
+export default { createCategory, getAllCategories, getCategoryById, updateCategory, deleteCategory }

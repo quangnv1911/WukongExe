@@ -11,7 +11,7 @@ const ProductSlide = createSlice({
             state.search = action.payload;
         },
         addProduct: (state, action) => {
-            const { _id, image, name, price, category, quantity } = action.payload;
+            const { _id, name, importPrice, sellPrice, discount, discountTime, image, category, quantity } = action.payload;
             const indexP = state.products.findIndex(sp => sp._id === _id);
             state.products.length === 0 || indexP === -1
                 ? state.products.push(action.payload)

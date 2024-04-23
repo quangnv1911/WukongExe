@@ -7,6 +7,7 @@ import { Form, FormControl, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addKeySearch } from '../redux/ProductReducer';
 import ShoppingCartModal from '../components/ShoppingCartModal';
+import { Link } from 'react-router-dom';
 function NavBar() {
     const [showModal, setShowModal] = useState(false);
     const handleShowModal = () => setShowModal(true);
@@ -25,7 +26,7 @@ function NavBar() {
     return (
         <div className='row d-flex justify-content-center align-items-center h-20 py-4 sticky-top bg-white navbar-wrapper'>
             <div className='col-sm-4 text-center'>
-                <img src={logoCopy} className='img-fluid ' alt="Example Image" />
+                <Link to={'/'}><img src={logoCopy} className='img-fluid ' alt="Example Image" /></Link>
             </div>
             <div className='col-md-8 d-flex justify-content-end'>
                 <div className='w-75 d-flex align-items-center' style={{ lineHeight: "2em", position: "relative" }}>
