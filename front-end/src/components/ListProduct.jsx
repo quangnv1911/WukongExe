@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, subProduct } from '../redux/ProductReducer';
 import { BACK_END_HOST } from '../utils/AppConfig'
 import combo1 from '../assets/combo1.png'
+import toast, { Toaster } from 'react-hot-toast';
+
 function ListProduct() {
 
   // const [filteredProducts, setFilteredProducts] = useState([]);
@@ -52,10 +54,12 @@ function ListProduct() {
     }
     const aProduct = { ...p, quantity }
     dispatch(addProduct(aProduct));
+    toast.success('Đã thêm sản phẩm vào giỏ hàng!');
   }
   const handleSubProduct = (p) => {
     const aProduct = { ...p };
     dispatch(subProduct(aProduct));
+    toast.success('Đã xoá sản phẩm khỏi giỏ hàng!');
   }
 
   const handleChangeQuantity = (productId, newQuantity) => {

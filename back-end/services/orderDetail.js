@@ -60,6 +60,17 @@ const groupProduct = (products) => {
     return Array.from(staticMap.values());
 }
 
+const createOrderDetail = async(orderDetailData) => {
+    try {
+        const orderDetail = await OrderDetail.create(orderDetailData);
+        console.log("here!");
+        return orderDetail;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 export default {
-    ratioRevenueAndProfit
+    ratioRevenueAndProfit,
+    createOrderDetail,
 }

@@ -12,6 +12,7 @@ import { RiCoupon3Line } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 import { ADDRESS_HOST, BACK_END_HOST } from '../utils/AppConfig';
 import Modal from 'react-bootstrap/Modal';
+import toast, { Toaster } from 'react-hot-toast';
 
 function FormCheckout() {
 
@@ -47,8 +48,12 @@ function FormCheckout() {
     const total = listCart.reduce((acc, product) => {
         return acc + (product.quantity * (product.sellPrice - (product.sellPrice * (product.discount / 100))))
     }, 0).toFixed(3);
+    const totalP = listCart.reduce((acc, product) => {
+        return acc + (product.quantity * (product.importPrice));
+    }, 0).toFixed(3);
     const discountTotal = total * (percentVoucher / 100);
     const totalEnd = total - discountTotal;
+    const totalProf = totalEnd - totalP;
 
     const [postData, setPostData] = useState({
         customerName: '',
@@ -56,29 +61,41 @@ function FormCheckout() {
         customerAddress: '',
         receiverName: '',
         receiverPhone: '',
-        total: total,
-        totalProfit: 0,
+        totalProfit: totalProf,
+        total: totalEnd,
         status: false,
         voucher: idVoucher,
-        note: ''
+        note: '',
+        listCart: [listCart]
     });
+
     useEffect(() => {
-        setPostData({ ...postData, voucher: idVoucher, customerAddress: postData.customerAddress.concat(endPointAddress) });
+        setPostData({ ...postData, voucher: idVoucher, total: totalEnd, listCart: listCart });
         console.log(postData);
         console.log("hello");
-    }, [idVoucher, endPointAddress]);
+    }, [idVoucher, listCart]);
 
     const handleChangeData = (e) => {
         const { name, value } = e.target;
-        setPostData({ ...postData, [name]: value });
+        if (name == "customerAddress") {
+            setPostData({ ...postData, [name]: value.concat(endPointAddress) });
+        } else {
+            setPostData({ ...postData, [name]: value });
+        }
         console.log(postData);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(endPointAddress + "XYZ");
-        // setPostData({ ...postData, customerAddress: postData.customerAddress.concat(endPointAddress) });
         console.log(postData);
-        navigate('/');
+        fetch(`${BACK_END_HOST}api/orders`, {
+            method: "POST",
+            headers: { "Content-Type": "Application/JSON" },
+            body: JSON.stringify(postData)
+        })
+           
+        toast.success("Đặt hàng thành công!");
+        dispatch(clearProduct());
+        navigate("/");
     };
 
 
@@ -113,14 +130,6 @@ function FormCheckout() {
         const idCom = e.target.value;
         setIdCommune(idCom);
     }
-
-
-
-    // const handleClickArea = (e) => {
-    //     const idDis = e.target.value;
-    //     setIdDistrict(idDis);
-    //     filterCommunesByDistrict(idDis);
-    // };
 
 
     useEffect(() => {
@@ -182,7 +191,17 @@ function FormCheckout() {
     const handleChangeRadio = (event) => {
         setSelectedValue(event.target.value);
     };
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
 
+        const formattedDay = day < 10 ? '0' + day : day;
+        const formattedMonth = month < 10 ? '0' + month : month;
+
+        return `${formattedDay}/${formattedMonth}/${year}`;
+    };
     return (
         <div className='row justify-content-center bg-white'>
 
@@ -204,11 +223,11 @@ function FormCheckout() {
                         </thead>
                         <tbody>
                             {listVoucher.map((v, index) => (
-                                <tr key={index}>
-                                    <td>{v.code}</td>
+                                <tr className='text-center' key={index}>
+                                    <td >{v.code}</td>
                                     <td>{v.name}</td>
-                                    <td>{v.expiryDate}</td>
-                                    <td className='text-center'>{v.percent}%</td>
+                                    <td>{formatDate(v.expiryDate)}</td>
+                                    <td >{v.percent}%</td>
                                     <td>
                                         <button className="btn btn-success" onClick={() => handleApplyVoucher(v)}>Áp dụng</button>
                                     </td>
@@ -284,33 +303,38 @@ function FormCheckout() {
                                     </div>
                                 </div>
                             )}
-                            <div className='row'>
-                                <div className="form-group my-2">
-                                    <label htmlFor='address'>Địa chỉ nhận hàng<sup className='text-danger'>*</sup></label>
-                                    <input onChange={handleChangeData} required name='customerAddress' type="text" className="form-control" id="address" placeholder="" />
-                                </div>
-                            </div>
                             {selectedValue === '3' ? <></> :
-                                <div className='row my-3'>
-                                    <div className="form-group col-sm-6">
-                                        <label htmlFor='area'>Khu vực<sup className='text-danger'>*</sup></label>
-                                        <select className="form-control" id='area' onChange={handleClickArea} >
-                                            <option>Chọn khu vực</option>
-                                            {provinces.map(p => {
-                                                return districts.filter(d => d.idProvince === p.idProvince).map(d => (
-                                                    <option key={d.idDistrict} value={d.idDistrict + " " + p.idProvince}>{p.name} - {d.name}</option>
-                                                ));
-                                            })}
-                                        </select>
+                                <>
+                                    <div className='row my-3'>
+                                        <div className="form-group col-sm-6">
+                                            <label htmlFor='area'>Khu vực<sup className='text-danger'>*</sup></label>
+                                            <select className="form-control" id='area' onChange={handleClickArea} >
+                                                <option>Chọn khu vực</option>
+                                                {provinces.map(p => {
+                                                    return districts.filter(d => d.idProvince === p.idProvince).map(d => (
+                                                        <option key={d.idDistrict} value={d.idDistrict + " " + p.idProvince}>{p.name} - {d.name}</option>
+                                                    ));
+                                                })}
+                                            </select>
+                                        </div>
+                                        <div className="form-group col-sm-6">
+                                            <label htmlFor='district'>Phường xã<sup className='text-danger'>*</sup></label>
+                                            <select className="form-control" id='district' onChange={handleClickCommune} >
+                                                <option>Chọn phường xã</option>
+                                                {communesCopy.map((c, index) => (<option key={index} value={c.idCommune}>{c.name}</option>))}
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div className="form-group col-sm-6">
-                                        <label htmlFor='district'>Phường xã<sup className='text-danger'>*</sup></label>
-                                        <select className="form-control" id='district' onChange={handleClickCommune} >
-                                            <option>Chọn phường xã</option>
-                                            {communesCopy.map((c, index) => (<option key={index} value={c.idCommune}>{c.name}</option>))}
-                                        </select>
+                                    <div className='row'>
+                                        <div className="form-group my-2">
+                                            <label htmlFor='address'>Địa chỉ nhận hàng<sup className='text-danger'>*</sup></label>
+                                            <input onChange={handleChangeData} required name='customerAddress' type="text" className="form-control" id="address" placeholder="" />
+                                        </div>
                                     </div>
-                                </div>}
+                                </>
+                            }
+
+
 
 
                             <div className="form-group">

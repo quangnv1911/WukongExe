@@ -79,9 +79,17 @@ const getRevenueProfitByYear = async (year) => {
     } catch (error) {
         console.log('Service: getRevenueProfitByYear', error);
     }
+};
+const createOrder = async(orderData) => {
+    try {
+        return await Order.create(orderData);
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
 export default {
     dashboardStatic,
-    getRevenueProfitByYear
+    getRevenueProfitByYear,
+    createOrder
 }
