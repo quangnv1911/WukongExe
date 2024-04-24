@@ -87,9 +87,28 @@ const createOrder = async(orderData) => {
         throw new Error(error);
     }
 }
+//getAllOrder
+const getAllOrder = async () => {
+    try {
+      return await Order.find();
+    } catch (error) {
+      throw new Error('Failed to fetch orders');
+    }
+};
+//getOrderById
+const getOrderById = async () => {
+    try {
+      return await Order.find({id});
+    } catch (error) {
+      throw new Error('Failed to fetch orders');
+    }
+};
+
 
 export default {
     dashboardStatic,
     getRevenueProfitByYear,
-    createOrder
+    createOrder,
+    getAllOrder,
+    getOrderById
 }

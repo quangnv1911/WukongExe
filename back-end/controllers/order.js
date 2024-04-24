@@ -1,5 +1,6 @@
 import { orderService, orderDetailService } from "../services/index.js";
 
+
 const getRevenueAndProfitByYear = async (req, res) => {
     try {
         const { year } = req.params;
@@ -48,8 +49,31 @@ const createOrder = async (req, res) => {
         })
     }
 }
+//getAllOrder
+const getAllOrder = async (req, res) => {
+    try {
+      const orders = await orderService.find();
+      res.json(orders);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+}
+//getOrderById
+const getOrderById = async (req, res) => {
+    try {
+      const order = await orderService.findById(req.params.id);
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+      }
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+}
 
 export default {
     getRevenueAndProfitByYear,
     createOrder,
+    getAllOrder,
+    getOrderById
 }
