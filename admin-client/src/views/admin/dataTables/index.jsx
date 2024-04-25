@@ -29,7 +29,7 @@ export default function Settings() {
      .catch(error => {
       console.log('Load list Product error:', error);
      })
-  })
+  }, [])
   
   // Chakra Color Mode
   return (
@@ -41,6 +41,7 @@ export default function Settings() {
         <DevelopmentTable
           columnsData={columnsDataDevelopment}
           tableData={listProduct}
+          setListProduct={setListProduct}
         />
         <SimpleGrid
           mb='20px'

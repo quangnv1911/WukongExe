@@ -30,13 +30,14 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
     try {
         const { productId } = req.params;
-        await productService.deleteProduct(productId);
+        await productService.updateProduct(productId, {
+            isHide: true
+        });
         res.status(204).send();
     } catch (error) {
         next(error);
     }
 };
-
 export default {
     createProduct,
     updateProduct,
