@@ -1,6 +1,6 @@
 import Voucher from "../models/Voucher.js";
 
-const createVoucher = async (voucherData) => {
+ const createVoucher = async (voucherData) => {
     try {
         return await Voucher.create(voucherData);
     } catch (error) {
@@ -8,7 +8,7 @@ const createVoucher = async (voucherData) => {
     }
 };
 
-const getAllVouchers = async () => {
+ const getAllVouchers = async () => {
     try {
         return await Voucher.find();
     } catch (error) {
@@ -16,7 +16,7 @@ const getAllVouchers = async () => {
     }
 };
 
-const getVoucherByCode = async (code) => {
+ const getVoucherByCode = async (code) => {
     try {
         return await Voucher.findOne({ code });
     } catch (error) {
@@ -24,7 +24,7 @@ const getVoucherByCode = async (code) => {
     }
 };
 
-const updateVoucher = async (code, voucherData) => {
+ const updateVoucher = async (code, voucherData) => {
     try {
         return await Voucher.findOneAndUpdate({ code }, voucherData, { new: true });
     } catch (error) {
@@ -32,7 +32,7 @@ const updateVoucher = async (code, voucherData) => {
     }
 };
 
-const deleteVoucher = async (code) => {
+ const deleteVoucher = async (code) => {
     try {
         return await Voucher.findOneAndDelete({ code });
     } catch (error) {

@@ -1,4 +1,12 @@
 import productService from "../services/product.js";
+const getAllProduct = async (req, res, next) => {
+    try {
+        const products = await productService.getAllProduct(req.body);
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
+}
 
 const createProduct = async (req, res, next) => {
     try {
@@ -30,16 +38,6 @@ const deleteProduct = async (req, res, next) => {
         next(error);
     }
 };
-
-const getAllProduct = async (req, res, next) => {
-    try {
-        const product = await productService.getAllProduct(req.body);
-        res.status(200).json(product);
-    } catch (error) {
-        next(error);
-    }
-};
-
 export default {
     createProduct,
     updateProduct,

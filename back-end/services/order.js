@@ -76,9 +76,36 @@ const getRevenueProfitByYear = async (year) => {
     } catch (error) {
         console.log('Service: getRevenueProfitByYear', error);
     }
+};
+const createOrder = async(orderData) => {
+    try {
+        return await Order.create(orderData);
+    } catch (error) {
+        throw new Error(error);
+    }
 }
+//getAllOrder
+const getAllOrder = async () => {
+    try {
+      return await Order.find();
+    } catch (error) {
+      throw new Error('Failed to fetch orders');
+    }
+};
+//getOrderById
+const getOrderById = async () => {
+    try {
+      return await Order.find({id});
+    } catch (error) {
+      throw new Error('Failed to fetch orders');
+    }
+};
+
 
 export default {
     dashboardStatic,
-    getRevenueProfitByYear
+    getRevenueProfitByYear,
+    createOrder,
+    getAllOrder,
+    getOrderById
 }
