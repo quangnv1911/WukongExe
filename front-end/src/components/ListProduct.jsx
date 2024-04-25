@@ -33,7 +33,7 @@ function ListProduct() {
   const [listProduct, setListProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch(`${BACK_END_HOST}api/products`)
+    fetch(`${BACK_END_HOST}/product`)
       .then(res => res.json())
       .then(data => setListProduct(data))
       .catch(err => {

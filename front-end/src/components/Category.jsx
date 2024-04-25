@@ -16,9 +16,10 @@ function Category() {
     }
     const [categories, setCategories] = useState([]);
     useEffect(() => {
-        fetch(`${BACK_END_HOST}api/categories`)
+        fetch(`${BACK_END_HOST}/category`)
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 setCategories(data);
             })
             .catch(err => {
