@@ -33,7 +33,7 @@ export const columnsDataDevelopment = [
   },
   {
     Header: "Hành động",
-    accessor: "action",
+    accessor: "_id",
   }
   
 ];

@@ -22,7 +22,9 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
     try {
         const { productId } = req.params;
-        await productService.deleteProduct(productId);
+        await productService.updateProduct(productId, {
+            isHide: true
+        });
         res.status(204).send();
     } catch (error) {
         next(error);
@@ -32,7 +34,7 @@ const deleteProduct = async (req, res, next) => {
 const getAllProduct = async (req, res, next) => {
     try {
         const product = await productService.getAllProduct(req.body);
-        res.status(201).json(product);
+        res.status(200).json(product);
     } catch (error) {
         next(error);
     }

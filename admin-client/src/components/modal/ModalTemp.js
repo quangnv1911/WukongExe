@@ -1,0 +1,287 @@
+import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Icon, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react'
+import moment from 'moment';
+import React, { useEffect, useState } from 'react'
+import { MdUpload } from 'react-icons/md';
+import { BACK_END_HOST } from 'utils/AppConfig';
+import api from 'utils/Services';
+import Dropzone from "views/admin/dataTables/components/Dropzone.js";
+
+const ModalTemp = (props) => {
+    const { size,
+        title,
+        body,
+        secondAction,
+        isOpen,
+        onClose,
+        color,
+        action,
+        type,
+        categories,
+        oldFormValue,
+        ...rest
+    } = props;
+    const textColorBrand = useColorModeValue("brand.500", "white");
+    const [image, setImage] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        importPrice: 0,
+        sellPrice: 0,
+        discount: 0,
+        discountTime: '',
+        isCombo: false,
+        subdescription: '',
+        category: ''
+    });
+
+    useEffect(() => {
+        if (oldFormValue) {
+            setImage(oldFormValue.image)
+            setFormData({
+                name: oldFormValue.name,
+                importPrice: oldFormValue.importPrice,
+                sellPrice: oldFormValue.sellPrice,
+                discount: oldFormValue.discount,
+                discountTime: oldFormValue.discountTime,
+                isCombo: oldFormValue.isCombo,
+                subdescription: oldFormValue.subdescription,
+                category: oldFormValue.categoryId,
+            })
+        }
+    }, [oldFormValue])
+    //handle input formDate change
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    //handleAdd
+    const handleAdd = () => {
+        api.post(`${BACK_END_HOST}/product`, {
+            image,
+            ...formData
+
+        })
+            .then(res => {
+
+                //Reset form and close modal
+                onClose();
+                setFormData({
+                    name: '',
+                    importPrice: 0,
+                    sellPrice: 0,
+                    discount: 0,
+                    discountDate: '',
+                    isCombo: false,
+                    subdescription: ''
+                });
+                setImage('');
+            })
+            .catch(error => {
+                console.log('handleAdd error', error);
+            })
+    }
+
+    //handleUpdate
+    const handleUpdate = () => {
+        api.put(`${BACK_END_HOST}/product/${oldFormValue._id}`, {
+            image,
+            ...formData
+
+        })
+            .then(res => {
+                //Reset form and close modal
+                onClose();
+                setFormData({
+                    name: '',
+                    importPrice: 0,
+                    sellPrice: 0,
+                    discount: 0,
+                    discountDate: '',
+                    isCombo: false,
+                    subdescription: ''
+                });
+                setImage('');
+            })
+            .catch(error => {
+                console.log('handleUpdate error', error);
+            })
+    }
+
+    const closeAndReset = () => {
+        setFormData({
+            name: '',
+            importPrice: 0,
+            sellPrice: 0,
+            discount: 0,
+            discountDate: '',
+            isCombo: false,
+            subdescription: ''
+        });
+        setImage('');
+        onClose();
+    }
+
+    return (
+        <Modal isOpen={isOpen} onClose={closeAndReset} size={size} scrollBehavior='inside'>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>{title}</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    {type === 'add' ?
+                        (<>
+                            <FormControl>
+                                <FormLabel>Tên</FormLabel>
+                                <Input
+                                    placeholder='Đồ ăn vặt A'
+                                    name="name"
+                                    onChange={handleInputChange}
+                                    value={formData?.name}
+                                />
+                            </FormControl>
+
+                            <FormControl>
+                                <FormLabel>Loại</FormLabel>
+                                <Select
+                                    placeholder='Chọn loại'
+                                    name="category"
+                                    onChange={handleInputChange}
+                                    value={formData?.category}
+                                >
+                                    {
+                                        categories && categories.map(category =>
+                                            <option value={category._id}>{category.name}</option>
+                                        )
+                                    }
+                                </Select>
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Giá nhập (đồng)</FormLabel>
+                                <Input
+                                    type="number"
+                                    placeholder='6000'
+                                    name="importPrice"
+                                    onChange={handleInputChange}
+                                    value={formData?.importPrice}
+                                />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Giá Bán (đồng)</FormLabel>
+                                <Input
+                                    type="number"
+                                    placeholder='10000'
+                                    name="sellPrice"
+                                    onChange={handleInputChange}
+                                    value={formData?.sellPrice}
+                                />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Giảm giá (%)</FormLabel>
+                                <Input
+                                    type="number"
+                                    placeholder='10'
+                                    name="discount"
+                                    onChange={handleInputChange}
+                                    value={formData?.discount}
+                                />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Ngày hết hạn giảm giá</FormLabel>
+                                <Input
+                                    type="date"
+                                    name="discountTime"
+                                    onChange={handleInputChange}
+                                    value={formData ? moment(formData.discountTime).format('YYYY-MM-DD') : ''}
+                                />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Có phải combo không?</FormLabel>
+                                <Checkbox
+                                    colorScheme='green'
+                                    name="isCombo"
+                                    onChange={handleInputChange}
+                                    value={formData?.isCombo}
+                                >
+                                    Có
+                                </Checkbox>
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Mô tả ngắn</FormLabel>
+                                <Input
+                                    placeholder='Gồm sản phẩm A + B'
+                                    name="subdescription"
+                                    onChange={handleInputChange}
+                                    value={formData?.subdescription}
+                                />
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Ảnh</FormLabel>
+                                <SimpleGrid
+                                    columns={{ base: 1, md: 1 }}
+                                    gap='20px'
+                                    mb={{ base: "20px", xl: "0px" }}
+                                    maxHeight='100%'
+                                    height='100%'
+                                >
+                                    <Flex
+                                        minH='300px'
+                                        direction={{ base: "column", "2xl": "row" }}
+                                        justify='center'
+                                    >
+                                        <Dropzone
+                                            w={{ base: "100%", "2xl": "268px" }}
+                                            me='36px'
+                                            maxH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+                                            minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+                                            setImage={setImage}
+                                            image={image}
+                                            content={
+                                                <Box>
+                                                    <Icon as={MdUpload} w='80px' h='80px' color={textColorBrand} />
+                                                    <Flex justify='center' mx='auto' mb='12px'>
+                                                        <Text fontSize='xl' fontWeight='700' color={textColorBrand}>
+                                                            Upload Files
+                                                        </Text>
+                                                    </Flex>
+                                                    <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
+                                                        PNG, JPG files are allowed
+                                                    </Text>
+                                                </Box>
+                                            }
+                                        />
+                                    </Flex>
+                                </SimpleGrid>
+
+                            </FormControl>
+                        </>) :
+                        body
+                    }
+                </ModalBody>
+
+                <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                        Đóng
+                    </Button>
+                    <Button
+                        variant='ghost'
+                        color={color}
+                        onClick={type === 'add' ? (oldFormValue ? handleUpdate : handleAdd) : action}>
+                        {secondAction}
+                    </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
+    )
+}
+
+export default ModalTemp
