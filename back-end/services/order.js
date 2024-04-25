@@ -61,15 +61,12 @@ const getRevenueProfitByYear = async (year) => {
         }, 'total totalProfit createdAt')
 
         revAndPro.forEach(element => {
-            console.log(element);
             let month = element.createdAt.getMonth(); //start at 0
 
             profits[month] += element.totalProfit;
             revenues[month] += element.total;
         })
 
-        console.log('profit', profits);
-        console.log('revenues', revenues);
 
         return {
             revenues,

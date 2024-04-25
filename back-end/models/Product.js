@@ -35,6 +35,10 @@ const productSchema = new Schema({
     isCombo: {
         type: Boolean,
         default: false
+    },
+    isHide: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
