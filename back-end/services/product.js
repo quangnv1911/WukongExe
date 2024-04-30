@@ -25,7 +25,20 @@ const deleteProduct = async (productId) => {
 
 const getAllProduct = async () => {
     try {
-        return await Product.find({});
+        // find All product that not hide
+        const products = await Product.find({
+            $or: [
+                { isHide: false },
+                { isHide: { $exists: false } }
+            ]
+        }).populate('category', 'name');
+        var newProducts = products.map(product => {
+            product._doc.categoryId = product._doc.category._id;
+            product._doc.category = product._doc.category.name;
+
+            return product;
+        })
+        return newProducts;
     } catch (error) {
         throw new Error(error);
     }

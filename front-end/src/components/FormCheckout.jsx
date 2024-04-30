@@ -87,7 +87,7 @@ function FormCheckout() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(postData);
-        fetch(`${BACK_END_HOST}api/orders`, {
+        fetch(`${BACK_END_HOST}/order`, {
             method: "POST",
             headers: { "Content-Type": "Application/JSON" },
             body: JSON.stringify(postData)
@@ -151,7 +151,7 @@ function FormCheckout() {
             .catch(err => console.log(err.message));
     }, []);
     useEffect(() => {
-        fetch(`${BACK_END_HOST}api/vouchers`)
+        fetch(`${BACK_END_HOST}//vouchers`)
             .then(res => res.json())
             .then(data => setListVoucher(data))
             .catch(err => {

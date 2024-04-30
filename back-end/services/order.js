@@ -61,15 +61,12 @@ const getRevenueProfitByYear = async (year) => {
         }, 'total totalProfit createdAt')
 
         revAndPro.forEach(element => {
-            console.log(element);
             let month = element.createdAt.getMonth(); //start at 0
 
             profits[month] += element.totalProfit;
             revenues[month] += element.total;
         })
 
-        console.log('profit', profits);
-        console.log('revenues', revenues);
 
         return {
             revenues,
@@ -87,9 +84,28 @@ const createOrder = async(orderData) => {
         throw new Error(error);
     }
 }
+//getAllOrder
+const getAllOrder = async () => {
+    try {
+      return await Order.find();
+    } catch (error) {
+      throw new Error('Failed to fetch orders');
+    }
+};
+//getOrderById
+const getOrderById = async () => {
+    try {
+      return await Order.find({id});
+    } catch (error) {
+      throw new Error('Failed to fetch orders');
+    }
+};
+
 
 export default {
     dashboardStatic,
     getRevenueProfitByYear,
-    createOrder
+    createOrder,
+    getAllOrder,
+    getOrderById
 }

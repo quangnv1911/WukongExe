@@ -2,11 +2,11 @@ import React from "react";
 
 import { Icon } from "@chakra-ui/react";
 import {
-  MdBarChart,
   MdPerson,
   MdHome,
   MdLock,
   MdSettings,
+  MdFastfood,
 } from "react-icons/md";
 
 // Admin Imports
@@ -43,9 +43,9 @@ const routes = [
     secondary: true,
   },
   {
-    name: "Data Tables",
+    name: "Product",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdFastfood} width='20px' height='20px' color='inherit' />,
     path: "/data-tables",
     component: DataTables,
   },

@@ -20,9 +20,11 @@ async function main() {
     await mongoose.connect(process.env.MONGO_DB_URL);
     console.log("Connect to MongoDB success");
     app.use(cors());
+
     app.use(bodyParser.json({ limit: '10mb' }));
     app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
     // app.use(bodyParser.json());
+
     routes(app);
 
     //crud products
