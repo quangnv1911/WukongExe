@@ -19,7 +19,7 @@ function Category() {
         fetch(`${BACK_END_HOST}/category`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 setCategories(data);
             })
             .catch(err => {

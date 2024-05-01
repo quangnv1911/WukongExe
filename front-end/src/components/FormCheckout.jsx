@@ -28,7 +28,7 @@ function FormCheckout() {
     const [idProvince, setIdProvince] = useState("");
     const [idDistrict, setIdDistrict] = useState("");
     const [idCommune, setIdCommune] = useState("");
-    const [idVoucher, setIdVoucher] = useState("");
+    const [idVoucher, setIdVoucher] = useState(null);
     const [percentVoucher, setPercentVoucher] = useState(0);
     const [endPointAddress, setEndPointAddress] = useState('');
     useEffect(() => {
@@ -58,7 +58,7 @@ function FormCheckout() {
     const [postData, setPostData] = useState({
         customerName: '',
         customerPhone: '',
-        customerAddress: '',
+        customerAddress: 'Tự lấy',
         receiverName: '',
         receiverPhone: '',
         totalProfit: totalProf,
@@ -84,18 +84,24 @@ function FormCheckout() {
         }
         console.log(postData);
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(postData);
-        fetch(`${BACK_END_HOST}/order`, {
+        await fetch(`${BACK_END_HOST}/order`, {
             method: "POST",
             headers: { "Content-Type": "Application/JSON" },
             body: JSON.stringify(postData)
         })
-           
-        toast.success("Đặt hàng thành công!");
-        dispatch(clearProduct());
-        navigate("/");
+            .then(async response => {
+                if (response.status === 201) {
+                    toast.success("Đặt hàng thành công!");
+                    dispatch(clearProduct());
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    navigate("/");
+                } else {
+                    toast.error("Đặt hàng thất bại. Vui lòng thử lại sau.");
+                }
+            })
     };
 
 
@@ -151,7 +157,7 @@ function FormCheckout() {
             .catch(err => console.log(err.message));
     }, []);
     useEffect(() => {
-        fetch(`${BACK_END_HOST}//vouchers`)
+        fetch(`${BACK_END_HOST}/voucher`)
             .then(res => res.json())
             .then(data => setListVoucher(data))
             .catch(err => {
