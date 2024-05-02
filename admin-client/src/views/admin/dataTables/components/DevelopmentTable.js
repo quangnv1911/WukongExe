@@ -258,6 +258,9 @@ export default function DevelopmentTable(props) {
           {...modalAttr}
           isOpen={isOpen}
           onClose={onClose}
+          setListProduct={setListProduct}
+          tableData={tableData}
+          categories={categories}
         />
       </>
     </Card>
