@@ -84,10 +84,14 @@ const createOrder = async(orderData) => {
         throw new Error(error);
     }
 }
-//getAllOrder
-const getAllOrder = async () => {
+//getAllOrder with Condtion
+const getAllOrder = async (page, numberPerPage, condition) => {
     try {
-      return await Order.find();
+      const orders = await Order.find(condition)
+        .sort({createdAt: 1, _id: 1})
+        .skip((page - 1) * numberPerPage)
+        .limit(numberPerPage);
+      return orders;
     } catch (error) {
       throw new Error('Failed to fetch orders');
     }

@@ -2,6 +2,7 @@ import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Icon, Input, Modal
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { MdUpload } from 'react-icons/md';
+import { Bounce, toast } from 'react-toastify';
 import { BACK_END_HOST } from 'utils/AppConfig';
 import api from 'utils/Services';
 import Dropzone from "views/admin/dataTables/components/Dropzone.js";
@@ -18,6 +19,8 @@ const ModalTemp = (props) => {
         type,
         categories,
         oldFormValue,
+        setListProduct,
+        tableData,
         ...rest
     } = props;
     const textColorBrand = useColorModeValue("brand.500", "white");
@@ -65,7 +68,33 @@ const ModalTemp = (props) => {
 
         })
             .then(res => {
+                var addedProduct = res.data;
+                console.log('addedProduct', addedProduct);
+                // handle category and categoryId
+                for (let i = 0; i < categories.length; i++) {
+                    if (categories[i]._id === addedProduct.category) {
+                        addedProduct.category = categories[i].name;
+                        addedProduct.categoryId = categories[i]._id;
+                        break;
+                    }
+                }
+                console.log('addedProduct2', tableData);
+                setListProduct(
+                    [...tableData,
+                        addedProduct]
+                )
 
+                toast.success(`Đã thêm "${addedProduct.name}" vào danh sách sản phẩm`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                })
                 //Reset form and close modal
                 onClose();
                 setFormData({
@@ -81,9 +110,19 @@ const ModalTemp = (props) => {
             })
             .catch(error => {
                 console.log('handleAdd error', error);
+                toast.error('Có lỗi gì đó đã xảy ra!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             })
     }
-
     //handleUpdate
     const handleUpdate = () => {
         api.put(`${BACK_END_HOST}/product/${oldFormValue._id}`, {
@@ -92,6 +131,35 @@ const ModalTemp = (props) => {
 
         })
             .then(res => {
+                var updatedProduct = res.data;
+                // handle category and categoryId
+                for (let i = 0; i < categories.length; i++) {
+                    if (categories[i]._id === updatedProduct.category) {
+                        updatedProduct.category = categories[i].name;
+                        updatedProduct.categoryId = categories[i]._id;
+                        break;
+                    }
+                }
+                // update tableDate
+                const updatedProductList = tableData.map(product => {
+                    if (product._id === updatedProduct._id) {
+                        return updatedProduct;
+                    }
+                    return product;
+                })
+
+                setListProduct(updatedProductList);
+                toast.success('Cập nhật thành công', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
                 //Reset form and close modal
                 onClose();
                 setFormData({
@@ -107,6 +175,17 @@ const ModalTemp = (props) => {
             })
             .catch(error => {
                 console.log('handleUpdate error', error);
+                toast.error('Có lỗi gì đó đã xảy ra!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             })
     }
 
