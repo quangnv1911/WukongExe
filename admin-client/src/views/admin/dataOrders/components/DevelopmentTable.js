@@ -73,6 +73,9 @@ export default function DevelopmentTable(props) {
     search: ''
   });
   const [typingTimeout, setTypingTimeout] = useState(null);
+  const [modalAttr, setModalAttr] = useState({});
+  const [isChange, setIsChange] = useState(true);
+
 
   //update searchCondition
   const updateSearchCondition = (event) => {
@@ -110,6 +113,10 @@ export default function DevelopmentTable(props) {
 
   //show modal
   const showOrderDetail = (_id) => {
+    setModalAttr({
+      _id
+    })
+    setIsChange(true);
     onOpen();
   }
 
@@ -122,14 +129,14 @@ export default function DevelopmentTable(props) {
       .catch(error => {
         console.log('Load list Product error:', error);
       });
-  }, 300); 
+  }, 300);
 
   // Debounced function to call API for pagination
   const debouncedGetPagination = debounce(() => {
     api.get(`${BACK_END_HOST}/order/orderPagination?delivered=${searchCondition.delivered}&notDelivered=${searchCondition.notDelivered}&search=${searchCondition.search}`)
       .then(res => setTotalPages(res.data.totalPages))
       .catch(error => console.log('paging list order error:', error));
-  }, 300); 
+  }, 300);
 
   // Effect to fetch data based on search conditions
   useEffect(() => {
@@ -142,7 +149,7 @@ export default function DevelopmentTable(props) {
     const timeout = setTimeout(() => {
       debouncedGetData();
       debouncedGetPagination();
-    }, 300); 
+    }, 300);
 
     // Set the typing timeout
     setTypingTimeout(timeout);
@@ -151,7 +158,8 @@ export default function DevelopmentTable(props) {
     return () => clearTimeout(timeout);
   }, [searchCondition]);
 
-  return ( 
+
+  return (
     <Card
       direction='column'
       w='100%'
@@ -263,10 +271,16 @@ export default function DevelopmentTable(props) {
                     } else if (cell.column.Header === 'Hành động') {
                       data = (
                         <Flex gap='5px'>
-                          <Button onClick={() => showOrderDetail()}>
+                          <Button onClick={() => showOrderDetail(cell.row.original._id)}>
                             <Icon as={MdInfo} width='20px' height='20px' color='#00a8ff' />
                           </Button>
                         </Flex>
+                      );
+                    } else if (cell.column.Header === 'Tổng đơn(đồng)') {
+                      data = (
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value?.toLocaleString('vi-VN')}
+                        </Text>
                       );
                     } else {
                       data = (
@@ -314,6 +328,11 @@ export default function DevelopmentTable(props) {
         <ModalTemp
           isOpen={isOpen}
           onClose={onClose}
+          isChange={isChange}
+          setIsChange={setIsChange}
+          setTableData={setTableData}
+          tableData={tableData}
+          {...modalAttr}
         />
       </>
     </Card>

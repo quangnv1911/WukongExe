@@ -8,4 +8,6 @@ router.get('/', orderController.getAllOrder);
 router.get('/static/:year', orderController.getRevenueAndProfitByYear);
 router.post('/', orderController.createOrder);
 router.get('/orderPagination', orderController.getPagination);
+router.post('/update', orderController.updateOrder);
+
 export default router;
