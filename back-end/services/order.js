@@ -88,7 +88,7 @@ const createOrder = async(orderData) => {
 const getAllOrder = async (page, numberPerPage, condition) => {
     try {
       const orders = await Order.find(condition)
-        .sort({createdAt: 1, _id: 1})
+        .sort({createdAt: -1, _id: 1})
         .skip((page - 1) * numberPerPage)
         .limit(numberPerPage);
       return orders;
@@ -105,11 +105,21 @@ const getOrderById = async () => {
     }
 };
 
+//updateOrder
+const updateOrder = async (_id, order) => {
+    try {
+      const orderUpdate = await Order.findOneAndUpdate({_id: _id}, order);
+      return orderUpdate;
+    } catch (error) {
+      throw new Error('Service: updateOrder error', error);
+    }
+};
 
 export default {
     dashboardStatic,
     getRevenueProfitByYear,
     createOrder,
     getAllOrder,
-    getOrderById
+    getOrderById,
+    updateOrder
 }

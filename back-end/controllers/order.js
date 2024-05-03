@@ -168,10 +168,31 @@ const getOrderById = async (req, res) => {
   }
 }
 
+const updateOrder = async (req, res) => {
+  try {
+    const { id, order } = req.body;
+
+    if (!id || !order) {
+      return res.status(200).json({
+        messages: 'Error'
+      })
+    }
+
+    const orderUpdate = await orderService.updateOrder(id, order);
+    return res.status(200).json(orderUpdate);
+
+  } catch (error) {
+    res.status(500).json({
+      messages: error.toString()
+    })
+  }
+}
+
 export default {
   getRevenueAndProfitByYear,
   createOrder,
   getAllOrder,
   getOrderById,
-  getPagination
+  getPagination,
+  updateOrder
 }
