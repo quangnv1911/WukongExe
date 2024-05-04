@@ -6,11 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, clearProduct, subProduct } from '../redux/ProductReducer';
 import emptyCart from '../assets/emptycart.png'
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 function ShoppingCartModal({ show, handleClose }) {
     const listCart = useSelector(state => state.product.products);
     const total = listCart.reduce((acc, product) => {
         return acc + (product.quantity * product.sellPrice - (product.sellPrice * (product.discount / 100)));
-    }, 0).toFixed(3);
+    }, 0).toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 3,
+    });
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
     const [quantities, setQuantities] = useState([]);
@@ -26,10 +30,12 @@ function ShoppingCartModal({ show, handleClose }) {
         // console.log(quantity);
         const aProduct = { ...p, quantity }
         dispatch(addProduct(aProduct));
+        toast.success('Đã thêm sản phẩm vào giỏ hàng!');
     }
     const handleSubProduct = (p) => {
         const aProduct = { ...p };
         dispatch(subProduct(aProduct));
+        toast.success('Đã xoá sản phẩm khỏi giỏ hàng!');
     }
 
     const handleChangeQuantity = (productId, newQuantity) => {
@@ -43,6 +49,7 @@ function ShoppingCartModal({ show, handleClose }) {
     }
     const handleDeleteCart = () => {
         dispatch(clearProduct());
+        toast.success('Đã xoá tất cả sản phẩm khỏi giỏ hàng!');
     }
     return (
         <Modal className='mt-5' show={show} onHide={handleClose}>
@@ -89,7 +96,10 @@ function ShoppingCartModal({ show, handleClose }) {
                                                     onBlur={(e) => e.target.classList.remove('no-outline')}
                                                 />
                                                 <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={24} /></td>
-                                            <td><p>{(product.sellPrice - (product.sellPrice * (product.discount / 100)) * product.quantity).toFixed(3)}</p></td>
+                                            <td><p>{(product.sellPrice - (product.sellPrice * (product.discount / 100))).toLocaleString('en-US', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 3,
+                                            })}</p></td>
                                         </tr>
                                     );
                                 })}
@@ -102,7 +112,7 @@ function ShoppingCartModal({ show, handleClose }) {
             </Modal.Body>
             <Modal.Footer style={{ justifyContent: 'space-between' }}>
                 {listCart.length === 0 ?
-                    <div style={{ marginLeft: 'auto' }}> 
+                    <div style={{ marginLeft: 'auto' }}>
                         <Link to={'/'} className='btn btn-success' onClick={handleClose}>Trở lại</Link>
                     </div> :
                     <>

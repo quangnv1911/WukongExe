@@ -398,7 +398,10 @@ function FormCheckout() {
                                                         />
                                                         <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={20} />
                                                     </div></td>
-                                                    <td className='text-center'><p>{((product.sellPrice - (product.sellPrice * (product.discount / 100))).toFixed(3) * product.quantity).toFixed(3)}</p></td>
+                                                    <td className='text-center'><p>{((product.sellPrice - (product.sellPrice * (product.discount / 100))) * product.quantity).toLocaleString('en-US', {
+                                                        minimumFractionDigits: 0,
+                                                        maximumFractionDigits: 3,
+                                                    })}</p></td>
                                                 </tr>
                                             );
                                         })}
@@ -410,7 +413,10 @@ function FormCheckout() {
                                         <tr className='table-success'>
                                             <td colSpan={2}>Tạm tính ({totalQuantity})</td>
                                             <td></td>
-                                            <td className='text-center'>{parseFloat(total).toFixed(3)}</td>
+                                            <td className='text-center'>{parseFloat(total).toLocaleString("en-US", {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 3
+                                            })}</td>
                                         </tr>
                                     </tbody>
                                 </div>
@@ -430,7 +436,10 @@ function FormCheckout() {
                                             <p className='mx-2'>Chiếu khấu khuyến mãi</p>
                                         </div>
                                         <div className='col-md-4'>
-                                            <div className='d-flex justify-content-center'><span>-{discountTotal.toFixed(3)}</span></div>
+                                            <div className='d-flex justify-content-center'><span>-{discountTotal.toLocaleString("en-US", {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 3
+                                            })}</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -443,7 +452,10 @@ function FormCheckout() {
                                             <h5 className='mx-2'>Thành tiền</h5>
                                         </div>
                                         <div className='col-md-4'>
-                                            <h5 className='mx-2 text-center'>{parseFloat(totalEnd).toFixed(3)} đ</h5>
+                                            <h5 className='mx-2 text-center'>{parseFloat(totalEnd).toLocaleString("en-US", {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 3
+                                            })} đ</h5>
                                         </div>
                                     </div>
                                     <div className='col-sm-12'>
