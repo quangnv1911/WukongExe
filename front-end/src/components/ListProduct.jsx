@@ -96,7 +96,7 @@ function ListProduct() {
                 ) : (
                   <div className='row'>
                     <div className='row'>
-                      {listProduct.filter(p => !p.isCombo && (!categoryId || p.category.toString() === categoryId) && (!searchProduct || p.name.toLowerCase().includes(searchProduct.toLowerCase()))).map(p => {
+                      {listProduct.filter(p => !p.isCombo && (!categoryId || p.categoryId.toString() === categoryId) && (!searchProduct || p.name.toLowerCase().includes(searchProduct.toLowerCase()))).map(p => {
                         const startQuantity = 1;
                         const isInCart = listCart.some(c => c._id === p._id);
                         const quantityInCart = quantities.find(item => item._id === p._id)?.quantity;
@@ -197,7 +197,7 @@ function ListProduct() {
             <Loading />
             :
             <div className='row w-100' >
-              {listProduct.filter(p => p.isCombo && (!categoryId || p.category.toString() === categoryId) && (!searchProduct || p.name.toLowerCase().includes(searchProduct.toLowerCase()))).map((p, index) => {
+              {listProduct.filter(p => p.isCombo && (!categoryId || p.categoryId.toString() === categoryId) && (!searchProduct || p.name.toLowerCase().includes(searchProduct.toLowerCase()))).map((p, index) => {
                 const startQuantity = 1;
                 const isInCart = listCart.some(c => c._id === p._id);
                 const quantityInCart = quantities.find(item => item._id === p._id)?.quantity;
