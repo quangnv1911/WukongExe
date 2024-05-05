@@ -119,7 +119,7 @@ export default function UserReports() {
             />
           }
           name='Doanh thu'
-          value={`$${revenue}`}
+          value={`${Math.round(revenue).toLocaleString('vi-VN')} đ`}
         />
         <MiniStatistics
           startContent={
@@ -133,8 +133,8 @@ export default function UserReports() {
             />
           }
           name='Lợi nhuận'
-          growth='+23%'
-          value={`$${profit}`}
+          // growth='+23%'
+          value={`${Math.round(profit).toLocaleString('vi-VN')} đ`}
         />
         <MiniStatistics
           startContent={
@@ -147,7 +147,7 @@ export default function UserReports() {
               }
             />
           }
-          growth='+23%'
+          // growth='+23%'
           name='Số lượng đơn hàng'
           value={`${numberOrder}`} />
         {/* <MiniStatistics
@@ -216,20 +216,20 @@ export default function UserReports() {
         </SimpleGrid>
         {/* <WeeklyRevenue /> */}
       </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
+      {/* <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
         <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
           <DailyTraffic />
-          {/* <PieCard staticOfProduct={ staticOfProduct } sum={revenue}/> */}
+          <PieCard staticOfProduct={ staticOfProduct } sum={revenue}/>
         </SimpleGrid>
-      </SimpleGrid>
+      </SimpleGrid> */}
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <ComplexTable
+        {/* <ComplexTable
           columnsData={columnsDataComplex}
           tableData={tableDataComplex}
-        />
+        /> */}
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <Tasks />
+          {/* <Tasks /> */}
           <MiniCalendar h='100%' minW='100%' selectRange={false} />
         </SimpleGrid>
       </SimpleGrid>
