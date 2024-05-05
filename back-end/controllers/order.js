@@ -24,7 +24,15 @@ const getRevenueAndProfitByYear = async (req, res) => {
 const createOrder = async (req, res) => {
   try {
     const { listCart, ...aOrder } = req.body;
-    const order = await orderService.createOrder(aOrder);
+    var { voucher } = aOrder ;
+    if(voucher === "") 
+      voucher = null;
+
+    const order = await orderService.createOrder({
+      ...aOrder,
+      voucher
+    });
+    
     const listCartVer2 = listCart.map(p => ({
       product: p._id,
       order: order._id,
