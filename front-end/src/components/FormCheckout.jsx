@@ -30,7 +30,7 @@ function FormCheckout() {
     const [idProvince, setIdProvince] = useState("");
     const [idDistrict, setIdDistrict] = useState("");
     const [idCommune, setIdCommune] = useState("");
-    const [idVoucher, setIdVoucher] = useState("");
+    const [idVoucher, setIdVoucher] = useState(null);
     const [percentVoucher, setPercentVoucher] = useState(0);
     const [endPointAddress, setEndPointAddress] = useState('');
     const [show, setShow] = useState(false);
@@ -63,7 +63,7 @@ function FormCheckout() {
     const [postData, setPostData] = useState({
         customerName: '',
         customerPhone: '',
-        customerAddress: '',
+        customerAddress: 'Tự lấy',
         receiverName: '',
         receiverPhone: '',
         totalProfit: totalProf,
@@ -89,7 +89,7 @@ function FormCheckout() {
         }
         console.log(postData);
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         handleShow();
         // console.log(postData);
@@ -156,7 +156,7 @@ function FormCheckout() {
             .catch(err => console.log(err.message));
     }, []);
     useEffect(() => {
-        fetch(`${BACK_END_HOST}//vouchers`)
+        fetch(`${BACK_END_HOST}/voucher`)
             .then(res => res.json())
             .then(data => setListVoucher(data))
             .catch(err => {
