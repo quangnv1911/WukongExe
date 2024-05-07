@@ -39,7 +39,8 @@
     "stylis-plugin-rtl": "2.0.2",
     "suneditor-react": "^3.6.1",
     "sweetalert2": "^6.6.1",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -74,5 +75,4 @@
   "devDependencies": {
     "gh-pages": "^3.2.3"
   }
-  
 }

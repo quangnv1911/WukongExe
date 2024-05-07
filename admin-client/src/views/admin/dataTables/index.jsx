@@ -1,12 +1,15 @@
 // Chakra imports
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
+import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
 import {
   columnsDataDevelopment,
+  columnsDataColumns 
 } from "views/admin/dataTables/variables/columnsData";
 import React, { useEffect, useState } from "react";
 import api from "utils/Services";
 import { BACK_END_HOST } from "utils/AppConfig";
+import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
 
 export default function Settings() {
 
@@ -33,7 +36,7 @@ export default function Settings() {
           tableData={listProduct}
           setListProduct={setListProduct}
         />
-        {/* <SimpleGrid
+        <SimpleGrid
           mb='20px'
           columns={{ sm: 1, md: 2 }}
           spacing={{ base: "20px", xl: "20px" }}>
@@ -41,11 +44,11 @@ export default function Settings() {
             columnsData={columnsDataColumns}
             tableData={tableDataColumns}
           />
-          <ComplexTable
+          {/* <ComplexTable
             columnsData={columnsDataComplex}
             tableData={tableDataComplex}
-          />
-        </SimpleGrid> */}
+          /> */}
+        </SimpleGrid>
 
         {/* <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} /> */}
       </SimpleGrid>
