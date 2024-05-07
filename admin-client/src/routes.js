@@ -8,6 +8,7 @@ import {
   MdSettings,
   MdFastfood,
   MdShoppingCart,
+  MdBarChart,
 } from "react-icons/md";
 
 // Admin Imports
@@ -16,7 +17,7 @@ import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 import DataOrders from "views/admin/dataOrders";
-
+import Voucher from "views/admin/vouchers";
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 
@@ -49,6 +50,13 @@ const routes = [
     icon: <Icon as={MdFastfood} width='20px' height='20px' color='inherit' />,
     path: "/data-tables",
     component: DataTables,
+  },
+  {
+    name: "Vouchers",
+    layout: "/admin",
+    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    path: "/voucher",
+    component: Voucher,
   },
   {
     name: "Order",
