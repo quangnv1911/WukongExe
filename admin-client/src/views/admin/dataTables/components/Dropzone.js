@@ -9,13 +9,16 @@ function Dropzone(props) {
     const bg = useColorModeValue("gray.100", "navy.700");
     const borderColor = useColorModeValue("secondaryGray.100", "whiteAlpha.100");
     const buttonRef = useRef(null);
-    const [previewImage, setPreviewImage] = useState(image ? image : null);
+    const [previewImage, setPreviewImage] = useState(image ? image.value : null);
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
         const reader = new FileReader();
 
         reader.onload = () => {
-            setImage(reader.result);
+            setImage({
+                value: reader.result,
+                file: acceptedFiles[0]
+            });
             buttonRef.current.style.display = 'none'
             setPreviewImage(reader.result);
         };

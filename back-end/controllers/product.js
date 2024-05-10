@@ -10,7 +10,28 @@ const getAllProduct = async (req, res, next) => {
 
 const createProduct = async (req, res, next) => {
     try {
-        const product = await productService.createProduct(req.body);
+        const { 
+            name,
+            importPrice,
+            sellPrice,
+            discount,
+            discountTime,
+            isCombo,
+            subdescription,
+            category
+        } = req.body;
+        const image = req.file.path;
+        const product = await productService.createProduct({ 
+            name,
+            importPrice,
+            sellPrice,
+            discount,
+            discountTime,
+            isCombo: Boolean(isCombo),
+            subdescription,
+            category,
+            image: `${process.env.BACK_END_HOST}/${image}`
+        });
         res.status(201).json(product);
     } catch (error) {
         next(error);
@@ -20,7 +41,40 @@ const createProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
     try {
         const { productId } = req.params;
-        const product = await productService.updateProduct(productId, req.body);
+        
+        const {
+            name,
+            importPrice,
+            sellPrice,
+            discount,
+            discountTime,
+            isCombo,
+            subdescription,
+            category
+        } =  req.body;
+        var updateProduct2 = {
+            name,
+            importPrice,
+            sellPrice,
+            discount,
+            discountTime,
+            isCombo: Boolean(isCombo),
+            subdescription,
+            category
+        }
+        if(updateProduct2.discountTime === 'null') {
+            updateProduct2.discountTime = null;
+        }
+
+        if(updateProduct2.subdescription === 'undefined') {
+            updateProduct2.subdescription = null;
+        }
+        
+        if(req.file) {
+            updateProduct2.image = `${process.env.BACK_END_HOST}/${req.file.path}`
+        }
+
+        const product = await productService.updateProduct(productId, updateProduct2);
         res.status(200).json(product);
     } catch (error) {
         next(error);
