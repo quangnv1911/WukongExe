@@ -29,7 +29,7 @@ const productSchema = new Schema({
         ref: Category,
         required: true
     },
-    subcription: {
+    subdescription: {
         type: String,
     },
     isCombo: {

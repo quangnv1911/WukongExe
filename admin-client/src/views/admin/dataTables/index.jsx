@@ -36,7 +36,7 @@ export default function Settings() {
           tableData={listProduct}
           setListProduct={setListProduct}
         />
-        <SimpleGrid
+        {/* <SimpleGrid
           mb='20px'
           columns={{ sm: 1, md: 2 }}
           spacing={{ base: "20px", xl: "20px" }}>
@@ -44,11 +44,11 @@ export default function Settings() {
             columnsData={columnsDataColumns}
             tableData={tableDataColumns}
           />
-          {/* <ComplexTable
+          <ComplexTable
             columnsData={columnsDataComplex}
             tableData={tableDataComplex}
-          /> */}
-        </SimpleGrid>
+          />
+        </SimpleGrid> */}
 
         {/* <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} /> */}
       </SimpleGrid>

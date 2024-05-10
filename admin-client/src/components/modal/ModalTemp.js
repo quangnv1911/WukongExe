@@ -37,8 +37,10 @@ const ModalTemp = (props) => {
     });
 
     useEffect(() => {
-        if (oldFormValue) {
-            setImage(oldFormValue.image)
+        if (oldFormValue && isOpen) {
+            setImage({
+                value: oldFormValue.image
+            })
             setFormData({
                 name: oldFormValue.name,
                 importPrice: oldFormValue.importPrice,
@@ -50,22 +52,40 @@ const ModalTemp = (props) => {
                 category: oldFormValue.categoryId,
             })
         }
-    }, [oldFormValue])
+    }, [oldFormValue, isOpen])
     //handle input formDate change
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        const { name, value, checked } = event.target;
+        if (checked) {
+            setFormData({
+                ...formData,
+                [name]: checked
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     //handleAdd
     const handleAdd = () => {
-        api.post(`${BACK_END_HOST}/product`, {
-            image,
-            ...formData
+        const formDataSend = new FormData();
+        formDataSend.append('image', image.file);
+        formDataSend.append('name', formData.name);
+        formDataSend.append('importPrice', formData.importPrice);
+        formDataSend.append('sellPrice', formData.sellPrice);
+        formDataSend.append('discount', formData.discount);
+        formDataSend.append('discountTime', formData.discountTime);
+        formDataSend.append('isCombo', formData.isCombo);
+        formDataSend.append('subdescription', formData.subdescription);
+        formDataSend.append('category', formData.category);
 
+        api.post(`${BACK_END_HOST}/product`, formDataSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
             .then(res => {
                 var addedProduct = res.data;
@@ -102,7 +122,7 @@ const ModalTemp = (props) => {
                     importPrice: 0,
                     sellPrice: 0,
                     discount: 0,
-                    discountDate: '',
+                    discountTime: '',
                     isCombo: false,
                     subdescription: ''
                 });
@@ -125,10 +145,30 @@ const ModalTemp = (props) => {
     }
     //handleUpdate
     const handleUpdate = () => {
-        api.put(`${BACK_END_HOST}/product/${oldFormValue._id}`, {
-            image,
-            ...formData
+        const formDataSend = new FormData();
+        console.log('image', formData);
+        console.log('image.file', image.file);
 
+        if (image.file) {
+            console.log('vao');
+            formDataSend.append('image', image.file);
+        }
+        formDataSend.append('name', formData.name);
+        formDataSend.append('importPrice', formData.importPrice);
+        formDataSend.append('sellPrice', formData.sellPrice);
+        formDataSend.append('discount', formData.discount);
+        formDataSend.append('discountTime', formData.discountTime);
+        formDataSend.append('isCombo', formData.isCombo);
+        formDataSend.append('subdescription', formData.subdescription);
+        formDataSend.append('category', formData.category);
+
+        formDataSend.forEach((value, key) => {
+            console.log(key, value); // In ra khóa và giá trị
+        });
+        api.put(`${BACK_END_HOST}/product/${oldFormValue._id}`, formDataSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
             .then(res => {
                 var updatedProduct = res.data;
@@ -167,7 +207,7 @@ const ModalTemp = (props) => {
                     importPrice: 0,
                     sellPrice: 0,
                     discount: 0,
-                    discountDate: '',
+                    discountTime: '',
                     isCombo: false,
                     subdescription: ''
                 });
@@ -195,7 +235,7 @@ const ModalTemp = (props) => {
             importPrice: 0,
             sellPrice: 0,
             discount: 0,
-            discountDate: '',
+            discountTime: '',
             isCombo: false,
             subdescription: ''
         });
@@ -287,7 +327,7 @@ const ModalTemp = (props) => {
                                     colorScheme='green'
                                     name="isCombo"
                                     onChange={handleInputChange}
-                                    value={formData?.isCombo}
+                                    defaultChecked={formData?.isCombo}
                                 >
                                     Có
                                 </Checkbox>
