@@ -1,15 +1,15 @@
 import express from 'express';
 import productController from "../controllers/product.js";
 import multer from 'multer'
+import cloudinary from '../configs/cloudinary.js';
+import { CloudinaryStorage } from 'multer-storage-cloudinary'
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        return cb(null, "./public/products")
-    },
-    filename: function (req, file, cb) {
-        return cb(null, `${Date.now()}_${file.originalname}`)
-    }
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    folder: 'BEARPO_PRODUCT',
+    allowedFormats: ['jpg', 'png', 'jpeg']
 })
+
 const upload = multer({ storage });
 
 const router = express.Router();

@@ -20,6 +20,7 @@ const createProduct = async (req, res, next) => {
             subdescription,
             category
         } = req.body;
+        console.log('req.file', req.file);
         const image = req.file.path;
         const product = await productService.createProduct({ 
             name,
@@ -30,7 +31,7 @@ const createProduct = async (req, res, next) => {
             isCombo: Boolean(isCombo),
             subdescription,
             category,
-            image: `${process.env.BACK_END_HOST}/${image}`
+            image: image
         });
         res.status(201).json(product);
     } catch (error) {
@@ -69,9 +70,9 @@ const updateProduct = async (req, res, next) => {
         if(updateProduct2.subdescription === 'undefined') {
             updateProduct2.subdescription = null;
         }
-        
+        console.log('req.file', req.file);
         if(req.file) {
-            updateProduct2.image = `${process.env.BACK_END_HOST}/${req.file.path}`
+            updateProduct2.image = req.file.path;
         }
 
         const product = await productService.updateProduct(productId, updateProduct2);
