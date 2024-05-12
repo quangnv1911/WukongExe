@@ -1,6 +1,6 @@
 import Order from "../models/Order.js";
 import { orderService, orderDetailService } from "../services/index.js";
-
+import TelegramBot from '../bot/telegram.js'
 
 const getRevenueAndProfitByYear = async (req, res) => {
   try {
@@ -48,6 +48,8 @@ const createOrder = async (req, res) => {
         return orderDetail;
       })
     );
+
+    TelegramBot.sendNewOrderMessage(order);
     return res.status(201).json(order);
   } catch (error) {
     res.status(500).json({

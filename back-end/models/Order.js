@@ -37,6 +37,10 @@ const orderSchema = new Schema({
     },
     note: {
         type: String,
+    },
+    shippingType: {
+        type: String,
+        default: 'Giao hàng tận nơi'
     }
 }, {
     timestamps: true
