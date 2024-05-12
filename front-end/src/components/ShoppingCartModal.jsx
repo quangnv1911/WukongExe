@@ -79,23 +79,27 @@ function ShoppingCartModal({ show, handleClose }) {
                                             <td>{index + 1}</td>
                                             <td><img src={product.image} alt={product.name} style={{ width: '80px', height: '80px', marginRight: '10px' }} /></td>
                                             <td><p>{product.name}</p></td>
-                                            <td><GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#057130' size={24} />
-                                                <input
-                                                    onChange={(e) => handleChangeQuantity(product._id, parseInt(e.target.value))}
-                                                    type='number'
-                                                    value={quantityInCart}
-                                                    style={{ width: "40%", height: "24px" }}
-                                                    className='px-1 text-center border-0 border-bottom'
-                                                    onKeyDown={(e) => {
-                                                        const value = e.target.value;
-                                                        if (e.key === '-' || (value === '' && e.key === '0')) {
-                                                            e.preventDefault();
-                                                        }
-                                                    }}
-                                                    onFocus={(e) => e.target.classList.add('no-outline')}
-                                                    onBlur={(e) => e.target.classList.remove('no-outline')}
-                                                />
-                                                <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={24} /></td>
+                                            <td>
+                                                <div className="d-flex align-items-center">
+                                                    <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#057130' size={24} />
+                                                    <input
+                                                        onChange={(e) => handleChangeQuantity(product._id, parseInt(e.target.value))}
+                                                        type='number'
+                                                        value={quantityInCart}
+                                                        style={{ width: "40%", height: "24px" }}
+                                                        className='px-0 text-center border-0 border-bottom'
+                                                        onKeyDown={(e) => {
+                                                            const value = e.target.value;
+                                                            if (e.key === '-' || (value === '' && e.key === '0')) {
+                                                                e.preventDefault();
+                                                            }
+                                                        }}
+                                                        onFocus={(e) => e.target.classList.add('no-outline')}
+                                                        onBlur={(e) => e.target.classList.remove('no-outline')}
+                                                    />
+                                                    <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={24} />
+                                                </div>
+                                            </td>
                                             <td><p>{(product.sellPrice - (product.sellPrice * (product.discount / 100))).toLocaleString('en-US', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 3,
