@@ -1,0 +1,80 @@
+[
+  {
+    "name":"Marketplace",
+    "image": "images", 
+    "category": "Chua",
+    "importPrice": 75000,  
+    "sellPrice": 100000,
+    "discount": "5%",  
+    "discountTime": "23-05-2024",
+    "isCombo": true,  
+    "action": "Delete"
+  },
+  {
+    "name":"Marketplace",
+    "image": "images", 
+    "category": "Chua",
+    "importPrice": 75000,  
+    "sellPrice": 100000,
+    "discount": "5%",  
+    "discountTime": "23-05-2024",
+    "isCombo": true,  
+    "action": "Delete"
+  },
+  {
+    "name":"Marketplace",
+    "image": "images", 
+    "category": "Chua",
+    "importPrice": 75000,  
+    "sellPrice": 100000,
+    "discount": "5%",  
+    "discountTime": "23-05-2024",
+    "isCombo": true,  
+    "action": "Delete"
+  },
+  {
+    "name":"Marketplace",
+    "image": "images", 
+    "category": "Chua",
+    "importPrice": 75000,  
+    "sellPrice": 100000,
+    "discount": "5%",  
+    "discountTime": "23-05-2024",
+    "isCombo": true,  
+    "action": "Delete"
+  },
+  {
+    "name":"Marketplace",
+    "image": "images", 
+    "category": "Chua",
+    "importPrice": 75000,  
+    "sellPrice": 100000,
+    "discount": "5%",  
+    "discountTime": "23-05-2024",
+    "isCombo": true,  
+    "action": "Delete"
+  },
+  {
+    "name":"Marketplace",
+    "image": "images", 
+    "category": "Chua",
+    "importPrice": 75000,  
+    "sellPrice": 100000,
+    "discount": "5%",  
+    "discountTime": "23-05-2024",
+    "isCombo": true,  
+    "action": "Delete"
+  },
+  {
+    "name":"Marketplace",
+    "image": "images", 
+    "category": "Chua",
+    "importPrice": 75000,  
+    "sellPrice": 100000,
+    "discount": "5%",  
+    "discountTime": "23-05-2024",
+    "isCombo": true,  
+    "action": "Delete"
+  }
+  
+]

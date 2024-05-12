@@ -63,7 +63,22 @@ const groupProduct = (products) => {
 const createOrderDetail = async(orderDetailData) => {
     try {
         const orderDetail = await OrderDetail.create(orderDetailData);
-        console.log("here!");
+        return orderDetail;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+const getOrderDetailById = async(id) => {
+    try {
+        const orderDetail = await OrderDetail.find({
+            order: id
+        }).populate({
+            path: 'order',
+            populate: {
+                path: 'voucher',
+            }
+        }).populate('product', 'name');
         return orderDetail;
     } catch (error) {
         throw new Error(error);
@@ -73,4 +88,5 @@ const createOrderDetail = async(orderDetailData) => {
 export default {
     ratioRevenueAndProfit,
     createOrderDetail,
+    getOrderDetailById
 }

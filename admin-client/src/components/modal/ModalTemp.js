@@ -2,6 +2,7 @@ import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Icon, Input, Modal
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { MdUpload } from 'react-icons/md';
+import { Bounce, toast } from 'react-toastify';
 import { BACK_END_HOST } from 'utils/AppConfig';
 import api from 'utils/Services';
 import Dropzone from "views/admin/dataTables/components/Dropzone.js";
@@ -18,6 +19,8 @@ const ModalTemp = (props) => {
         type,
         categories,
         oldFormValue,
+        setListProduct,
+        tableData,
         ...rest
     } = props;
     const textColorBrand = useColorModeValue("brand.500", "white");
@@ -34,8 +37,10 @@ const ModalTemp = (props) => {
     });
 
     useEffect(() => {
-        if (oldFormValue) {
-            setImage(oldFormValue.image)
+        if (oldFormValue && isOpen) {
+            setImage({
+                value: oldFormValue.image
+            })
             setFormData({
                 name: oldFormValue.name,
                 importPrice: oldFormValue.importPrice,
@@ -47,25 +52,69 @@ const ModalTemp = (props) => {
                 category: oldFormValue.categoryId,
             })
         }
-    }, [oldFormValue])
+    }, [oldFormValue, isOpen])
     //handle input formDate change
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+        const { name, value, checked } = event.target;
+        if (checked) {
+            setFormData({
+                ...formData,
+                [name]: checked
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     //handleAdd
     const handleAdd = () => {
-        api.post(`${BACK_END_HOST}/product`, {
-            image,
-            ...formData
+        const formDataSend = new FormData();
+        formDataSend.append('image', image.file);
+        formDataSend.append('name', formData.name);
+        formDataSend.append('importPrice', formData.importPrice);
+        formDataSend.append('sellPrice', formData.sellPrice);
+        formDataSend.append('discount', formData.discount);
+        formDataSend.append('discountTime', formData.discountTime);
+        formDataSend.append('isCombo', formData.isCombo);
+        formDataSend.append('subdescription', formData.subdescription);
+        formDataSend.append('category', formData.category);
 
+        api.post(`${BACK_END_HOST}/product`, formDataSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
             .then(res => {
+                var addedProduct = res.data;
+                console.log('addedProduct', addedProduct);
+                // handle category and categoryId
+                for (let i = 0; i < categories.length; i++) {
+                    if (categories[i]._id === addedProduct.category) {
+                        addedProduct.category = categories[i].name;
+                        addedProduct.categoryId = categories[i]._id;
+                        break;
+                    }
+                }
+                console.log('addedProduct2', tableData);
+                setListProduct(
+                    [...tableData,
+                        addedProduct]
+                )
 
+                toast.success(`Đã thêm "${addedProduct.name}" vào danh sách sản phẩm`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                })
                 //Reset form and close modal
                 onClose();
                 setFormData({
@@ -73,7 +122,7 @@ const ModalTemp = (props) => {
                     importPrice: 0,
                     sellPrice: 0,
                     discount: 0,
-                    discountDate: '',
+                    discountTime: '',
                     isCombo: false,
                     subdescription: ''
                 });
@@ -81,17 +130,76 @@ const ModalTemp = (props) => {
             })
             .catch(error => {
                 console.log('handleAdd error', error);
+                toast.error('Có lỗi gì đó đã xảy ra!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             })
     }
-
     //handleUpdate
     const handleUpdate = () => {
-        api.put(`${BACK_END_HOST}/product/${oldFormValue._id}`, {
-            image,
-            ...formData
+        const formDataSend = new FormData();
+        console.log('image', formData);
+        console.log('image.file', image.file);
 
+        if (image.file) {
+            console.log('vao');
+            formDataSend.append('image', image.file);
+        }
+        formDataSend.append('name', formData.name);
+        formDataSend.append('importPrice', formData.importPrice);
+        formDataSend.append('sellPrice', formData.sellPrice);
+        formDataSend.append('discount', formData.discount);
+        formDataSend.append('discountTime', formData.discountTime);
+        formDataSend.append('isCombo', formData.isCombo);
+        formDataSend.append('subdescription', formData.subdescription);
+        formDataSend.append('category', formData.category);
+
+        formDataSend.forEach((value, key) => {
+            console.log(key, value); // In ra khóa và giá trị
+        });
+        api.put(`${BACK_END_HOST}/product/${oldFormValue._id}`, formDataSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
             .then(res => {
+                var updatedProduct = res.data;
+                // handle category and categoryId
+                for (let i = 0; i < categories.length; i++) {
+                    if (categories[i]._id === updatedProduct.category) {
+                        updatedProduct.category = categories[i].name;
+                        updatedProduct.categoryId = categories[i]._id;
+                        break;
+                    }
+                }
+                // update tableDate
+                const updatedProductList = tableData.map(product => {
+                    if (product._id === updatedProduct._id) {
+                        return updatedProduct;
+                    }
+                    return product;
+                })
+
+                setListProduct(updatedProductList);
+                toast.success('Cập nhật thành công', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
                 //Reset form and close modal
                 onClose();
                 setFormData({
@@ -99,7 +207,7 @@ const ModalTemp = (props) => {
                     importPrice: 0,
                     sellPrice: 0,
                     discount: 0,
-                    discountDate: '',
+                    discountTime: '',
                     isCombo: false,
                     subdescription: ''
                 });
@@ -107,6 +215,17 @@ const ModalTemp = (props) => {
             })
             .catch(error => {
                 console.log('handleUpdate error', error);
+                toast.error('Có lỗi gì đó đã xảy ra!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             })
     }
 
@@ -116,7 +235,7 @@ const ModalTemp = (props) => {
             importPrice: 0,
             sellPrice: 0,
             discount: 0,
-            discountDate: '',
+            discountTime: '',
             isCombo: false,
             subdescription: ''
         });
@@ -208,7 +327,7 @@ const ModalTemp = (props) => {
                                     colorScheme='green'
                                     name="isCombo"
                                     onChange={handleInputChange}
-                                    value={formData?.isCombo}
+                                    defaultChecked={formData?.isCombo}
                                 >
                                     Có
                                 </Checkbox>

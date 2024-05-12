@@ -23,19 +23,27 @@ const dashboardStatic = async (req, res) => {
         })
     }
 }
-// const creatOrderDetail = async () => {
-//     try {
-//         const { listCart, ...aOrder } = req.body;
-//         console.log(aOrder);
-//         const order = await orderService.createOrder(aOrder);
-//         return res.status(201).json({});
-//     } catch (error) {
-//         res.status(500).json({
-//             error: error.toString()
-//         })
-//     }
-// }
+
+const getOrderDetailById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id){
+            return res.status(200).json({
+                messages: 'Error'
+            })
+        }
+
+        const ratioRevenueAndProfit = await orderDetailService.getOrderDetailById(id);
+        return res.status(200).json(ratioRevenueAndProfit);
+    } catch (error) {
+        res.status(500).json({
+            messages: error.toString()
+        })
+    }
+}
 
 export default {
-    dashboardStatic
+    dashboardStatic,
+    getOrderDetailById
 }

@@ -13,6 +13,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import { ADDRESS_HOST, BACK_END_HOST } from '../utils/AppConfig';
 import Modal from 'react-bootstrap/Modal';
 import toast, { Toaster } from 'react-hot-toast';
+import QrModal from './QrModal';
+import { v4 as uuidv4 } from 'uuid';
 
 function FormCheckout() {
 
@@ -31,6 +33,9 @@ function FormCheckout() {
     const [idVoucher, setIdVoucher] = useState(null);
     const [percentVoucher, setPercentVoucher] = useState(0);
     const [endPointAddress, setEndPointAddress] = useState('');
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => setShow(true);
     useEffect(() => {
         const provinceName = provinces.find(p => p.idProvince === idProvince)?.name || '';
 
@@ -86,22 +91,16 @@ function FormCheckout() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(postData);
-        await fetch(`${BACK_END_HOST}/order`, {
-            method: "POST",
-            headers: { "Content-Type": "Application/JSON" },
-            body: JSON.stringify(postData)
-        })
-            .then(async response => {
-                if (response.status === 201) {
-                    toast.success("Đặt hàng thành công!");
-                    dispatch(clearProduct());
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    navigate("/");
-                } else {
-                    toast.error("Đặt hàng thất bại. Vui lòng thử lại sau.");
-                }
-            })
+        handleShow();
+        // console.log(postData);
+        // fetch(`${BACK_END_HOST}/order`, {
+        //     method: "POST",
+        //     headers: { "Content-Type": "Application/JSON" },
+        //     body: JSON.stringify(postData)
+        // })
+        // toast.success("Đặt hàng thành công!");
+        // dispatch(clearProduct());
+        // navigate("/");
     };
 
 
@@ -471,6 +470,13 @@ function FormCheckout() {
                         <p><LuCopyright /> Copyright 2008 - 2024</p>
                     </div>
                 </div>
+                <QrModal
+                    show={show}
+                    setShow={setShow}
+                    total={totalEnd}
+                    uuid={uuidv4()}
+                    postData={postData}
+                />
             </div>
         </div>
     );

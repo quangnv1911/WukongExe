@@ -58,7 +58,7 @@ export default function DevelopmentTable(props) {
     prepareRow,
     initialState,
   } = tableInstance;
-  initialState.pageSize = 11;
+  initialState.pageSize = 99;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -258,6 +258,9 @@ export default function DevelopmentTable(props) {
           {...modalAttr}
           isOpen={isOpen}
           onClose={onClose}
+          setListProduct={setListProduct}
+          tableData={tableData}
+          categories={categories}
         />
       </>
     </Card>
