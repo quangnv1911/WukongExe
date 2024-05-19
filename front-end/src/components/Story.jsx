@@ -23,15 +23,26 @@ function Story() {
                             <div className='w-100 h-100 p-1'>
                                 <button className='d-flex align-items-center p-1 pe-2 rounded-5' style={{ width: "auto", fontSize: "15px", border: "1px solid green" }}>
                                     <FaFacebook className='mx-2' style={{ color: "blue" }} />
-                                    <label className='fw-semibold' style={{ color: "green" }}>Chat Facebook</label>
+                                    <label className='fw-semibold' style={{ color: "green" }}>
+                                        <a 
+                                            style={{
+                                                color: 'green',
+                                                textDecoration: 'none'
+                                            }} 
+                                            href='https://www.facebook.com/profile.php?id=61559747398038&mibextid=LQQJ4d'
+                                            target="_blank"
+                                            >
+                                            Chat Facebook
+                                        </a>
+                                    </label>
                                 </button>
                                 <button className='d-flex align-items-center p-1 pe-2 my-2 rounded-5' style={{ width: "auto", fontSize: "15px", border: "1px solid green" }}>
                                     <SiZalo className='mx-2' style={{ color: "blue" }} />
-                                    <label className='fw-semibold' style={{ color: "green" }}>Chat Zalo</label>
+                                    <label className='fw-semibold' style={{ color: "green" }}>098 5185854</label>
                                 </button>
                                 <button className='d-flex align-items-center p-1 pe-2 rounded-5' style={{ width: "auto", fontSize: "15px", border: "1px solid green" }}>
                                     <FaPhoneAlt className='mx-2' style={{ color: "green" }} />
-                                    <label className='fw-semibold' style={{ color: "green" }}>0900000000</label>
+                                    <label className='fw-semibold' style={{ color: "green" }}>098 5185854</label>
                                 </button>
                             </div>
                         </div>

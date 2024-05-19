@@ -31,7 +31,7 @@ function Voucher() {
     ]
     return (
         <>
-            <div className='row h-auto'>
+            {/* <div className='row h-auto'>
                 <div className='col-sm-12 py-5 text-center'>
                     <h3 className='fw-bold'>KHUYẾN MÃI</h3>
                 </div>
@@ -46,7 +46,6 @@ function Voucher() {
                                         <img style={{width:"95%"}} src={c.image} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
                                         <div className="card-body">
                                             <h5 className="card-title" style={{lineHeight:"20px", height:"20px", fontSize:"16px",overflow: "hidden",display: "-webkit-box",WebkitBoxOrient: "vertical", WebkitLineClamp: 1}}>{c.name}</h5>
-                                            {/* <br /> */}
                                             <p className="card-text mt-3" style={{ color: "#057130" }}>voucher</p>
                                         </div>
                                     </div>
@@ -56,7 +55,7 @@ function Voucher() {
 
                     </div>
                 </div>
-            </div>
+            </div> */}
             
         </>
     )
