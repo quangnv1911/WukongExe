@@ -63,7 +63,7 @@ function FormCheckout() {
     const [postData, setPostData] = useState({
         customerName: '',
         customerPhone: '',
-        customerAddress: 'Tự lấy',
+        customerAddress: '',
         receiverName: '',
         receiverPhone: '',
         totalProfit: totalProf,
@@ -71,19 +71,28 @@ function FormCheckout() {
         status: false,
         voucher: idVoucher,
         note: '',
-        listCart: [listCart]
+        listCart: [listCart],
+        shippingType: 'Giao hàng tận nơi'
     });
 
     useEffect(() => {
         setPostData({ ...postData, voucher: idVoucher, total: totalEnd, listCart: listCart });
-        console.log(postData);
-        console.log("hello");
     }, [idVoucher, listCart]);
 
     const handleChangeData = (e) => {
         const { name, value } = e.target;
         if (name == "customerAddress") {
             setPostData({ ...postData, [name]: value.concat(endPointAddress) });
+        } else if(name == 'shippingType'){
+            var shippingType = 'Giao hàng tận nơi';
+            if(value === '1'){
+                shippingType= 'Giao hàng tận nơi';
+            } else if(value === '2') {
+                shippingType= 'Giao hàng bí mật';
+            } else if(value === '3') {
+                shippingType= 'Tự lấy hàng';
+            }
+            setPostData({ ...postData, [name]: shippingType });
         } else {
             setPostData({ ...postData, [name]: value });
         }
@@ -195,6 +204,7 @@ function FormCheckout() {
 
     const handleChangeRadio = (event) => {
         setSelectedValue(event.target.value);
+        handleChangeData(event);
     };
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
@@ -278,19 +288,19 @@ function FormCheckout() {
                             </div>
                             <div className='row mb-3 mx-1'>
                                 <div className="form-check col-sm-3">
-                                    <input className="form-check-input" type="radio" name="exampleRadio" id="exampleRadios0" value="1" onChange={handleChangeRadio} checked={selectedValue === '1'} />
+                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios0" value="1"  onChange={handleChangeRadio} checked={selectedValue === '1'} />
                                     <label className="form-check-label" htmlFor="exampleRadios1">
                                         Giao hàng tận nơi
                                     </label>
                                 </div>
                                 <div className="form-check col-sm-3">
-                                    <input className="form-check-input" type="radio" name="exampleRadio" id="exampleRadios1" onChange={handleChangeRadio} checked={selectedValue === '2'} value="2" />
+                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios1" value="2"  onChange={handleChangeRadio}  checked={selectedValue === '2'}/>
                                     <label className="form-check-label" htmlFor="exampleRadios1">
                                         Giao hàng bí mật
                                     </label>
                                 </div>
                                 <div className="form-check col-sm-3">
-                                    <input className="form-check-input" type="radio" name="exampleRadio" id="exampleRadios2" onChange={handleChangeRadio} checked={selectedValue === '3'} value="3" />
+                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios2" value="3"  onChange={handleChangeRadio}  checked={selectedValue === '3'} />
                                     <label className="form-check-label" htmlFor="exampleRadios2">
                                         Tự lấy hàng
                                     </label>

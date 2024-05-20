@@ -11,8 +11,7 @@ const orderSchema = new Schema({
         required: true
     },
     customerAddress: {
-        type: String,
-        required: true
+        type: String
     },
     receiverName: {
         type: String,

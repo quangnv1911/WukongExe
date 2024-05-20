@@ -12,6 +12,10 @@ export const columnsDataDevelopment = [
     accessor: "customerPhone",
   },
   {
+    Header: "Phương thức giao hàng",
+    accessor: "shippingType",
+  },
+  {
     Header: "Địa chỉ",
     accessor: "customerAddress",
   },
