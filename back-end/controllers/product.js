@@ -28,7 +28,7 @@ const createProduct = async (req, res, next) => {
             sellPrice,
             discount,
             discountTime,
-            isCombo: Boolean(isCombo),
+            isCombo: isCombo === 'true' ? true : false,
             subdescription,
             category,
             image: image
@@ -59,7 +59,7 @@ const updateProduct = async (req, res, next) => {
             sellPrice,
             discount,
             discountTime,
-            isCombo: Boolean(isCombo),
+            isCombo:  isCombo === 'true' ? true : false,
             subdescription,
             category
         }

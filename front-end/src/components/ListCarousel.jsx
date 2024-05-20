@@ -22,13 +22,13 @@ function ListCarousel() {
                     alt="Second slide"
                 />
             </Carousel.Item>
-            <Carousel.Item>
+            {/* <Carousel.Item>
                 <img
                     className="d-block w-50 img-fluid mx-auto rounded-5"
                     src={ts}
                     alt="Third slide"
                 />
-            </Carousel.Item>
+            </Carousel.Item> */}
             <Carousel.Item>
                 <img
                     className="d-block w-50 img-fluid mx-auto rounded-5"

@@ -230,6 +230,12 @@ export default function DevelopmentTable(props) {
                         </Flex>
 
                       );
+                    } else if (cell.column.Header === "Giá nhập (đồng)" || cell.column.Header === "Giá bán (đồng)") {
+                      data = (
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value.toLocaleString('vi-VN')}
+                        </Text>
+                      );
                     } else {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
