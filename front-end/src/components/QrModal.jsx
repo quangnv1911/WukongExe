@@ -115,7 +115,9 @@ const QrModal = (props) => {
                         (
                             <div>
                                 <Modal.Header>
-                                    <Modal.Title style={{ color: 'red' }}>Vui lòng không đóng cửa sổ QR khi thanh toán</Modal.Title>
+                                    <Modal.Title style={{ color: 'red' }}>
+                                        Vui lòng không sửa nội dung chuyển khoản!<br/>
+                                    </Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
                                     <img src={`https://img.vietqr.io/image/${bank.BANK_ID}-${bank.ACCOUNT_NO}-${bank.TEMPLATE}.png?amount=${bank.AMOUNT}&addInfo=${bank.DESCRIPTION}&accountName=${bank.ACCOUNT_NAME}`} alt="Error" width={'100%'} />
