@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import moment from 'moment';
 import { HStack } from '@chakra-ui/react';
 import { SimpleGrid } from '@chakra-ui/react';
+import { BACK_END_HOST_QUANG } from 'utils/AppConfig';
 
 
 const VoucherManagement = () => {
@@ -26,7 +27,7 @@ const VoucherManagement = () => {
 
   const fetchVouchers = async () => {
     try {
-      const response = await axios.get('http://localhost:3008/api/vouchers');
+      const response = await axios.get(BACK_END_HOST_QUANG + '/api/vouchers');
       setVouchers(response.data);
     } catch (error) {
       console.error('Error fetching vouchers:', error);
@@ -54,7 +55,7 @@ const VoucherManagement = () => {
       }
   
       // Nếu không tồn tại mã giảm giá, tiến hành tạo mới
-      await axios.post('http://localhost:3008/api/vouchers', newVoucher);
+      await axios.post(BACK_END_HOST_QUANG + '/api/vouchers', newVoucher);
       setNewVoucher({
         code: '',
         name: '',
@@ -82,7 +83,7 @@ const VoucherManagement = () => {
     try {
       await validationSchema.validate(newVoucher, { abortEarly: false });
       setValidationErrors({});
-      await axios.put(`http://localhost:3008/api/vouchers/${code}`, newVoucher);
+      await axios.put(BACK_END_HOST_QUANG + `/api/vouchers/${code}`, newVoucher);
       fetchVouchers();
     } catch (error) {
       if (error.name === 'ValidationError') {
@@ -99,7 +100,7 @@ const VoucherManagement = () => {
 
   const handleDeleteVoucher = async (code) => {
     try {
-      await axios.delete(`http://localhost:3008/api/vouchers/${code}`);
+      await axios.delete(BACK_END_HOST_QUANG + `/api/vouchers/${code}`);
       fetchVouchers();
     } catch (error) {
       console.error(`Error deleting voucher with code ${code}:`, error);
