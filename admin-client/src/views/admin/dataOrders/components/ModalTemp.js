@@ -118,36 +118,59 @@ const ModalTemp = (props) => {
                             </Tbody>
                         </Table>
                     </TableContainer>
-                    <Flex justify='flex-end' align='center' fontSize={'20px'}>
-                        <Text mr={'5px'}>
-                            Giảm giá:
-                        </Text>
-                        <Text>
-                            {orderDetail.length > 0 ?
-                                (
-                                    orderDetail[0].order.voucher ? `${orderDetail[0].order.voucher.percent}%` : 'Không có'
-                                )
-                                :
-                                (
-                                    <Flex justify={'center'} align='center'>
-                                        <Button isLoading />
-                                    </Flex>
-                                )}
-                        </Text>
+                    <Flex justifyContent={'space-between'} alignItems={'center'}>
+                        <Flex justify='flex-end' align='center' fontSize={'20px'}>
+                            <Text mr={'5px'}>
+                                Lãi:
+                            </Text>
+                            <Text>
+                                {orderDetail.length > 0 ?
+                                    (
+                                        orderDetail[0].order.totalProfit ? `${orderDetail[0].order.totalProfit.toLocaleString('vi-VN')}(đồng)` : 'Không có'
+                                    )
+                                    :
+                                    (
+                                        <Flex justify={'center'} align='center'>
+                                            <Button isLoading />
+                                        </Flex>
+                                    )}
+                            </Text>
+                        </Flex>
+                        <div>
+                            <Flex justify='flex-end' align='center' fontSize={'20px'}>
+                                <Text mr={'5px'}>
+                                    Giảm giá:
+                                </Text>
+                                <Text>
+                                    {orderDetail.length > 0 ?
+                                        (
+                                            orderDetail[0].order.voucher ? `${orderDetail[0].order.voucher.percent}%` : 'Không có'
+                                        )
+                                        :
+                                        (
+                                            <Flex justify={'center'} align='center'>
+                                                <Button isLoading />
+                                            </Flex>
+                                        )}
+                                </Text>
+                            </Flex>
+                            <Flex justify='flex-end' align='center' fontSize={'20px'}>
+                                <Text mr={'5px'}>
+                                    Tổng tiền:
+                                </Text>
+                                <Text>
+                                    {orderDetail.length > 0 ? orderDetail[0].order.total.toLocaleString('vi-VN') :
+                                        (
+                                            <Flex justify={'center'} align='center'>
+                                                <Button isLoading />
+                                            </Flex>
+                                        )}(đồng)
+                                </Text>
+                            </Flex>
+                        </div>
                     </Flex>
-                    <Flex justify='flex-end' align='center' fontSize={'20px'}>
-                        <Text mr={'5px'}>
-                            Tổng tiền:
-                        </Text>
-                        <Text>
-                            {orderDetail.length > 0 ? orderDetail[0].order.total.toLocaleString('vi-VN') :
-                                (
-                                    <Flex justify={'center'} align='center'>
-                                        <Button isLoading />
-                                    </Flex>
-                                )}(đồng)
-                        </Text>
-                    </Flex>
+
+
                 </ModalBody>
 
                 <ModalFooter>
