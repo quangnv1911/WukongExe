@@ -66,7 +66,7 @@ export default function Conversion(props) {
         chartData={pieChartData}
         labels={labels}
       />
-      {/* <Card
+      <Card
         bg={cardColor}
         flexDirection='row'
         boxShadow={cardShadow}
@@ -75,7 +75,7 @@ export default function Conversion(props) {
         px='20px'
         mt='15px'
         mx='auto'>
-        <Flex direction='column' py='5px'>
+        {/* <Flex direction='column' py='5px'>
           <Flex align='center'>
             <Box h='8px' w='8px' bg='brand.500' borderRadius='50%' me='4px' />
             <Text
@@ -105,8 +105,8 @@ export default function Conversion(props) {
           <Text fontSize='lg' color={textColor} fontWeight='700'>
             25%
           </Text>
-        </Flex>
-      </Card> */}
+        </Flex> */}
+      </Card>
     </Card>
   );
 }

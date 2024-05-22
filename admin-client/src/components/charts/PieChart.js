@@ -41,7 +41,8 @@ class PieChart extends React.Component {
           "#b2bec3"
         ],
         chart: {
-          width: "50px",
+          width: "200px", // Increased width
+          height: "200px", // Increased height
         },
         states: {
           hover: {
@@ -51,10 +52,24 @@ class PieChart extends React.Component {
           },
         },
         legend: {
-          show: false,
+          show: true,
+          position: 'right',
+          horizontalAlign: 'center',
+          labels: {
+            colors: ["#000"],  // Text color
+            useSeriesColors: false,
+            fontSize: '10px', // Smaller legend text
+          },
+          itemMargin: {
+            horizontal: 10,
+            vertical: 5,
+          },
         },
         dataLabels: {
-          enabled: false,
+          enabled: true,
+          formatter: function (val) {
+            return Math.round(val) + "%";  // Append % to the value
+          },
         },
         hover: { mode: null },
         plotOptions: {
@@ -84,6 +99,11 @@ class PieChart extends React.Component {
         tooltip: {
           enabled: true,
           theme: "dark",
+          y: {
+            formatter: function (value) {
+              return Math.round(value) + "%";
+            }
+          }
         },
       },
     });

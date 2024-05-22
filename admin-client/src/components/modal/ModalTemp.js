@@ -33,7 +33,8 @@ const ModalTemp = (props) => {
         discountTime: '',
         isCombo: false,
         subdescription: '',
-        category: ''
+        category: '',
+        quantity: 0
     });
 
     useEffect(() => {
@@ -50,6 +51,7 @@ const ModalTemp = (props) => {
                 isCombo: oldFormValue.isCombo,
                 subdescription: oldFormValue.subdescription,
                 category: oldFormValue.categoryId,
+                quantity: oldFormValue.quantity
             })
         }
     }, [oldFormValue, isOpen])
@@ -81,6 +83,7 @@ const ModalTemp = (props) => {
         formDataSend.append('isCombo', formData.isCombo);
         formDataSend.append('subdescription', formData.subdescription);
         formDataSend.append('category', formData.category);
+        formDataSend.append('quantity', formData.quantity);
 
         api.post(`${BACK_END_HOST}/product`, formDataSend, {
             headers: {
@@ -124,7 +127,8 @@ const ModalTemp = (props) => {
                     discount: 0,
                     discountTime: '',
                     isCombo: false,
-                    subdescription: ''
+                    subdescription: '',
+                    quantity: 0
                 });
                 setImage('');
             })
@@ -161,6 +165,7 @@ const ModalTemp = (props) => {
         formDataSend.append('isCombo', formData.isCombo);
         formDataSend.append('subdescription', formData.subdescription);
         formDataSend.append('category', formData.category);
+        formDataSend.append('quantity', formData.quantity);
 
         formDataSend.forEach((value, key) => {
             console.log(key, value); // In ra khóa và giá trị
@@ -209,7 +214,8 @@ const ModalTemp = (props) => {
                     discount: 0,
                     discountTime: '',
                     isCombo: false,
-                    subdescription: ''
+                    subdescription: '',
+                    quantity: 0
                 });
                 setImage('');
             })
@@ -237,7 +243,8 @@ const ModalTemp = (props) => {
             discount: 0,
             discountTime: '',
             isCombo: false,
-            subdescription: ''
+            subdescription: '',
+            quantity: 0
         });
         setImage('');
         onClose();
@@ -276,6 +283,17 @@ const ModalTemp = (props) => {
                                         )
                                     }
                                 </Select>
+                            </FormControl>
+
+                            <FormControl mt={4}>
+                                <FormLabel>Số lượng</FormLabel>
+                                <Input
+                                    type="number"
+                                    placeholder='8'
+                                    name="quantity"
+                                    onChange={handleInputChange}
+                                    value={formData?.quantity}
+                                />
                             </FormControl>
 
                             <FormControl mt={4}>

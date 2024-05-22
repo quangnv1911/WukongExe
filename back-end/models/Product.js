@@ -39,6 +39,11 @@ const productSchema = new Schema({
     isHide: {
         type: Boolean,
         default: false
+    },
+    quantity: {
+        type: Number,
+        default: 0,
+        min: [0, 'Quantity cannot be less than 0']
     }
 }, {
     timestamps: true

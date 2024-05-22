@@ -8,6 +8,10 @@ export const columnsDataDevelopment = [
     accessor: "image",
   },
   {
+    Header: "Số lượng",
+    accessor: "quantity",
+  },
+  {
     Header: "Loại",
     accessor: "category",
   },

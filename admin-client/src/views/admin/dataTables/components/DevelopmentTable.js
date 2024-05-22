@@ -16,8 +16,8 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import moment from "moment";
-import React, {  useEffect, useMemo, useState } from "react";
-import { MdAdd, MdCancel, MdCheckCircle, MdDelete, MdEdit} from "react-icons/md";
+import React, { useEffect, useMemo, useState } from "react";
+import { MdAdd, MdCancel, MdCheckCircle, MdDelete, MdEdit } from "react-icons/md";
 import {
   useGlobalFilter,
   usePagination,
@@ -64,7 +64,7 @@ export default function DevelopmentTable(props) {
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
 
   const [modalAttr, setModalAttr] = useState({});
-  
+
 
   const [categories, setCategories] = useState([]);
 
@@ -99,7 +99,8 @@ export default function DevelopmentTable(props) {
   }
 
   const displayEditModal = (product) => {
-    const oldFormValue = tableData?.find(p => p._id === product[8].value);
+    // so sanh voi id trong bang. id o vi tri thu 9
+    const oldFormValue = tableData?.find(p => p._id === product[9].value);
     setModalAttr({
       size: 'xl',
       title: 'Sửa',
@@ -236,6 +237,23 @@ export default function DevelopmentTable(props) {
                           {cell.value.toLocaleString('vi-VN')}
                         </Text>
                       );
+                    } else if (cell.column.Header === "Số lượng") {
+
+                      if (cell.value === 0) {
+                        data = (
+                          <Text color={'red.500'} fontSize='sm' fontWeight='700'>
+                            Hết hàng
+                          </Text>
+                        )
+                      } else {
+                        data = (
+                          <Text color={'green.500'} fontSize='sm' fontWeight='700'>
+                            {cell.value}
+                          </Text>
+                        )
+                      }
+
+
                     } else {
                       data = (
                         <Text color={textColor} fontSize='sm' fontWeight='700'>

@@ -1,7 +1,8 @@
 import productService from "../services/product.js";
 const getAllProduct = async (req, res, next) => {
     try {
-        const products = await productService.getAllProduct(req.body);
+        const { role } = req.query;
+        const products = await productService.getAllProduct(role);
         res.status(200).json(products);
     } catch (error) {
         next(error);
@@ -10,7 +11,7 @@ const getAllProduct = async (req, res, next) => {
 
 const createProduct = async (req, res, next) => {
     try {
-        const { 
+        const {
             name,
             importPrice,
             sellPrice,
@@ -18,11 +19,12 @@ const createProduct = async (req, res, next) => {
             discountTime,
             isCombo,
             subdescription,
-            category
+            category,
+            quantity
         } = req.body;
         console.log('req.file', req.file);
         const image = req.file.path;
-        const product = await productService.createProduct({ 
+        const product = await productService.createProduct({
             name,
             importPrice,
             sellPrice,
@@ -31,7 +33,8 @@ const createProduct = async (req, res, next) => {
             isCombo: isCombo === 'true' ? true : false,
             subdescription,
             category,
-            image: image
+            image: image,
+            quantity
         });
         res.status(201).json(product);
     } catch (error) {
@@ -42,7 +45,7 @@ const createProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
     try {
         const { productId } = req.params;
-        
+
         const {
             name,
             importPrice,
@@ -51,27 +54,29 @@ const updateProduct = async (req, res, next) => {
             discountTime,
             isCombo,
             subdescription,
-            category
-        } =  req.body;
+            category,
+            quantity
+        } = req.body;
         var updateProduct2 = {
             name,
             importPrice,
             sellPrice,
             discount,
             discountTime,
-            isCombo:  isCombo === 'true' ? true : false,
+            isCombo: isCombo === 'true' ? true : false,
             subdescription,
-            category
+            category,
+            quantity
         }
-        if(updateProduct2.discountTime === 'null') {
+        if (updateProduct2.discountTime === 'null') {
             updateProduct2.discountTime = null;
         }
 
-        if(updateProduct2.subdescription === 'undefined') {
+        if (updateProduct2.subdescription === 'undefined') {
             updateProduct2.subdescription = null;
         }
         console.log('req.file', req.file);
-        if(req.file) {
+        if (req.file) {
             updateProduct2.image = req.file.path;
         }
 
@@ -93,9 +98,28 @@ const deleteProduct = async (req, res, next) => {
         next(error);
     }
 };
+
+const checkProductQuantity = async (req, res, next) => {
+    try {
+        const { postData } = req.body;
+        const { listCart } = postData;
+
+        const listCartVer2 = listCart && listCart.map(p => ({
+            product: p._id,
+            quantity: p.quantity,
+        }));
+
+        const products = await productService.checkProductQuantity(listCartVer2);
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
+}
+
 export default {
     createProduct,
     updateProduct,
     deleteProduct,
-    getAllProduct
+    getAllProduct,
+    checkProductQuantity
 }

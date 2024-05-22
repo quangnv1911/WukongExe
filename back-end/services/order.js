@@ -30,12 +30,6 @@ const dashboardStatic = async (fromDate, toDate) => {
             total += dashboardStatic[i].total;
             totalProfit += dashboardStatic[i].totalProfit;
 
-            // let month = dashboardStatic[i].createdAt.getMonth(); // thang bat dau tu 0
-            // if(map.has(monthAbbreviations[month])) {
-            //     map.set(monthAbbreviations[month])
-            // } else {
-
-            // }
         }
 
         return {

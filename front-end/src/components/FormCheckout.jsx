@@ -15,6 +15,7 @@ import Modal from 'react-bootstrap/Modal';
 import toast, { Toaster } from 'react-hot-toast';
 import QrModal from './QrModal';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 function FormCheckout() {
 
@@ -83,14 +84,14 @@ function FormCheckout() {
         const { name, value } = e.target;
         if (name == "customerAddress") {
             setPostData({ ...postData, [name]: value.concat(endPointAddress) });
-        } else if(name == 'shippingType'){
+        } else if (name == 'shippingType') {
             var shippingType = 'Giao hàng tận nơi';
-            if(value === '1'){
-                shippingType= 'Giao hàng tận nơi';
-            } else if(value === '2') {
-                shippingType= 'Giao hàng bí mật';
-            } else if(value === '3') {
-                shippingType= 'Tự lấy hàng';
+            if (value === '1') {
+                shippingType = 'Giao hàng tận nơi';
+            } else if (value === '2') {
+                shippingType = 'Giao hàng bí mật';
+            } else if (value === '3') {
+                shippingType = 'Tự lấy hàng';
             }
             setPostData({ ...postData, [name]: shippingType });
         } else {
@@ -100,7 +101,7 @@ function FormCheckout() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        handleShow();
+        // handleShow();
         // console.log(postData);
         // fetch(`${BACK_END_HOST}/order`, {
         //     method: "POST",
@@ -110,7 +111,31 @@ function FormCheckout() {
         // toast.success("Đặt hàng thành công!");
         // dispatch(clearProduct());
         // navigate("/");
+
+        handleCheckProductQuantity();
     };
+
+    const handleCheckProductQuantity = () => {
+        console.log('postData', postData);
+        axios.post(`${BACK_END_HOST}/product/check-product-quantity`, {
+            postData
+        })
+            .then(res => {
+                console.log(res);
+                if (res.data.value) {
+                    handleShow();
+                    // fetch(`${BACK_END_HOST}/order`, {
+                    //     method: "POST",
+                    //     headers: { "Content-Type": "Application/JSON" },
+                    //     body: JSON.stringify(postData)
+                    // })
+                    // toast.success("Đặt hàng thành công!");
+                } else {
+                    toast.error(res.data.message);
+                }
+            })
+            .catch(error => console.log('handleCheckProductQuantity error', error))
+    }
 
 
     const handleApplyVoucher = (v) => {
@@ -288,19 +313,19 @@ function FormCheckout() {
                             </div>
                             <div className='row mb-3 mx-1'>
                                 <div className="form-check col-sm-3">
-                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios0" value="1"  onChange={handleChangeRadio} checked={selectedValue === '1'} />
+                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios0" value="1" onChange={handleChangeRadio} checked={selectedValue === '1'} />
                                     <label className="form-check-label" htmlFor="exampleRadios1">
                                         Giao hàng tận nơi
                                     </label>
                                 </div>
                                 <div className="form-check col-sm-3">
-                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios1" value="2"  onChange={handleChangeRadio}  checked={selectedValue === '2'}/>
+                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios1" value="2" onChange={handleChangeRadio} checked={selectedValue === '2'} />
                                     <label className="form-check-label" htmlFor="exampleRadios1">
                                         Giao hàng bí mật
                                     </label>
                                 </div>
                                 <div className="form-check col-sm-3">
-                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios2" value="3"  onChange={handleChangeRadio}  checked={selectedValue === '3'} />
+                                    <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios2" value="3" onChange={handleChangeRadio} checked={selectedValue === '3'} />
                                     <label className="form-check-label" htmlFor="exampleRadios2">
                                         Tự lấy hàng
                                     </label>

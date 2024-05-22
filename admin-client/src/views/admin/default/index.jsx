@@ -201,7 +201,8 @@ export default function UserReports() {
 
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         <TotalSpent />
-        <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px'>
+      </SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
           <PieCard 
             staticOfProduct={ staticOfProduct } 
             sum={revenue} 
@@ -213,9 +214,8 @@ export default function UserReports() {
             isRevenue={false} 
             text='Tỉ lệ lợi nhuận/sản phẩm'
             />
+            {/* <WeeklyRevenue /> */}
         </SimpleGrid>
-        {/* <WeeklyRevenue /> */}
-      </SimpleGrid>
       {/* <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
         <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
