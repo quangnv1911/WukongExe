@@ -15,7 +15,7 @@ export default function Settings() {
 
   const [listProduct, setListProduct] = useState([]);
   useEffect(() => {
-    api.get(`${BACK_END_HOST}/product`)
+    api.get(`${BACK_END_HOST}/product?role=admin`)
      .then(res => {
       setListProduct(res.data);
      })

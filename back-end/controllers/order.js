@@ -1,5 +1,5 @@
 import Order from "../models/Order.js";
-import { orderService, orderDetailService } from "../services/index.js";
+import { orderService, orderDetailService, productService } from "../services/index.js";
 import TelegramBot from '../bot/telegram.js'
 
 const getRevenueAndProfitByYear = async (req, res) => {
@@ -45,6 +45,7 @@ const createOrder = async (req, res) => {
     const lsOrderDetail = await Promise.all(
       listCartVer2.map(async (p) => {
         const orderDetail = await orderDetailService.createOrderDetail(p);
+        const updateProduct = await productService.decreaseProductQuantity(p.product, p.quantity);
         return orderDetail;
       })
     );

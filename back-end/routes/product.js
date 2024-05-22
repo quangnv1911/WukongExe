@@ -17,5 +17,6 @@ router.get("/", productController.getAllProduct)
 router.post("/", upload.single('image'), productController.createProduct);
 router.put("/:productId", upload.single('image'), productController.updateProduct);
 router.delete("/:productId", productController.deleteProduct);
+router.post("/check-product-quantity", productController.checkProductQuantity);
 
 export default router;
