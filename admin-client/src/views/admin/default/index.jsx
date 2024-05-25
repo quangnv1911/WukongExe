@@ -34,6 +34,7 @@ import InputField from "components/fields/InputField";
 import { BACK_END_HOST } from "utils/AppConfig";
 import moment from "moment";
 import api from "utils/Services";
+import CustomerCard from "./components/CustomerCard";
 
 export default function UserReports() {
   // Bearpo: statics
@@ -49,6 +50,7 @@ export default function UserReports() {
   const [profit, setProfit] = useState(0);
   const [numberOrder, setNumberOrder] = useState(0);
   const [staticOfProduct, setStaticOfProduct] = useState([]);
+  const [numberProduct, setNumberProduct] = useState(0);
 
   useEffect(() => {
     if ((fromDate !== '' && toDate !== '' && fromDate > toDate) && (!errorProperties || !errorProperties.borderColor)) {
@@ -72,6 +74,7 @@ export default function UserReports() {
             setRevenue(data.revenue);
             setProfit(data.profit);
             setNumberOrder(data.numberOrder);
+            setNumberProduct(data.numberProduct);
             setStaticOfProduct(data.staticOfProduct);
           }
         })
@@ -104,7 +107,7 @@ export default function UserReports() {
         />
       </SimpleGrid>
       <SimpleGrid
-        columns={{ base: 1, md: 2, lg: 3, "2xl": 3 }}
+        columns={{ base: 1, md: 2, lg: 4, "2xl": 4 }}
         gap='20px'
         mb='20px'>
         <MiniStatistics
@@ -150,6 +153,21 @@ export default function UserReports() {
           // growth='+23%'
           name='Số lượng đơn hàng'
           value={`${numberOrder}`} />
+
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <Icon w='32px' h='32px' as={MdOutlineShoppingCart} color={brandColor} />
+              }
+            />
+          }
+          // growth='+23%'
+          name='Số lượng sản phẩm bán ra'
+          value={`${numberProduct}`} />
         {/* <MiniStatistics
           endContent={
             <Flex me='-16px' mt='10px'>
@@ -201,21 +219,24 @@ export default function UserReports() {
 
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         <TotalSpent />
+        <CustomerCard
+          text='Tỉ lệ khách hàng quay lại/ Tỉ lệ khách hàng mới'
+        />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-          <PieCard 
-            staticOfProduct={ staticOfProduct } 
-            sum={revenue} 
-            isRevenue={true} 
-            text='Tỉ lệ doanh thu/sản phẩm'/>
-          <PieCard 
-            staticOfProduct={ staticOfProduct } 
-            sum={profit}
-            isRevenue={false} 
-            text='Tỉ lệ lợi nhuận/sản phẩm'
-            />
-            {/* <WeeklyRevenue /> */}
-        </SimpleGrid>
+        <PieCard
+          staticOfProduct={staticOfProduct}
+          sum={revenue}
+          isRevenue={true}
+          text='Tỉ lệ doanh thu/sản phẩm' />
+        <PieCard
+          staticOfProduct={staticOfProduct}
+          sum={profit}
+          isRevenue={false}
+          text='Tỉ lệ lợi nhuận/sản phẩm'
+        />
+        {/* <WeeklyRevenue /> */}
+      </SimpleGrid>
       {/* <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
         <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>

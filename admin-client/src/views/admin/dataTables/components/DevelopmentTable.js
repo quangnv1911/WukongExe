@@ -16,7 +16,7 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import moment from "moment";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { MdAdd, MdCancel, MdCheckCircle, MdDelete, MdEdit } from "react-icons/md";
 import {
   useGlobalFilter,
@@ -27,6 +27,8 @@ import {
 import ModalTemp from 'components/modal/ModalTemp.js';
 import api from "utils/Services";
 import { BACK_END_HOST } from "utils/AppConfig";
+import { SearchBar } from "components/navbar/searchBar/SearchBar";
+import debounce from "lodash.debounce";
 
 export default function DevelopmentTable(props) {
 
@@ -67,6 +69,7 @@ export default function DevelopmentTable(props) {
 
 
   const [categories, setCategories] = useState([]);
+  const [search, setSearch] = useState('');
 
   //getAll category
   useEffect(() => {
@@ -126,7 +129,23 @@ export default function DevelopmentTable(props) {
         console.log('handleDelete error', error);
       })
   }
- 
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    debouncedSearch(e.target.value);
+  }
+
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      api.post(`${BACK_END_HOST}/product/search`, {search: value})
+        .then(res => {
+          setListProduct(res.data);
+        })
+        .catch(error => console.log('debouncedSearch error:', error))
+    }, 300), // Đặt thời gian debounce là 300ms
+    []
+  );
+
 
 
   return (
@@ -136,13 +155,12 @@ export default function DevelopmentTable(props) {
       px='0px'
       overflowX={{ sm: "scroll", lg: "hidden" }}>
       <Flex px='25px' justify='space-between' mb='20px' align='center'>
-        <Text
-          color={textColor}
-          fontSize='22px'
-          fontWeight='700'
-          lineHeight='100%'>
-          Sản phẩm
-        </Text>
+        <SearchBar
+          name='search'
+          value={search}
+          onChange={(e) => handleSearchChange(e)}
+          placeholder="Nhập tên sản phẩm ..."
+        />
         {/* <Menu /> */}
         <Button onClick={displayAddModal}>
           <Icon as={MdAdd} width='20px' height='20px' marginRight='5px' />

@@ -15,6 +15,7 @@ const dashboardStatic = async (req, res) => {
             revenue: dashboardStatic.total,
             profit: dashboardStatic.totalProfit,
             numberOrder: dashboardStatic.numberOrder,
+            numberProduct: dashboardStatic.numberProduct,
             staticOfProduct: ratioRevenueAndProfit
         });
     } catch (error) {

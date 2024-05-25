@@ -18,5 +18,6 @@ router.post("/", upload.single('image'), productController.createProduct);
 router.put("/:productId", upload.single('image'), productController.updateProduct);
 router.delete("/:productId", productController.deleteProduct);
 router.post("/check-product-quantity", productController.checkProductQuantity);
+router.post("/search", productController.searchProductByName);
 
 export default router;
