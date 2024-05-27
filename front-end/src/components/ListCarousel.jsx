@@ -1,8 +1,9 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import image1 from '../assets/image1.png';
-import image2 from '../assets/image2.png';
-import ts from '../assets/ts.png'
+import huahua from '../assets/carousel/huahua.png'
+import menglan from '../assets/carousel/menglan.png'
+import qizi from '../assets/carousel/qizi.png'
+import yaya from '../assets/carousel/yaya.png'
 function ListCarousel() {
     
     return (
@@ -11,15 +12,15 @@ function ListCarousel() {
                 <img
                     className="d-block w-50 img-fluid mx-auto rounded-5"
                     style={{objectFit:"cover", objectPosition:"center"}}
-                    src={image1}
-                    alt="First slide"
+                    src={huahua}
+                    alt="huahua"
                 />
             </Carousel.Item>
             <Carousel.Item>
                 <img
                     className="d-block w-50 img-fluid mx-auto rounded-5"
-                    src={image2}
-                    alt="Second slide"
+                    src={menglan}
+                    alt="menglan"
                 />
             </Carousel.Item>
             {/* <Carousel.Item>
@@ -32,15 +33,15 @@ function ListCarousel() {
             <Carousel.Item>
                 <img
                     className="d-block w-50 img-fluid mx-auto rounded-5"
-                    src={image1}
-                    alt="Fourth slide"
+                    src={qizi}
+                    alt="qizi"
                 />
             </Carousel.Item>
             <Carousel.Item>
                 <img
                     className="d-block w-50 img-fluid mx-auto rounded-5"
-                    src={image2}
-                    alt="Fifth slide"
+                    src={yaya}
+                    alt="yaya"
                 />
             </Carousel.Item>
         </Carousel>
