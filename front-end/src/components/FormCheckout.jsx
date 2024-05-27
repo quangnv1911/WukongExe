@@ -243,7 +243,7 @@ function FormCheckout() {
         return `${formattedDay}/${formattedMonth}/${year}`;
     };
     return (
-        <div className='row justify-content-center bg-white'>
+        <div className='row justify-content-center bg-white pb-5'>
 
             <Modal show={showModal} onHide={handleCloseModal} size='lg' centered={false}>
                 <Modal.Header closeButton>
@@ -500,11 +500,11 @@ function FormCheckout() {
                         </div>
                     </div>
                 </form>
-                <div className='row'>
+                {/* <div className='row'>
                     <div className='col-sm-12 my-4 text-center text-secondary'>
                         <p><LuCopyright /> Copyright 2008 - 2024</p>
                     </div>
-                </div>
+                </div> */}
                 <QrModal
                     show={show}
                     setShow={setShow}
