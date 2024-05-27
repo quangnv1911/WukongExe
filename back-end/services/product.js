@@ -120,6 +120,26 @@ const searchProductByName = async (search) => {
         throw new Error(error);
     }
 }
+
+const getProductById = async (productId) => {
+    try {
+        console.log('productId', productId);
+        // find All product that not hide and quantity > 0
+        const products = await Product.findOne({
+            _id: productId,
+            $or: [
+                { isHide: false, },
+                { isHide: { $exists: false } }
+            ],
+            quantity: { $gt: 0 },
+        }).populate('category', 'name');
+
+        return products;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 export default {
     createProduct,
     updateProduct,
@@ -127,5 +147,6 @@ export default {
     getAllProduct,
     decreaseProductQuantity,
     checkProductQuantity,
-    searchProductByName
+    searchProductByName,
+    getProductById
 }

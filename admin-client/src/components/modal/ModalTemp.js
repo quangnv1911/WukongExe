@@ -1,11 +1,13 @@
 import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Icon, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react'
 import moment from 'moment';
-import React, { useEffect, useState } from 'react'
-import { MdUpload } from 'react-icons/md';
+import React, { useEffect, useRef, useState } from 'react'
+import { Md1KPlus, MdAddCircleOutline, MdDelete, MdOutlineHdrPlus, MdUpload } from 'react-icons/md';
 import { Bounce, toast } from 'react-toastify';
+import SunEditor from 'suneditor-react';
 import { BACK_END_HOST } from 'utils/AppConfig';
 import api from 'utils/Services';
 import Dropzone from "views/admin/dataTables/components/Dropzone.js";
+import 'suneditor/dist/css/suneditor.min.css';
 
 const ModalTemp = (props) => {
     const { size,
@@ -25,6 +27,8 @@ const ModalTemp = (props) => {
     } = props;
     const textColorBrand = useColorModeValue("brand.500", "white");
     const [image, setImage] = useState('');
+    const editorProduct = useRef(null);
+    const editorStory = useRef(null);
     const [formData, setFormData] = useState({
         name: '',
         importPrice: 0,
@@ -34,27 +38,11 @@ const ModalTemp = (props) => {
         isCombo: false,
         subdescription: '',
         category: '',
-        quantity: 0
+        quantity: 0,
+        story: ''
     });
 
-    useEffect(() => {
-        if (oldFormValue && isOpen) {
-            setImage({
-                value: oldFormValue.image
-            })
-            setFormData({
-                name: oldFormValue.name,
-                importPrice: oldFormValue.importPrice,
-                sellPrice: oldFormValue.sellPrice,
-                discount: oldFormValue.discount,
-                discountTime: oldFormValue.discountTime,
-                isCombo: oldFormValue.isCombo,
-                subdescription: oldFormValue.subdescription,
-                category: oldFormValue.categoryId,
-                quantity: oldFormValue.quantity
-            })
-        }
-    }, [oldFormValue, isOpen])
+    
     //handle input formDate change
     const handleInputChange = (event) => {
         const { name, value, checked } = event.target;
@@ -81,9 +69,10 @@ const ModalTemp = (props) => {
         formDataSend.append('discount', formData.discount);
         formDataSend.append('discountTime', formData.discountTime);
         formDataSend.append('isCombo', formData.isCombo);
-        formDataSend.append('subdescription', formData.subdescription);
+        formDataSend.append('subdescription', editorProduct.current.getContents().trim());
         formDataSend.append('category', formData.category);
         formDataSend.append('quantity', formData.quantity);
+        formDataSend.append('story', editorStory.current.getContents().trim());
 
         api.post(`${BACK_END_HOST}/product`, formDataSend, {
             headers: {
@@ -163,9 +152,10 @@ const ModalTemp = (props) => {
         formDataSend.append('discount', formData.discount);
         formDataSend.append('discountTime', formData.discountTime);
         formDataSend.append('isCombo', formData.isCombo);
-        formDataSend.append('subdescription', formData.subdescription);
+        formDataSend.append('subdescription', editorProduct.current.getContents().trim());
         formDataSend.append('category', formData.category);
         formDataSend.append('quantity', formData.quantity);
+        formDataSend.append('story', editorStory.current.getContents().trim());
 
         formDataSend.forEach((value, key) => {
             console.log(key, value); // In ra khóa và giá trị
@@ -249,6 +239,36 @@ const ModalTemp = (props) => {
         setImage('');
         onClose();
     }
+
+
+    // The sunEditor parameter will be set to the core suneditor instance when this function is called
+    const getSunEditorInstanceTitle = (sunEditor) => {
+        editorProduct.current = sunEditor;
+    };
+    const getSunEditorInstanceStory = (sunEditor) => {
+        editorStory.current = sunEditor;
+    };
+
+    useEffect(() => {
+        if (oldFormValue && isOpen) {
+            setImage({
+                value: oldFormValue.image
+            })
+            setFormData({
+                name: oldFormValue.name,
+                importPrice: oldFormValue.importPrice,
+                sellPrice: oldFormValue.sellPrice,
+                discount: oldFormValue.discount,
+                discountTime: oldFormValue.discountTime,
+                isCombo: oldFormValue.isCombo,
+                subdescription: oldFormValue.subdescription,
+                category: oldFormValue.categoryId,
+                quantity: oldFormValue.quantity,
+                story: oldFormValue.story
+            })
+
+        }
+    }, [oldFormValue, isOpen])
 
     return (
         <Modal isOpen={isOpen} onClose={closeAndReset} size={size} scrollBehavior='inside'>
@@ -350,16 +370,64 @@ const ModalTemp = (props) => {
                                     Có
                                 </Checkbox>
                             </FormControl>
+                            {
+                                formData?.isCombo ?
+                                    (
+                                        <div>
+                                            <FormControl mt={4}>
+                                                <FormLabel>Các sản phẩm</FormLabel>
+                                                <SunEditor
+                                                    ref={editorProduct}
+                                                    setOptions={{
+                                                        height: 200,
+                                                        buttonList: [
+                                                            ['undo', 'redo'],
+                                                            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                                                            ['font', 'fontSize', 'formatBlock'],
+                                                            ['paragraphStyle', 'blockquote'],
+                                                            ['fontColor', 'hiliteColor', 'textStyle'],
+                                                            ['removeFormat'],
+                                                            '/',
+                                                            ['outdent', 'indent'],
+                                                            ['align', 'horizontalRule', 'list', 'lineHeight'],
+                                                            ['table', 'link', 'image', 'video'],
+                                                            ['fullScreen', 'showBlocks', 'codeView'],
+                                                            ['preview', 'print']
+                                                        ]
+                                                    }}
+                                                    getSunEditorInstance={getSunEditorInstanceTitle}
+                                                />
+                                            </FormControl>
+                                            <FormControl mt={4}>
+                                                <FormLabel>Câu truyện</FormLabel>
+                                                <SunEditor
+                                                    ref={editorStory}
+                                                    setOptions={{
+                                                        height: 200,
+                                                        buttonList: [
+                                                            ['undo', 'redo'],
+                                                            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                                                            ['font', 'fontSize', 'formatBlock'],
+                                                            ['paragraphStyle', 'blockquote'],
+                                                            ['fontColor', 'hiliteColor', 'textStyle'],
+                                                            ['removeFormat'],
+                                                            '/',
+                                                            ['outdent', 'indent'],
+                                                            ['align', 'horizontalRule', 'list', 'lineHeight'],
+                                                            ['table', 'link', 'image', 'video'],
+                                                            ['fullScreen', 'showBlocks', 'codeView'],
+                                                            ['preview', 'print']
+                                                        ]
+                                                    }}
+                                                    getSunEditorInstance={getSunEditorInstanceStory}
+                                                />
+                                            </FormControl>
+                                        </div>
+                                    )
+                                    :
+                                    (<></>)
+                            }
 
-                            <FormControl mt={4}>
-                                <FormLabel>Mô tả ngắn</FormLabel>
-                                <Input
-                                    placeholder='Gồm sản phẩm A + B'
-                                    name="subdescription"
-                                    onChange={handleInputChange}
-                                    value={formData?.subdescription}
-                                />
-                            </FormControl>
 
                             <FormControl mt={4}>
                                 <FormLabel>Ảnh</FormLabel>

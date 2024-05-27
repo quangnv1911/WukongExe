@@ -20,7 +20,8 @@ const createProduct = async (req, res, next) => {
             isCombo,
             subdescription,
             category,
-            quantity
+            quantity,
+            story
         } = req.body;
         console.log('req.file', req.file);
         const image = req.file.path;
@@ -34,7 +35,8 @@ const createProduct = async (req, res, next) => {
             subdescription,
             category,
             image: image,
-            quantity
+            quantity,
+            story
         });
         res.status(201).json(product);
     } catch (error) {
@@ -55,7 +57,8 @@ const updateProduct = async (req, res, next) => {
             isCombo,
             subdescription,
             category,
-            quantity
+            quantity,
+            story
         } = req.body;
         var updateProduct2 = {
             name,
@@ -66,7 +69,8 @@ const updateProduct = async (req, res, next) => {
             isCombo: isCombo === 'true' ? true : false,
             subdescription,
             category,
-            quantity
+            quantity,
+            story
         }
         if (updateProduct2.discountTime === 'null') {
             updateProduct2.discountTime = null;
@@ -125,11 +129,22 @@ const searchProductByName = async (req, res, next) => {
         next(error);
     }
 }
+
+const getProductById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const products = await productService.getProductById(id);
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
+}
 export default {
     createProduct,
     updateProduct,
     deleteProduct,
     getAllProduct,
     checkProductQuantity,
-    searchProductByName
+    searchProductByName,
+    getProductById
 }

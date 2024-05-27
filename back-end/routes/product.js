@@ -20,4 +20,6 @@ router.delete("/:productId", productController.deleteProduct);
 router.post("/check-product-quantity", productController.checkProductQuantity);
 router.post("/search", productController.searchProductByName);
 
+router.get("/detail/:id", productController.getProductById)
+
 export default router;

@@ -9,6 +9,7 @@ import { BACK_END_HOST } from '../utils/AppConfig'
 import combo1 from '../assets/combo1.png'
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from './Loading';
+import ModalCombo from './ModalCombo';
 
 function ListProduct() {
 
@@ -33,6 +34,15 @@ function ListProduct() {
   const [quantities, setQuantities] = useState([]);
   const [listProduct, setListProduct] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
+  const [productId, setProductId] = useState();
+
+  const handleClose = () => setShow(false);
+  const handleShow = (id) => {
+    setProductId(id)
+    setShow(true)
+  };
+
   useEffect(() => {
     fetch(`${BACK_END_HOST}/product`)
       .then(res => res.json())
@@ -83,89 +93,93 @@ function ListProduct() {
         <div className='col-sm-12' style={{ backgroundColor: "#057130" }}>
         </div>
       </div>
-     
+
       <div className='row h-auto '>
         <div className='col-sm-12 py-5 text-center'>
           <h3 className='fw-bold'>COMBO BEAR PO</h3>
         </div>
       </div>
       <div className='row h-auto pb-4 d-flex justify-content-center'>
-        <div className='col-sm-10 text-center'>
+        <div className='col-sm-8 text-center'>
           {loading ?
             <Loading />
             :
-            <div className='row w-100' >
+            <div className='row ' >
               {listProduct.filter(p => p.isCombo && (!categoryId || p.categoryId.toString() === categoryId) && (!searchProduct || p.name.toLowerCase().includes(searchProduct.toLowerCase()))).map((p, index) => {
                 const startQuantity = 1;
                 const isInCart = listCart.some(c => c._id === p._id);
                 const quantityInCart = quantities.find(item => item._id === p._id)?.quantity;
                 return (
-                  <div className="col-sm-2 mb-4" key={p._id}>
+                  <div className="col-sm-3 mb-4" key={p._id}>
                     <div className="card w-100 mx-auto border-0">
                       {p.discount !== 0 && <p style={{ backgroundColor: "#50CD89", width: "45%", position: "absolute", top: "10px" }} className="text-light ms-2 rounded-1 text-center">Giảm giá {p.discount}%</p>}
-                      <img src={p.image} style={{ width: "12em" }} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
-                      <div className="card-body">
-                        <h5 className="card-title" style={{ lineHeight: "20px", height: "40px", fontSize: "18px", overflow: "hidden", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2 }}>{p.name}</h5>
-                        <p className={p.discount !== 0 ? "card-text mb-0" : "card-text"} style={{ fontSize: "16px" }}>
-                          <IoPricetagOutline style={{ color: "#057130" }} />
-                          <span className='fw-bold' style={{ color: "#057130" }}>  {p.discount !== 0
-                            ? (p.sellPrice - (p.sellPrice * (p.discount / 100))).toLocaleString('en-US', {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 3,
-                            })
-                            : p.sellPrice.toLocaleString('en-US', {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 3,
-                            })
-                          }</span>
-                          <span className='text-black-50'> VND</span>
-
-                        </p>
-                        {p.discount !== 0 ? <p className="card-text text-secondary" style={{ fontSize: "16px" }}>
-                          <IoPricetagOutline />
-                          <del>
-                            <span className='fw-bold' > {p.sellPrice.toLocaleString('en-US', {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 3,
-                            })
-                            }
-                            </span>
+                      <div onClick={() => handleShow(p._id)} style={{cursor: 'pointer'}}>
+                        <img src={p.image} style={{ width: "12em" }} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
+                        <div className="card-body">
+                          <h5 className="card-title" style={{ lineHeight: "20px", height: "40px", fontSize: "18px", overflow: "hidden", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2 }}>{p.name}</h5>
+                          <p className={p.discount !== 0 ? "card-text mb-0" : "card-text"} style={{ fontSize: "16px" }}>
+                            <IoPricetagOutline style={{ color: "#057130" }} />
+                            <span className='fw-bold' style={{ color: "#057130" }}>  {p.discount !== 0
+                              ? (p.sellPrice - (p.sellPrice * (p.discount / 100))).toLocaleString('en-US', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 3,
+                              })
+                              : p.sellPrice.toLocaleString('en-US', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 3,
+                              })
+                            }</span>
                             <span className='text-black-50'> VND</span>
-                          </del>
 
-                        </p> : <><br /></>}
-                        <div className='row d-flex justify-content-center align-items-center'>
-                          <div className='col-sm-8 p-0 d-flex justify-content-center'>
-                            {isInCart ? (
-                              <>
-                                <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(p, quantity)} color='#057130' size={24} />
-                                <input
-                                  onChange={(e) => handleChangeQuantity(p._id, parseInt(e.target.value))}
-                                  type='number'
-                                  value={quantityInCart}
-                                  style={{ width: "40%" }}
-                                  className='px-1 text-center border-0 border-bottom'
-                                  onKeyDown={(e) => {
-                                    const value = e.target.value;
-                                    if (e.key === '-' || (value === '' && e.key === '0')) {
-                                      e.preventDefault();
-                                    }
-                                  }}
-                                  onFocus={(e) => e.target.classList.add('no-outline')}
-                                  onBlur={(e) => e.target.classList.remove('no-outline')}
-                                />
-                                <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
+                          </p>
+                          {p.discount !== 0 ? <p className="card-text text-secondary" style={{ fontSize: "16px" }}>
+                            <IoPricetagOutline />
+                            <del>
+                              <span className='fw-bold' > {p.sellPrice.toLocaleString('en-US', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 3,
+                              })
+                              }
+                              </span>
+                              <span className='text-black-50'> VND</span>
+                            </del>
 
-                              </>
-                            ) : (
-                              <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
-                            )}
+                          </p> : <><br /></>}
 
-                          </div>
+                        </div>
+                      </div>
+                      <div className='row d-flex justify-content-center align-items-center mb-2'>
+                        <div className='col-sm-8 p-0 d-flex justify-content-center'>
+                          {isInCart ? (
+                            <>
+                              <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(p, quantity)} color='#057130' size={24} />
+                              <input
+                                onChange={(e) => handleChangeQuantity(p._id, parseInt(e.target.value))}
+                                type='number'
+                                value={quantityInCart}
+                                style={{ width: "40%" }}
+                                className='px-1 text-center border-0 border-bottom'
+                                onKeyDown={(e) => {
+                                  const value = e.target.value;
+                                  if (e.key === '-' || (value === '' && e.key === '0')) {
+                                    e.preventDefault();
+                                  }
+                                }}
+                                onFocus={(e) => e.target.classList.add('no-outline')}
+                                onBlur={(e) => e.target.classList.remove('no-outline')}
+                              />
+                              <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
+
+                            </>
+                          ) : (
+                            <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
+                          )}
+
                         </div>
                       </div>
                     </div>
                   </div>
+
                 );
               })}
 
@@ -280,8 +294,13 @@ function ListProduct() {
 
         </div>
       </div>
+      <ModalCombo
+        show={show}
+        handleClose={handleClose}
+        handleShow={handleShow}
+        productId={productId}
+      />
 
-      
     </>
   )
 }
