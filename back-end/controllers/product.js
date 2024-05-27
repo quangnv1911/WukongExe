@@ -116,10 +116,20 @@ const checkProductQuantity = async (req, res, next) => {
     }
 }
 
+const searchProductByName = async (req, res, next) => {
+    try {
+        const { search } = req.body;
+        const products = await productService.searchProductByName(search);
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
+}
 export default {
     createProduct,
     updateProduct,
     deleteProduct,
     getAllProduct,
-    checkProductQuantity
+    checkProductQuantity,
+    searchProductByName
 }

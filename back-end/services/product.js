@@ -94,11 +94,38 @@ const checkProductQuantity = async (products) => {
         }
     }
 }
+
+const searchProductByName = async (search) => {
+    try {
+        // search by product name which isHide = false
+        const products = await Product.find({
+            $or: [
+                { isHide: false, },
+                { isHide: { $exists: false } }
+            ],
+            name: {
+                $regex: search,
+                $options: "i"
+            }
+        }).populate('category', 'name');
+
+        var newProducts = products.map(product => {
+            product._doc.categoryId = product._doc.category._id;
+            product._doc.category = product._doc.category.name;
+
+            return product;
+        })
+        return newProducts;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 export default {
     createProduct,
     updateProduct,
     deleteProduct,
     getAllProduct,
     decreaseProductQuantity,
-    checkProductQuantity
+    checkProductQuantity,
+    searchProductByName
 }

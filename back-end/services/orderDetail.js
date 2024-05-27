@@ -2,6 +2,9 @@ import OrderDetail from '../models/OrderDetail.js';
 
 const ratioRevenueAndProfit = async (fromDate, toDate) => {
     try {
+        fromDate = new Date(fromDate);
+        toDate = new Date(toDate);
+        toDate.setHours(23, 59, 59, 999);
         var condition;
         if (fromDate === '' && toDate === '') { //Case: getAll
             condition = {}

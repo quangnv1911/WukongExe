@@ -9,5 +9,6 @@ router.get('/static/:year', orderController.getRevenueAndProfitByYear);
 router.post('/', orderController.createOrder);
 router.get('/orderPagination', orderController.getPagination);
 router.post('/update', orderController.updateOrder);
+router.get('/ratio-returning-customer/:year', orderController.getRatioReturningCustomerAndNewCustomer);
 
 export default router;

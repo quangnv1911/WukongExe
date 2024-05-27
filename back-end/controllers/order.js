@@ -21,6 +21,7 @@ const getRevenueAndProfitByYear = async (req, res) => {
     })
   }
 }
+
 const createOrder = async (req, res) => {
   try {
     const { listCart, ...aOrder } = req.body;
@@ -58,6 +59,7 @@ const createOrder = async (req, res) => {
     })
   }
 }
+
 //getAllOrder with condition
 const getAllOrder = async (req, res) => {
   try {
@@ -104,6 +106,7 @@ const getAllOrder = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 }
+
 //getPagination
 const getPagination = async (req, res) => {
   try {
@@ -166,6 +169,7 @@ const getPagination = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
+
 //getOrderById
 const getOrderById = async (req, res) => {
   try {
@@ -199,11 +203,32 @@ const updateOrder = async (req, res) => {
   }
 }
 
+const getRatioReturningCustomerAndNewCustomer = async (req, res) => {
+  try {
+    const { year } = req.params;
+
+    if (!year) {
+      return res.status(200).json({
+        messages: 'Error'
+      })
+    }
+
+    const ratio = await orderService.getRatioReturningCustomerAndNewCustomer(year);
+    return res.status(200).json(ratio);
+
+  } catch (error) {
+    res.status(500).json({
+      messages: error.toString()
+    })
+  }
+}
+
 export default {
   getRevenueAndProfitByYear,
   createOrder,
   getAllOrder,
   getOrderById,
   getPagination,
-  updateOrder
+  updateOrder,
+  getRatioReturningCustomerAndNewCustomer
 }
