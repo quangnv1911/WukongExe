@@ -19,14 +19,14 @@ const QrModal = (props) => {
         ...rest } = props;
     const bank = {
         BANK_ID: "MBBank",
-        ACCOUNT_NO: "0358627705",
+        ACCOUNT_NO: "0981589291",
         TEMPLATE: "compact2",
         AMOUNT: total,
         DESCRIPTION: uuid,
-        ACCOUNT_NAME: 'NGUYEN%20TO%20HOAI%20THUONG'
+        ACCOUNT_NAME: 'VU%20THI%20MAI%20ANH'
     }
     const api_get = "https://oauth.casso.vn/v2/transactions?sort=DESC";
-    const CASSO_API_KEY = "AK_CS.caffbc80165a11efb40563f1fa39d149.uHgwd8URn1xpr9vGFZmOE1u0PfvaEhZUdDGi1lOZKMmfUYyaPl3Djojx5wMW0qJFv4YY5jBX"
+    const CASSO_API_KEY = "AK_CS.75fecf901cfa11efa41101eee626a0b8.U6kmcPAaSjWbujmTl4reyKVD9fJZGV0reh5D6JnCAtqznbzIpgQdWubPHRfwcMuZDepRCnVy"
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
