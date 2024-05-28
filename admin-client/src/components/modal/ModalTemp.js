@@ -69,10 +69,10 @@ const ModalTemp = (props) => {
         formDataSend.append('discount', formData.discount);
         formDataSend.append('discountTime', formData.discountTime);
         formDataSend.append('isCombo', formData.isCombo);
-        formDataSend.append('subdescription', editorProduct.current.getContents().trim());
+        formDataSend.append('subdescription', editorProduct.current ? editorProduct.current.getContents().trim() : '');
         formDataSend.append('category', formData.category);
         formDataSend.append('quantity', formData.quantity);
-        formDataSend.append('story', editorStory.current.getContents().trim());
+        formDataSend.append('story', editorStory.current ? editorStory.current.getContents().trim() : '');
 
         api.post(`${BACK_END_HOST}/product`, formDataSend, {
             headers: {
@@ -152,10 +152,10 @@ const ModalTemp = (props) => {
         formDataSend.append('discount', formData.discount);
         formDataSend.append('discountTime', formData.discountTime);
         formDataSend.append('isCombo', formData.isCombo);
-        formDataSend.append('subdescription', editorProduct.current.getContents().trim());
+        formDataSend.append('subdescription', editorProduct.current ? editorProduct.current.getContents().trim() : '');
         formDataSend.append('category', formData.category);
         formDataSend.append('quantity', formData.quantity);
-        formDataSend.append('story', editorStory.current.getContents().trim());
+        formDataSend.append('story', editorStory.current ? editorStory.current.getContents().trim() : '');
 
         formDataSend.forEach((value, key) => {
             console.log(key, value); // In ra khóa và giá trị
