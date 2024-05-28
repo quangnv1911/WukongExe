@@ -11,13 +11,14 @@ import Wating from '../utils/Wating';
 
 const ModalCombo = (props) => {
 
-    const { show, handleClose, handleShow, productId } = props;
+    const { show, handleClose, handleShow, productId, setShow } = props;
 
     const listCart = useSelector(state => state.product.products);
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
     const [quantities, setQuantities] = useState([]);
     const [product, setProduct] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const lsQuantity = listCart.map(c => ({ _id: c._id, quantity: c.quantity }));
@@ -25,15 +26,15 @@ const ModalCombo = (props) => {
     }, [listCart]);
 
     useEffect(() => {
-        if (productId) {
+        if (show && productId) {
             axios.get(`${BACK_END_HOST}/product/detail/${productId}`)
                 .then(res => {
-                    console.log('ress', res.data);
                     setProduct(res.data)
+                    setIsLoading(false)
                 })
                 .catch(error => console.log('get product detail error:', error))
         }
-    }, [productId])
+    }, [show])
 
 
     const handleAddProduct = (p, quantity) => {
@@ -60,25 +61,34 @@ const ModalCombo = (props) => {
         });
         setQuantities(updatedQuantities);
     }
+
+    const handleCloseModal = () => {
+        setShow(false);
+        // setProduct();
+        // setIsLoading(true)``````````````````````````````````````````````
+    }
+
     var quantityInCart, isInCart, startQuantity;
 
-    if (product) {
-        quantityInCart = quantities.find(item => item._id === product._id)?.quantity;
-        isInCart = listCart.some(c => c._id === product._id);
-        startQuantity = 1;
-    }
+    useEffect(() => {
+        if (product) {
+            quantityInCart = quantities.find(item => item._id === product._id)?.quantity;
+            isInCart = listCart.some(c => c._id === product._id);
+            startQuantity = 1;
+        }
+    }, [product])
+    
 
     return (
         <>
-
-            <Modal show={show} onHide={handleClose} size='xl' centered>
+            <Modal show={show} onHide={handleCloseModal} size='xl' centered>
                 <Modal.Header closeButton>
                     {/* <Modal.Title>Modal heading</Modal.Title> */}
                 </Modal.Header>
                 <Modal.Body closeButton>
                     <div className='row'>
                         {
-                            product ?
+                            !isLoading && product ?
                                 (
                                     <>
                                         <div className='col-md-6 col-sm-12'
@@ -116,15 +126,45 @@ const ModalCombo = (props) => {
                                                                 />
                                                             </div>
 
-                                                            <div style={{
-                                                                color: 'green',
-                                                                fontSize: '1.875rem',
-                                                                fontWeight: '700',
-                                                                lineHeight: '1.375',
-                                                                paddingBottom: '20px'
-                                                            }}>
-                                                                {product.sellPrice.toLocaleString('vi-VN')} (đ)
+                                                            <div 
+                                                                className='d-flex'
+                                                                style={{
+                                                                    alignItems: 'center',
+                                                                    paddingBottom: '20px'
+                                                                }}
+                                                                >
+                                                                <div style={{
+                                                                    color: 'green',
+                                                                    fontSize: '1.875rem',
+                                                                    fontWeight: '700',
+                                                                    lineHeight: '1.375',
+                                                                }}>
+                                                                    {product.discount !== 0
+                                                                        ? (product.sellPrice - (product.sellPrice * (product.discount / 100))).toLocaleString('en-US', {
+                                                                            minimumFractionDigits: 0,
+                                                                            maximumFractionDigits: 3,
+                                                                        })
+                                                                        : product.sellPrice.toLocaleString('en-US', {
+                                                                            minimumFractionDigits: 0,
+                                                                            maximumFractionDigits: 3,
+                                                                        })
+                                                                    } (đ)
+                                                                </div>
+                                                                <div>
+                                                                    {product.discount !== 0 ? <p className="card-text text-secondary" style={{ fontSize: "23px", paddingLeft: '20px', opacity: '0.7' }}>
+                                                                        <del>
+                                                                            <span className='fw-bold' > {product.sellPrice.toLocaleString('en-US', {
+                                                                                minimumFractionDigits: 0,
+                                                                                maximumFractionDigits: 3,
+                                                                            })
+                                                                            }
+                                                                            </span> (đ)
+                                                                        </del>
+
+                                                                    </p> : <><br /></>}
+                                                                </div>
                                                             </div>
+
 
                                                             <div className='d-flex' style={{ justifyContent: 'center', marginBottom: '20px' }}>
                                                                 <div
@@ -224,7 +264,7 @@ const ModalCombo = (props) => {
                                 )
                                 :
                                 (
-                                    <Wating/>
+                                    <Wating />
                                 )
                         }
 
