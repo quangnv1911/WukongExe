@@ -299,6 +299,7 @@ function ListProduct() {
         handleClose={handleClose}
         handleShow={handleShow}
         productId={productId}
+        setShow={setShow}
       />
 
     </>
