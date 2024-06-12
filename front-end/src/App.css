@@ -43,14 +43,3 @@ input[type="number"] {
 
 
 
-html, body {
-  cursor: url('/image-removebg-preview.png'), auto !important;
-}
-
-button:hover {
-  cursor: url('/hover.png'), auto !important;
-}
-
-.cursor-pointer {
-  cursor: url('/pointer.cur'), auto !important;
-}

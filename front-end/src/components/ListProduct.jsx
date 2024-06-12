@@ -113,7 +113,7 @@ function ListProduct() {
                   <div className="col-sm-3 mb-4" key={p._id}>
                     <div className="card w-100 mx-auto border-0">
                       {p.discount !== 0 && <p style={{ backgroundColor: "#50CD89", width: "45%", position: "absolute", top: "10px" }} className="text-light ms-2 rounded-1 text-center">Giảm giá {p.discount}%</p>}
-                      <div onClick={() => handleShow(p._id)} className='cursor-pointer' >
+                      <div onClick={() => handleShow(p._id)} style={{cursor: 'pointer'}}>
                         <img src={p.image} style={{ width: "12em" }} className="card-img-top img-fluid mx-auto pt-1" alt="Product Image" />
                         <div className="card-body">
                           <h5 className="card-title" style={{ lineHeight: "20px", height: "40px", fontSize: "18px", overflow: "hidden", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2 }}>{p.name}</h5>
@@ -152,7 +152,7 @@ function ListProduct() {
                         <div className='col-sm-8 p-0 d-flex justify-content-center'>
                           {isInCart ? (
                             <>
-                              <GrSubtractCircle className='cursor-pointer'  onClick={() => handleSubProduct(p, quantity)} color='#057130' size={24} />
+                              <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(p, quantity)} color='#057130' size={24} />
                               <input
                                 onChange={(e) => handleChangeQuantity(p._id, parseInt(e.target.value))}
                                 type='number'
@@ -168,11 +168,11 @@ function ListProduct() {
                                 onFocus={(e) => e.target.classList.add('no-outline')}
                                 onBlur={(e) => e.target.classList.remove('no-outline')}
                               />
-                              <GrAddCircle className='cursor-pointer'  onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
+                              <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
 
                             </>
                           ) : (
-                            <GrAddCircle className='cursor-pointer'  onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
+                            <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
                           )}
 
                         </div>
@@ -254,7 +254,7 @@ function ListProduct() {
                                   <div className='col-sm-8 p-0 d-flex justify-content-center'>
                                     {isInCart ? (
                                       <>
-                                        <GrSubtractCircle className='cursor-pointer' onClick={() => handleSubProduct(p, quantity)} color='#057130' size={24} />
+                                        <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(p, quantity)} color='#057130' size={24} />
                                         <input
                                           onChange={(e) => handleChangeQuantity(p._id, parseInt(e.target.value))}
                                           type='number'
@@ -270,11 +270,11 @@ function ListProduct() {
                                           onFocus={(e) => e.target.classList.add('no-outline')}
                                           onBlur={(e) => e.target.classList.remove('no-outline')}
                                         />
-                                        <GrAddCircle className='cursor-pointer' onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
+                                        <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, quantityInCart)} color='#057130' size={24} />
 
                                       </>
                                     ) : (
-                                      <GrAddCircle className='cursor-pointer' onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
+                                      <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(p, startQuantity)} color='#057130' size={24} />
                                     )}
 
                                   </div>
