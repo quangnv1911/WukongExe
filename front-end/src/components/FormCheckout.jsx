@@ -77,7 +77,7 @@ function FormCheckout() {
     });
 
     useEffect(() => {
-        setPostData({ ...postData, voucher: idVoucher, total: totalEnd, listCart: listCart });
+        setPostData({ ...postData, voucher: idVoucher, total: totalEnd, listCart: listCart, totalProfit: totalProf });
     }, [idVoucher, listCart]);
 
     const handleChangeData = (e) => {
