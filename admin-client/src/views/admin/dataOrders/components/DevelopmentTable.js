@@ -13,6 +13,8 @@ import {
   Th,
   Thead,
   Tr,
+  Wrap,
+  WrapItem,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -305,25 +307,21 @@ export default function DevelopmentTable(props) {
             })}
         </Tbody>
       </Table>
-      <Flex
-        align='center'
-        justify='end'
-        mr='30px'
-      >
+      <Wrap justify='end' mr='30px'>
         {[...Array(totalPages)].map((_, index) => (
-          <Button
-            colorScheme='green'
-            borderRadius='5px'
-            m='2px'
-            onClick={() => setPageNow(index + 1)}
-            background={pageNow === (index + 1) ? 'green.700' : null}
-            key={index}
-          >
-            {(index + 1)}
-
-          </Button>
+          <WrapItem key={index}>
+            <Button
+              colorScheme='green'
+              borderRadius='5px'
+              m='2px'
+              onClick={() => setPageNow(index + 1)}
+              background={pageNow === (index + 1) ? 'green.700' : undefined}
+            >
+              {index + 1}
+            </Button>
+          </WrapItem>
         ))}
-      </Flex>
+      </Wrap>
       <>
         <ModalTemp
           isOpen={isOpen}
