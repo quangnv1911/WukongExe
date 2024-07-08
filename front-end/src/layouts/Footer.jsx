@@ -37,11 +37,9 @@ function Footer() {
                     <p><span style={{ opacity: 0.8 }}>Địa chỉ: </span><span>Thạch Hoà, Thạch Thất, Hà Nội</span></p>
                     <p>Tìm hiểu thêm qua các nền tảng khác</p>
                     <p>
-                        <img className='img-fluid mx-1' style={{objectFit:"cover", objectPosition:"center"}} width={30} src={face} alt="Facebook" />
-                        <img className='img-fluid mx-1' style={{objectFit:"cover", objectPosition:"center"}} width={30} src={zalo} alt="Zalo" />
-                        <img className='img-fluid mx-1' style={{objectFit:"cover", objectPosition:"center"}} width={30} src={tele} alt="Telegram" />
-                        <img className='img-fluid mx-1' style={{objectFit:"cover", objectPosition:"center"}} width={30} src={inta} alt="Instagram" />
-                        <img className='img-fluid mx-1' style={{objectFit:"cover", objectPosition:"center"}} width={30} src={tiktok} alt="TikTok" />
+                        <a href="https://www.facebook.com/tiemanvatbearpo.com.vn">
+                            <img className='img-fluid mx-1' style={{objectFit:"cover", objectPosition:"center"}} width={30} src={face} alt="Facebook" />
+                        </a>
                     </p>
                 </div>
             </div>
