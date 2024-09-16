@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  mongo-db:
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - dev 
+
+  nginx:
+    image: nginx:stable-alpine3.17
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    networks:
+      - dev
+      
+  back-end:
+    image: quangnv1911/bearpo-back-end:v1
+    build:
+      context: /back-end
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3008
+      - MONGO_DB_URL=mongodb://167.71.218.101:27017/Bearpo
+      - PRIVATE_KEY=your_private_key
+      - BACK_END_HOST=http://167.71.218.101:3008
+      - CLOUD_NAME=dt4zxti7x
+      - API_KEY=145527241165396
+      - API_SECRET=your_api_secret
+      - TELEGRAMBOT_TOKEN=your_telegram_bot_token
+      - TELEGRAM_GROUPID=your_telegram_group_id
+    depends_on:
+      - mongo-db
+    networks:
+      - dev    
+    ports:
+      - "3008:3008"
+
+  front-end:
+    image: quangnv1911/bearpo-front-end:v1
+    build:
+      context: /front-end
+      dockerfile: Dockerfile
+    networks:
+      - dev    
+
+  admin-client:
+    image: quangnv1911/bearpo-admin-client:v1
+    build:
+      context: /admin-client
+      dockerfile: Dockerfile
+    networks:
+      - dev    
+  json-server:
+    image: quangnv1911/bearpo-json-server:v1
+    build:
+      context: /json-server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+networks:
+  dev:

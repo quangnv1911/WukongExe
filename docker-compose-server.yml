@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mongo-db:
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - dev
+
+  nginx:
+    image: nginx:stable-alpine3.17
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    networks:
+      - dev
+
+  back-end:
+    image: quangnv1911/bearpo-back-end:v1
+    environment:
+      - PORT=3008
+      - MONGO_DB_URL=mongodb://mongo-db:27017/Bearpo
+      - PRIVATE_KEY=p5XcBBTii7a+6p90blNrQ5qKZWYc9AN3ZsPxokEndvqxqHI71aaZ/Yrz51pNMjgy2nsxlGWqMM7KLJ5dV8lQvyQCMG057xUWW0KPwnwbU0o6+l3w5PdQe50jvcYWWwbKExJgUAb>      - BACK_END_HOST=http://167.71.218.101:3008
+      - CLOUD_NAME=dt4zxti7x
+      - API_KEY=145527241165396
+      - API_SECRET=TjbiU9lmYCgdIPAod6hiG4XHf3I
+      - TELEGRAMBOT_TOKEN=6935212540:AAG68j80HgH1DcXw4emEqf_1D_w4XYxsimI
+      - TELEGRAM_GROUPID=-4509219046
+    depends_on:
+      - mongo-db
+    networks:
+      - dev
+    ports:
+      - "3008:3008"
+
+  front-end:
+    image: quangnv1911/bearpo-front-end:v1
+    networks:
+      - dev
+
+  admin-client:
+    image: quangnv1911/bearpo-admin-client:v1
+    networks:
+      - dev
+    ports:
+      - "3000:80"
+  json-server:
+    image: quangnv1911/bearpo-json-server:v1
+    ports:
+      - "3001:3000"
+
+networks:
+  dev:
+
