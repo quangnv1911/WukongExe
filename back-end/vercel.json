@@ -6,5 +6,11 @@
             "src": "/(.*)",
             "dest": "/routes/index.js"
         }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
     ]
 }
