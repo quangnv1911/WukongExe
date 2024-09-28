@@ -12,6 +12,7 @@ config();
 
 
 const app = express();
+app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use('/public', express.static('public'));
 const PORT = process.env.PORT || 3007;
 
@@ -46,4 +47,4 @@ async function main() {
 }
 
 main();
-export default app;
+module.exports = app;
