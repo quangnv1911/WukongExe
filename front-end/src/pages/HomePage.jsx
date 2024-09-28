@@ -9,10 +9,11 @@ const HomePage = () => {
   return (
     <DefaultTemplate>
       <Story />
-      <Category />
+      {/* <Category /> */}
       <ListProduct />
       <Combo/>
       <Voucher/>
+      
     </DefaultTemplate>
   )
 }

@@ -30,21 +30,6 @@ const routes = [
     component: MainDashboard,
   },
   {
-    name: "Edit Homepage",
-    layout: "/admin",
-    path: "/edit-giao-dien",
-    icon: (
-      <Icon
-        as={MdSettings}
-        width='20px'
-        height='20px'
-        color='inherit'
-      />
-    ),
-    component: NFTMarketplace,
-    secondary: true,
-  },
-  {
     name: "Product",
     layout: "/admin",
     icon: <Icon as={MdFastfood} width='20px' height='20px' color='inherit' />,
@@ -73,7 +58,7 @@ const routes = [
   //   component: Profile,
   // },
   {
-    name: "Sign In",
+    name: "Logout",
     layout: "/auth",
     path: "/sign-in",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,

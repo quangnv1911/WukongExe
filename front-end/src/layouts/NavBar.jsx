@@ -39,7 +39,7 @@ function NavBar() {
     return (
         <div className='row d-flex justify-content-center align-items-center h-20 py-4 sticky-top bg-white navbar-wrapper'>
             <div className='col-sm-4 text-center'>
-                <Link to={'/'}><img src={logoCopy} className='img-fluid ' alt="Example Image" /></Link>
+                <Link to={'/'}><img src={logoCopy} className='img-fluid ' alt="Example Image" width='250px' height='79px' /></Link>
             </div>
             <div className='col-sm-8 d-flex justify-content-end'>
                 <div className='w-75 d-flex align-items-center' style={{ lineHeight: "2em" }}>
@@ -55,7 +55,7 @@ function NavBar() {
                         )}
                     </span>
                     {!isSmallScreen && (
-                        <button className='text-white btn' style={{ backgroundColor: "#057130" }}>
+                        <button className='text-white btn' style={{ backgroundColor: "#ffcb03" }}>
                             <TbFilterSearch style={{ fontSize: "20px", lineHeight: "2em" }} />
                             <span className='ml-1'>Bộ lọc</span>
                         </button>

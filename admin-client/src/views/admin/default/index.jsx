@@ -37,7 +37,7 @@ import api from "utils/Services";
 import CustomerCard from "./components/CustomerCard";
 
 export default function UserReports() {
-  // Bearpo: statics
+  // Wukong: statics
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");

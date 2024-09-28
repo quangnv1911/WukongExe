@@ -114,7 +114,7 @@ const ModalCombo = (props) => {
                                                         <div className='m-2'>
                                                             <h4>{product ? product.name : ''}</h4>
                                                             <div>
-                                                                Tình trạng: <span style={{ color: 'green', fontWeight: '600' }}>Còn hàng</span>
+                                                                Tình trạng: <span style={{ color: '#ffcb03', fontWeight: '600' }}>Còn hàng</span>
                                                             </div>
                                                             <div className='d-flex' style={{ justifyContent: 'center', marginBottom: '20px' }}>
                                                                 <div
@@ -134,7 +134,7 @@ const ModalCombo = (props) => {
                                                                 }}
                                                                 >
                                                                 <div style={{
-                                                                    color: 'green',
+                                                                    color: '#ffcb03',
                                                                     fontSize: '1.875rem',
                                                                     fontWeight: '700',
                                                                     lineHeight: '1.375',
@@ -216,7 +216,7 @@ const ModalCombo = (props) => {
                                                                             justifyContent: 'center',
                                                                             alignItems: 'center'
                                                                         }}>
-                                                                            <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#057130' size={24} />
+                                                                            <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#ffcb03' size={24} />
                                                                             <input
                                                                                 onChange={(e) => handleChangeQuantity(product._id, parseInt(e.target.value))}
                                                                                 type='number'
@@ -232,7 +232,7 @@ const ModalCombo = (props) => {
                                                                                 onFocus={(e) => e.target.classList.add('no-outline')}
                                                                                 onBlur={(e) => e.target.classList.remove('no-outline')}
                                                                             />
-                                                                            <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={24} />
+                                                                            <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#ffcb03' size={24} />
 
                                                                         </div>
                                                                     ) :
@@ -242,7 +242,7 @@ const ModalCombo = (props) => {
                                                                                 justifyContent: 'center',
                                                                                 alignItems: 'center'
                                                                             }}>
-                                                                                <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, startQuantity)} color='#057130' size={24} />
+                                                                                <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, startQuantity)} color='#ffcb03' size={24} />
                                                                             </div>
                                                                         )
                                                                 }

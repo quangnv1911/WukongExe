@@ -30,12 +30,20 @@ function ShoppingCartModal({ show, handleClose }) {
         // console.log(quantity);
         const aProduct = { ...p, quantity }
         dispatch(addProduct(aProduct));
-        toast.success('Đã thêm sản phẩm vào giỏ hàng!');
+        toast.success('Đã thêm sản phẩm vào giỏ hàng!', {
+            style: {
+                color: '#fbbf24' // Màu vàng (Tailwind CSS: yellow-400)
+            },
+        });
     }
     const handleSubProduct = (p) => {
         const aProduct = { ...p };
         dispatch(subProduct(aProduct));
-        toast.success('Đã xoá sản phẩm khỏi giỏ hàng!');
+        toast.success('Đã xoá sản phẩm khỏi giỏ hàng!', {
+            style: {
+                color: '#fbbf24' // Màu vàng (Tailwind CSS: yellow-400)
+            },
+        });
     }
 
     const handleChangeQuantity = (productId, newQuantity) => {
@@ -81,7 +89,7 @@ function ShoppingCartModal({ show, handleClose }) {
                                             <td><p>{product.name}</p></td>
                                             <td>
                                                 <div className="d-flex align-items-center">
-                                                    <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#057130' size={24} />
+                                                    <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#ffcb03' size={24} />
                                                     <input
                                                         onChange={(e) => handleChangeQuantity(product._id, parseInt(e.target.value))}
                                                         type='number'
@@ -97,7 +105,7 @@ function ShoppingCartModal({ show, handleClose }) {
                                                         onFocus={(e) => e.target.classList.add('no-outline')}
                                                         onBlur={(e) => e.target.classList.remove('no-outline')}
                                                     />
-                                                    <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={24} />
+                                                    <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#ffcb03' size={24} />
                                                 </div>
                                             </td>
                                             <td><p>{(product.sellPrice - (product.sellPrice * (product.discount / 100))).toLocaleString('en-US', {
@@ -117,11 +125,11 @@ function ShoppingCartModal({ show, handleClose }) {
             <Modal.Footer style={{ justifyContent: 'space-between' }}>
                 {listCart.length === 0 ?
                     <div style={{ marginLeft: 'auto' }}>
-                        <Link to={'/'} className='btn btn-success' onClick={handleClose}>Trở lại</Link>
+                        <Link to={'/'} className='btn btn-warning' onClick={handleClose}>Trở lại</Link>
                     </div> :
                     <>
                         <h5 style={{ textAlign: 'left' }}>Tổng tiền: {total} VNĐ</h5>
-                        <Link to="/checkout" className="btn btn-success">Đặt đơn</Link>
+                        <Link to="/checkout" className="btn btn-warning">Đặt đơn</Link>
                     </>
                 }
             </Modal.Footer>

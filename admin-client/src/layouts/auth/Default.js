@@ -64,12 +64,10 @@ function AuthIllustration(props) {
           <Flex
             bg={`url(${logo})`}
             justify='center'
-            align='end'
-            w='100%'
-            h='100%'
+            align='center'
+            w='500px'
+            h='500px'
             bgSize='cover'
-            bgPosition='50%'
-            position='absolute'
             borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}></Flex>
         </Box>
         <Footer />

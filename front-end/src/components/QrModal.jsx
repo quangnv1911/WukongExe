@@ -22,11 +22,11 @@ const QrModal = (props) => {
         ACCOUNT_NO: "0334745645",
         TEMPLATE: "compact2",
         AMOUNT: total,
-        DESCRIPTION: uuid,
+        DESCRIPTION: 'Wukong ' + uuid,
         ACCOUNT_NAME: 'NGUYEN VINH QUANG'
     }
     const api_get = "https://oauth.casso.vn/v2/transactions?sort=DESC";
-    const CASSO_API_KEY = ""
+    const CASSO_API_KEY = "AK_CS.8919b2c06f3411ef9eef9daee9cc4b4e.D3UmTnte682d53QW4xP4ivFO725YT9HMgjvurK6N1ukb1l6HA3kAxzI1GOwQ59u5HKOhhdjX"
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -96,7 +96,7 @@ const QrModal = (props) => {
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
-            cancelButtonColor: "#057130",
+            cancelButtonColor: "#ffcb03",
             cancelButtonText: "Đóng",
             confirmButtonText: "Hủy thanh toán"
         }).then((result) => {

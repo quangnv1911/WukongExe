@@ -1,23 +1,21 @@
 version: '3.8'
 
 services:
-  mongo-db:
-    image: mongo:latest
-    restart: always
-    ports:
-      - "27017:27017"
-    networks:
-      - dev 
-
   nginx:
-    image: nginx:stable-alpine3.17
+    image: nginx:latest
+    container_name: nginx
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Cấu hình nginx
+      - ./cert.pem:/etc/nginx/cert.pem:ro  # Chứng chỉ SSL
+      - ./privkey.pem:/etc/nginx/privkey.pem:ro  # Khóa riêng SSL
     ports:
       - "80:80"
+      - "443:443"
+    depends_on:
+      - front-end
+      - admin-client
     networks:
       - dev
-      
   back-end:
     image: quangnv1911/bearpo-back-end:v1
     build:
@@ -25,16 +23,14 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=3008
-      - MONGO_DB_URL=mongodb://167.71.218.101:27017/Bearpo
-      - PRIVATE_KEY=your_private_key
-      - BACK_END_HOST=http://167.71.218.101:3008
+      - MONGO_DB_URL=mongodb+srv://quangnv1911:yGLniiAAhh7a93u5@wukongfood.oshcg.mongodb.net/?retryWrites=true&w=majority&appName=WukongFood
+      - PRIVATE_KEY=p5XcBBTii7a+6p90blNrQ5qKZWYc9AN3ZsPxokEndvqxqHI71aaZ/Yrz51pNMjgy2nsxlGWqMM7KLJ5dV8lQvyQCMG057xUWW0KPwnwbU0o6+l3w5PdQe50jvcYWWwbKExJgUAb>      
+      - BACK_END_HOST=https://api.wukongfood.site
       - CLOUD_NAME=dt4zxti7x
       - API_KEY=145527241165396
-      - API_SECRET=your_api_secret
-      - TELEGRAMBOT_TOKEN=your_telegram_bot_token
-      - TELEGRAM_GROUPID=your_telegram_group_id
-    depends_on:
-      - mongo-db
+      - API_SECRET=TjbiU9lmYCgdIPAod6hiG4XHf3I
+      - TELEGRAMBOT_TOKEN=7701202850:AAEUqZNENK-wNqGlPRYdD8E3HHxxFzLeML8
+      - TELEGRAM_GROUPID=-4581214257
     networks:
       - dev    
     ports:

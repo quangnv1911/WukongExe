@@ -5,7 +5,7 @@ function Combo() {
     const listCombo = [
         {
             image: combo1,
-            name: "COMBO Bear Po (limited)",
+            name: "COMBO Wukong Food (limited)",
             price: "19.99",
         },
         {

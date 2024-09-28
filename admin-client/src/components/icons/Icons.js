@@ -463,11 +463,11 @@ export const SpotifyLogo = createIcon({
 export const HorizonLogo = () => (
   <img
     src={logo}
-    alt="BearPo"
+    alt="Wukong"
     width="179"
     height="20"
     style={{
-      marginBottom: '25px'
+      marginBottom: '0px'
     }}
   />
 );

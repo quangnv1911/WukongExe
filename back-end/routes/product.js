@@ -6,7 +6,7 @@ import { CloudinaryStorage } from 'multer-storage-cloudinary'
 
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
-    folder: 'BEARPO_PRODUCT',
+    folder: 'Wukong_PRODUCT',
     allowedFormats: ['jpg', 'png', 'jpeg']
 })
 

@@ -38,7 +38,7 @@ async function main() {
 
 
     app.listen(PORT, () => {
-      console.log('Bearpo running on port ' + PORT);
+      console.log('Wukong running on port ' + PORT);
     })
   } catch (err) {
     console.log(err);

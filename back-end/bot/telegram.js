@@ -22,7 +22,7 @@ const sendNewOrderMessage = (order) => {
 ⚠️  Trạng thái giao hàng: ${order.status ? 'Đã giao': 'Chưa giao'}
 💵  Tổng giá trị đơn hàng: ${order.total.toLocaleString('vi-VN')} (đồng)
 
-🔗  Bearpo Admin: https://bearpo-admin.vercel.app/
+🔗  Kiểm tra chi tiết tại: https://admin.wukongfood.site
         `
 
     bot.sendMessage(process.env.telegram_groupid, htmlMessage);

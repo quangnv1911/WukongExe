@@ -8,7 +8,7 @@ import tele from '../assets/tele.png';
 
 function Footer() {
     return (
-        <div className='row d-flex p-4' style={{ backgroundColor: "#057130"}}>
+        <div className='row d-flex p-4' style={{ backgroundColor: "#282828", color: 'hsla(0, 0%, 100%, .5'}}>
             <div className='col-lg-3 col-md-6 col-sm-6 col-12 text-center mb-4'>
                 <img src={logo} width={240} className='img-fluid' alt="Logo" />
             </div>
@@ -32,12 +32,12 @@ function Footer() {
             </div>
             <div className='col-lg-3 col-md-6 col-sm-6 col-12 d-flex align-items-center mb-4'>
                 <div className='text-white'>
-                    <p><span style={{ opacity: 0.8 }}>Liên hệ: </span><span>+84 358627705</span> </p> 
-                    <p><span style={{ opacity: 0.8 }}>Giới thiệu: </span><span>bearpofood@gmail.vn</span></p>
+                    <p><span style={{ opacity: 0.8 }}>Liên hệ: </span><span>081 825 1203</span> </p> 
+                    <p><span style={{ opacity: 0.8 }}>Giới thiệu: </span><span>wukongfood@gmail.vn</span></p>
                     <p><span style={{ opacity: 0.8 }}>Địa chỉ: </span><span>Thạch Hoà, Thạch Thất, Hà Nội</span></p>
                     <p>Tìm hiểu thêm qua các nền tảng khác</p>
                     <p>
-                        <a href="https://www.facebook.com/tiemanvatbearpo.com.vn">
+                        <a href="https://www.facebook.com/profile.php?id=61565933736328">
                             <img className='img-fluid mx-1' style={{objectFit:"cover", objectPosition:"center"}} width={30} src={face} alt="Facebook" />
                         </a>
                     </p>

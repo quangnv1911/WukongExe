@@ -269,7 +269,7 @@ function FormCheckout() {
                                     <td>{formatDate(v.expiryDate)}</td>
                                     <td >{v.percent}%</td>
                                     <td>
-                                        <button className="btn btn-success" onClick={() => handleApplyVoucher(v)}>Áp dụng</button>
+                                        <button className="btn btn-warning" onClick={() => handleApplyVoucher(v)}>Áp dụng</button>
                                     </td>
                                 </tr>
                             ))}
@@ -285,7 +285,7 @@ function FormCheckout() {
                         <p className='text-secondary fw-medium'>
                             <Link to={'/'} className='text-secondary' style={{ textDecoration: "none" }}>
                                 Trang chủ
-                            </Link> / <span style={{ color: "#057130" }}>Thông tin giao hàng</span>
+                            </Link> / <span style={{ color: "#ffcb03" }}>Thông tin giao hàng</span>
                         </p>
                     </div>
                     <div className='col-sm-12 my-4'>
@@ -414,7 +414,7 @@ function FormCheckout() {
                                                     <td><img src={product.image} alt={product.name} style={{ width: '50px', height: '50px', marginRight: '10px' }} /></td>
                                                     <td style={{ width: "35%" }}><p>{product.name}</p></td>
                                                     <td className='text-center'><div>
-                                                        <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#057130' size={20} />
+                                                        <GrSubtractCircle style={{ cursor: "pointer" }} onClick={() => handleSubProduct(product, quantity)} color='#ffcb03' size={20} />
                                                         <input
                                                             onChange={(e) => handleChangeQuantity(product._id, parseInt(e.target.value))}
                                                             type='number'
@@ -430,7 +430,7 @@ function FormCheckout() {
                                                             onFocus={(e) => e.target.classList.add('no-outline')}
                                                             onBlur={(e) => e.target.classList.remove('no-outline')}
                                                         />
-                                                        <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#057130' size={20} />
+                                                        <GrAddCircle style={{ cursor: "pointer" }} onClick={() => handleAddProduct(product, quantityInCart)} color='#ffcb03' size={20} />
                                                     </div></td>
                                                     <td className='text-center'><p>{((product.sellPrice - (product.sellPrice * (product.discount / 100))) * product.quantity).toLocaleString('en-US', {
                                                         minimumFractionDigits: 0,
@@ -493,7 +493,7 @@ function FormCheckout() {
                                         </div>
                                     </div>
                                     <div className='col-sm-12'>
-                                        <button className='btn btn-success btn-lg w-100 mt-2' type="submit"><FaCheckCircle /> Đặt đơn</button>
+                                        <button className='btn btn-warning btn-lg w-100 mt-2' type="submit"><FaCheckCircle /> Đặt đơn</button>
                                     </div>
                                 </div>
                             </div>}
