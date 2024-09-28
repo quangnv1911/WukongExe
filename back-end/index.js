@@ -44,5 +44,6 @@ async function main() {
     console.log(err);
   }
 }
-export default app;
+
 main();
+module.exports = app;
