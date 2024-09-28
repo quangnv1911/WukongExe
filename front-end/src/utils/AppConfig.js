@@ -1,4 +1,4 @@
-export const BACK_END_HOST = "https://wukong-exe-be.vercel.app/api/v1"; // Sử dụng HTTPS
+export const BACK_END_HOST = "https://wukong-be.onrender.com/api/v1"; // Sử dụng HTTPS
 export const FRONT_END_HOST = "https://wukong-exe.vercel.app/"; // Sử dụng HTTPS
 export const ADDRESS_HOST = "https://vietnam-administrative-division-json-server-swart.vercel.app/"; // Sử dụng HTTPS
 
