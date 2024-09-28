@@ -47,4 +47,4 @@ async function main() {
 }
 
 main();
-export default app;
+module.exports = app;
