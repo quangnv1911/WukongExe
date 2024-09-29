@@ -23,7 +23,6 @@ function NavBar() {
             dispatch(addKeySearch(value));
         }
     };
-    console.log(totalQuantity);
     useEffect(() => {
         // Kiểm tra kích thước màn hình khi component được render lại
         const handleResize = () => {
@@ -54,12 +53,12 @@ function NavBar() {
                             <sup style={{ position: "absolute", top: "-5px", left: "42px", backgroundColor: "red", color: "white", borderRadius: "50%", padding: "10px 8px", fontSize: "12px" }}>{totalQuantity}</sup>
                         )}
                     </span>
-                    {!isSmallScreen && (
+                    {/* {!isSmallScreen && (
                         <button className='text-white btn' style={{ backgroundColor: "#ffcb03" }}>
                             <TbFilterSearch style={{ fontSize: "20px", lineHeight: "2em" }} />
                             <span className='ml-1'>Bộ lọc</span>
                         </button>
-                    )}
+                    )} */}
                 </div>
             </div>
             <ShoppingCartModal show={showModal} handleClose={handleCloseModal} />

@@ -116,12 +116,11 @@ function FormCheckout() {
     };
 
     const handleCheckProductQuantity = () => {
-        console.log('postData', postData);
+        
         axios.post(`${BACK_END_HOST}/product/check-product-quantity`, {
             postData
         })
             .then(res => {
-                console.log(res);
                 if (res.data.value) {
                     handleShow();
                     // fetch(`${BACK_END_HOST}/order`, {
@@ -314,19 +313,19 @@ function FormCheckout() {
                             <div className='row mb-3 mx-1'>
                                 <div className="form-check col-sm-3">
                                     <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios0" value="1" onChange={handleChangeRadio} checked={selectedValue === '1'} />
-                                    <label className="form-check-label" htmlFor="exampleRadios1">
+                                    <label title='Giao hàng nhanh chóng, ' className="form-check-label" htmlFor="exampleRadios1">
                                         Giao hàng tận nơi
                                     </label>
                                 </div>
-                                <div className="form-check col-sm-3">
+                                <div className="form-check col-sm-3" style={{cursor: "pointer"}}>
                                     <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios1" value="2" onChange={handleChangeRadio} checked={selectedValue === '2'} />
-                                    <label className="form-check-label" htmlFor="exampleRadios1">
+                                    <label title='Đảm bảo rằng thông tin về người gửi và nội dung bên trong gói hàng không bị lộ ra ngoài.' className="form-check-label" htmlFor="exampleRadios1">
                                         Giao hàng bí mật
                                     </label>
                                 </div>
                                 <div className="form-check col-sm-3">
                                     <input className="form-check-input" type="radio" name="shippingType" id="exampleRadios2" value="3" onChange={handleChangeRadio} checked={selectedValue === '3'} />
-                                    <label className="form-check-label" htmlFor="exampleRadios2">
+                                    <label title='Khách tự đến nhận hàng' className="form-check-label" htmlFor="exampleRadios2">
                                         Tự lấy hàng
                                     </label>
                                 </div>

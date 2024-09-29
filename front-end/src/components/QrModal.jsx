@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { clearProduct } from '../redux/ProductReducer';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import OrderConfirmationModal from './OrderConfirmation';
 
 
 const QrModal = (props) => {
@@ -33,7 +34,12 @@ const QrModal = (props) => {
 
     const [data, setData] = useState({});
     const [isPaid, setIsPaid] = useState(false);
+    const [showModal, setShowModal] = useState(false)
 
+    const handleCloseModal = () => {
+        navigate('/')
+        setShowModal(false); // Đóng modal
+    };
     const fetchData = async () => {
         try {
             const res = await fetch(api_get, {
@@ -44,7 +50,7 @@ const QrModal = (props) => {
             });
             const jsonData = await res.json();
             setData(jsonData);
-
+            
             //handle send success
             jsonData.data.records.forEach(trans => {
                 //lam tron xuong va so sanh + xoa dau '-' cua uuid
@@ -77,11 +83,13 @@ const QrModal = (props) => {
     const saveOrder = async () => {
         axios.post(`${BACK_END_HOST}/order`, postData)
             .then(res => {
-                toast.success('Thanh toán thành công ❤️\nCảm ơn bạn')
+               
                 dispatch(clearProduct());
+                
                 setTimeout(() => {
-                    navigate("/");
-                }, 4000)
+                    toast.success('Thanh toán thành công ❤️\nCảm ơn bạn')
+                    setShowModal(true)
+                }, 2000)
             })
             .catch(error => {
                 console.log('saveOrder error:', error);
@@ -111,7 +119,7 @@ const QrModal = (props) => {
         <div>
             <Modal show={show} style={{ minWidth: '100%' }}>
                 {
-                    isPaid ? <Thank /> :
+                    isPaid ?   <OrderConfirmationModal show={showModal} handleClose={handleCloseModal} /> :
                         (
                             <div>
                                 <Modal.Header>
@@ -132,7 +140,7 @@ const QrModal = (props) => {
                 }
 
             </Modal>
-
+          
         </div>
 
     )
