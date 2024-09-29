@@ -177,9 +177,9 @@ const ModalCombo = (props) => {
                                                             </div>
 
                                                             <div>
-                                                                <strong>Mô tả sản phẩm</strong>
+                                                                <strong> Combo bao gồm:</strong>
                                                                 <div>
-                                                                    Sản phẩm bao gồm:
+                                                                   
                                                                     {
                                                                         product ? <div dangerouslySetInnerHTML={{ __html: product.subdescription }}></div> : ''
                                                                     }
@@ -198,7 +198,7 @@ const ModalCombo = (props) => {
                                                             </div>
 
                                                             <div>
-                                                                <strong>Câu truyện về chú gấu</strong>
+                                                                <strong>Chuyện Kể Tây Du</strong>
                                                                 <div>
                                                                     {
                                                                         product ? <div dangerouslySetInnerHTML={{ __html: product.story }}></div> : ''

@@ -90,11 +90,14 @@ function ListProduct() {
 
   return (
     <>
-      {/* <div className='row h-auto' style={{margin: '30px 150px'}}>
-        <div className='col-sm-12 py-2 px-3 text-center' style={{backgroundColor: '#ffcb03', color: '#063e57'}}>
-          <h3 className='fw-bold'>COMBO Wukong Food</h3>
+      <div className="row h-auto" style={{ margin: "30px 150px" }}>
+        <div
+          className="col-sm-12 py-2 px-3 text-center"
+          style={{ backgroundColor: "#ffcb03", color: "#063e57" }}
+        >
+          <h3 className="fw-bold">COMBO Wukong Food</h3>
         </div>
-      </div> */}
+      </div>
       <div className="row h-auto pb-4 d-flex justify-content-center">
         <div className="col-sm-8 text-center">
           {loading ? (
@@ -278,9 +281,12 @@ function ListProduct() {
         </div>
       </div>
 
-      <div className='row h-auto 'style={{margin: '40px 20%'}}>
-        <div className='col-sm-12 py-2 px-3 text-center' style={{backgroundColor: '#ffcb03', color: '#063e57'}}>
-          <h3 className='fw-bold'>ĐỒ ĂN VẶT Wukong Food</h3>
+      <div className="row h-auto " style={{ margin: "40px 20%" }}>
+        <div
+          className="col-sm-12 py-2 px-3 text-center"
+          style={{ backgroundColor: "#ffcb03", color: "#063e57" }}
+        >
+          <h3 className="fw-bold">ĐỒ ĂN VẶT Wukong Food</h3>
         </div>
       </div>
 
@@ -335,143 +341,154 @@ function ListProduct() {
                                   Giảm giá {p.discount}%
                                 </p>
                               )}
-                              <img
-                                src={p.image}
-                                style={{ width: "10em" , height:'7em'}}
-                                className="card-img-top img-fluid mx-auto pt-1"
-                                alt="Product Image"
-                              />
-                              <div className="card-body">
-                                <h5
-                                  className="card-title"
-                                  style={{
-                                    lineHeight: "20px",
-                                    height: "40px",
-                                    fontSize: "18px",
-                                    overflow: "hidden",
-                                    display: "-webkit-box",
-                                    WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 2,
-                                  }}
-                                >
-                                  {p.name}
-                                </h5>
-                                <p
-                                  className={
-                                    p.discount !== 0
-                                      ? "card-text mb-0"
-                                      : "card-text"
-                                  }
-                                  style={{ fontSize: "16px" }}
-                                >
-                                  <IoPricetagOutline
-                                    style={{ color: "#ffcb03" }}
-                                  />
-                                  <span
-                                    className="fw-bold"
-                                    style={{ color: "#ffcb03" }}
+
+                              <div
+                                onClick={() => handleShow(p._id)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                <img
+                                  src={p.image}
+                                  style={{ width: "10em", height: "7em" }}
+                                  className="card-img-top img-fluid mx-auto pt-1"
+                                  alt="Product Image"
+                                />
+                                <div className="card-body">
+                                  <h5
+                                    className="card-title"
+                                    style={{
+                                      lineHeight: "20px",
+                                      height: "40px",
+                                      fontSize: "18px",
+                                      overflow: "hidden",
+                                      display: "-webkit-box",
+                                      WebkitBoxOrient: "vertical",
+                                      WebkitLineClamp: 2,
+                                    }}
                                   >
-                                    {" "}
-                                    {p.discount !== 0
-                                      ? (
-                                          p.sellPrice -
-                                          p.sellPrice * (p.discount / 100)
-                                        ).toLocaleString("en-US", {
-                                          minimumFractionDigits: 0,
-                                          maximumFractionDigits: 3,
-                                        })
-                                      : p.sellPrice.toLocaleString("en-US", {
-                                          minimumFractionDigits: 0,
-                                          maximumFractionDigits: 3,
-                                        })}
-                                  </span>
-                                  <span className="text-black-50"> VND</span>
-                                </p>
-                                {p.discount !== 0 ? (
+                                    {p.name}
+                                  </h5>
                                   <p
-                                    className="card-text text-secondary"
+                                    className={
+                                      p.discount !== 0
+                                        ? "card-text mb-0"
+                                        : "card-text"
+                                    }
                                     style={{ fontSize: "16px" }}
                                   >
-                                    <IoPricetagOutline />
-                                    <del>
-                                      <span className="fw-bold">
-                                        {" "}
-                                        {p.sellPrice.toLocaleString("en-US", {
-                                          minimumFractionDigits: 0,
-                                          maximumFractionDigits: 3,
-                                        })}
-                                      </span>
-                                      <span className="text-black-50">
-                                        {" "}
-                                        VND
-                                      </span>
-                                    </del>
+                                    <IoPricetagOutline
+                                      style={{ color: "#ffcb03" }}
+                                    />
+                                    <span
+                                      className="fw-bold"
+                                      style={{ color: "#ffcb03" }}
+                                    >
+                                      {" "}
+                                      {p.discount !== 0
+                                        ? (
+                                            p.sellPrice -
+                                            p.sellPrice * (p.discount / 100)
+                                          ).toLocaleString("en-US", {
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 3,
+                                          })
+                                        : p.sellPrice.toLocaleString("en-US", {
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 3,
+                                          })}
+                                    </span>
+                                    <span className="text-black-50"> VND</span>
                                   </p>
-                                ) : (
-                                  <>
-                                    <br />
-                                  </>
-                                )}
-                                <div className="row d-flex justify-content-center align-items-center">
-                                  <div className="col-sm-8 p-0 d-flex justify-content-center">
-                                    {isInCart ? (
-                                      <>
-                                        <GrSubtractCircle
-                                          style={{ cursor: "pointer" }}
-                                          onClick={() =>
-                                            handleSubProduct(p, quantity)
-                                          }
-                                          color="#ffcb03"
-                                          size={24}
-                                        />
-                                        <input
-                                          onChange={(e) =>
-                                            handleChangeQuantity(
-                                              p._id,
-                                              parseInt(e.target.value)
-                                            )
-                                          }
-                                          type="number"
-                                          value={quantityInCart}
-                                          style={{ width: "40%" }}
-                                          className="px-1 text-center border-0 border-bottom"
-                                          onKeyDown={(e) => {
-                                            const value = e.target.value;
-                                            if (
-                                              e.key === "-" ||
-                                              (value === "" && e.key === "0")
-                                            ) {
-                                              e.preventDefault();
+                                  {p.discount !== 0 ? (
+                                    <p
+                                      className="card-text text-secondary"
+                                      style={{ fontSize: "16px" }}
+                                    >
+                                      <IoPricetagOutline />
+                                      <del>
+                                        <span className="fw-bold">
+                                          {" "}
+                                          {p.sellPrice.toLocaleString("en-US", {
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 3,
+                                          })}
+                                        </span>
+                                        <span className="text-black-50">
+                                          {" "}
+                                          VND
+                                        </span>
+                                      </del>
+                                    </p>
+                                  ) : (
+                                    <>
+                                      <br />
+                                    </>
+                                  )}
+                                  <div className="row d-flex justify-content-center align-items-center">
+                                    <div className="col-sm-8 p-0 d-flex justify-content-center">
+                                      {isInCart ? (
+                                        <>
+                                          <GrSubtractCircle
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() =>
+                                              handleSubProduct(p, quantity)
                                             }
-                                          }}
-                                          onFocus={(e) =>
-                                            e.target.classList.add("no-outline")
-                                          }
-                                          onBlur={(e) =>
-                                            e.target.classList.remove(
-                                              "no-outline"
-                                            )
-                                          }
-                                        />
+                                            color="#ffcb03"
+                                            size={24}
+                                          />
+                                          <input
+                                            onChange={(e) =>
+                                              handleChangeQuantity(
+                                                p._id,
+                                                parseInt(e.target.value)
+                                              )
+                                            }
+                                            type="number"
+                                            value={quantityInCart}
+                                            style={{ width: "40%" }}
+                                            className="px-1 text-center border-0 border-bottom"
+                                            onKeyDown={(e) => {
+                                              const value = e.target.value;
+                                              if (
+                                                e.key === "-" ||
+                                                (value === "" && e.key === "0")
+                                              ) {
+                                                e.preventDefault();
+                                              }
+                                            }}
+                                            onFocus={(e) =>
+                                              e.target.classList.add(
+                                                "no-outline"
+                                              )
+                                            }
+                                            onBlur={(e) =>
+                                              e.target.classList.remove(
+                                                "no-outline"
+                                              )
+                                            }
+                                          />
+                                          <GrAddCircle
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() =>
+                                              handleAddProduct(
+                                                p,
+                                                quantityInCart
+                                              )
+                                            }
+                                            color="#ffcb03"
+                                            size={24}
+                                          />
+                                        </>
+                                      ) : (
                                         <GrAddCircle
                                           style={{ cursor: "pointer" }}
                                           onClick={() =>
-                                            handleAddProduct(p, quantityInCart)
+                                            handleAddProduct(p, startQuantity)
                                           }
                                           color="#ffcb03"
                                           size={24}
                                         />
-                                      </>
-                                    ) : (
-                                      <GrAddCircle
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() =>
-                                          handleAddProduct(p, startQuantity)
-                                        }
-                                        color="#ffcb03"
-                                        size={24}
-                                      />
-                                    )}
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               </div>

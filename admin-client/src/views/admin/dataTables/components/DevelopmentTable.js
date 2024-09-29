@@ -103,7 +103,7 @@ export default function DevelopmentTable(props) {
 
   const displayEditModal = (product) => {
     // so sanh voi id trong bang. id o vi tri thu 9
-    const oldFormValue = tableData?.find(p => p._id === product[9].value);
+    const oldFormValue = tableData?.find(p => p._id === product[10].value);
     setModalAttr({
       size: 'xl',
       title: 'Sửa',
@@ -236,7 +236,8 @@ export default function DevelopmentTable(props) {
                     } else if (cell.column.Header === "Hành động") {
                       data = (
                         <Flex gap="5px">
-                          <Button onClick={() => displayEditModal(cell.row.cells)}>
+                           <Button onClick={() => displayEditModal(cell.row.cells)}>
+
                             <Icon as={MdEdit} width="20px" height="20px" color="#00a8ff" />
                           </Button>
                           <Button onClick={() => displayDeleteModal(cell.row.cells[0].value, cell.value)}>
