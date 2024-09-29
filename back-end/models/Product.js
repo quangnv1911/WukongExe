@@ -20,6 +20,9 @@ const productSchema = new Schema({
     discountTime: {
         type: Date
     },
+    description: {
+        type: String,
+    },
     image: {
         type: String,
         required: true

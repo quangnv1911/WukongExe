@@ -35,6 +35,7 @@ const ModalTemp = (props) => {
         sellPrice: 0,
         discount: 0,
         discountTime: '',
+        description: '',
         isCombo: false,
         subdescription: '',
         category: '',
@@ -67,6 +68,7 @@ const ModalTemp = (props) => {
         formDataSend.append('importPrice', formData.importPrice);
         formDataSend.append('sellPrice', formData.sellPrice);
         formDataSend.append('discount', formData.discount);
+        formDataSend.append('description', formData.description);
         formDataSend.append('discountTime', formData.discountTime);
         formDataSend.append('isCombo', formData.isCombo);
         formDataSend.append('subdescription', editorProduct.current ? editorProduct.current.getContents().trim() : '');
@@ -114,6 +116,7 @@ const ModalTemp = (props) => {
                     importPrice: 0,
                     sellPrice: 0,
                     discount: 0,
+                    description: '',
                     discountTime: '',
                     isCombo: false,
                     subdescription: '',
@@ -150,6 +153,7 @@ const ModalTemp = (props) => {
         formDataSend.append('importPrice', formData.importPrice);
         formDataSend.append('sellPrice', formData.sellPrice);
         formDataSend.append('discount', formData.discount);
+        formDataSend.append('description', formData.description);
         formDataSend.append('discountTime', formData.discountTime);
         formDataSend.append('isCombo', formData.isCombo);
         formDataSend.append('subdescription', editorProduct.current ? editorProduct.current.getContents().trim() : '');
@@ -202,6 +206,7 @@ const ModalTemp = (props) => {
                     importPrice: 0,
                     sellPrice: 0,
                     discount: 0,
+                    description: '',
                     discountTime: '',
                     isCombo: false,
                     subdescription: '',
@@ -231,6 +236,7 @@ const ModalTemp = (props) => {
             importPrice: 0,
             sellPrice: 0,
             discount: 0,
+            description: '',
             discountTime: '',
             isCombo: false,
             subdescription: '',
@@ -260,6 +266,7 @@ const ModalTemp = (props) => {
                 sellPrice: oldFormValue.sellPrice,
                 discount: oldFormValue.discount,
                 discountTime: oldFormValue.discountTime,
+                description: oldFormValue.description,
                 isCombo: oldFormValue.isCombo,
                 subdescription: oldFormValue.subdescription,
                 category: oldFormValue.categoryId,
@@ -337,15 +344,24 @@ const ModalTemp = (props) => {
                                     value={formData?.sellPrice}
                                 />
                             </FormControl>
-
                             <FormControl mt={4}>
-                                <FormLabel>Giảm giá (%)</FormLabel>
+                                <FormLabel>Giá Bán (đồng)</FormLabel>
                                 <Input
                                     type="number"
-                                    placeholder='10'
-                                    name="discount"
+                                    placeholder='10000'
+                                    name="sellPrice"
                                     onChange={handleInputChange}
-                                    value={formData?.discount}
+                                    value={formData?.sellPrice}
+                                />
+                            </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>Thông tin sản phẩm</FormLabel>
+                                <Input
+                                    type="text"
+                                    placeholder='10'
+                                    name="description"
+                                    onChange={handleInputChange}
+                                    value={formData?.description}
                                 />
                             </FormControl>
 

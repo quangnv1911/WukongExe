@@ -137,7 +137,7 @@ export default function DevelopmentTable(props) {
 
   const debouncedSearch = useCallback(
     debounce((value) => {
-      api.post(`${BACK_END_HOST}/product/search`, {search: value})
+      api.post(`${BACK_END_HOST}/product/search`, { search: value })
         .then(res => {
           setListProduct(res.data);
         })
@@ -190,9 +190,9 @@ export default function DevelopmentTable(props) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {tableData.length <= 0 ?
-            <Button isLoading fontSize='20px' />
-            :
+          {tableData.length <= 0 ? (
+            <Button isLoading fontSize="20px" />
+          ) : (
             page.map((row, index) => {
               prepareRow(row);
               return (
@@ -201,99 +201,103 @@ export default function DevelopmentTable(props) {
                     let data = "";
                     if (cell.column.Header === "Tên") {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                       );
                     } else if (cell.column.Header === "Ảnh") {
                       data = (
-                        <Flex align='center'>
-                          {
-                            <img src={cell.value} alt="product" width={'50%'} />
-                          }
+                        <Flex align="center">
+                          <img src={cell.value} alt="product" width={"50%"} />
                         </Flex>
                       );
                     } else if (cell.column.Header === "Ngày hết hạn giảm giá") {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {moment(cell.value).format('DD/MM/YYYY')}
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                          {moment(cell.value).format("DD/MM/YYYY")}
                         </Text>
                       );
                     } else if (cell.column.Header === "Combo") {
-                      cell.value ?
-                        data = (
-                          <Flex align='center' justifyContent='center'>
-                            <Icon as={MdCheckCircle} width='20px' height='20px' color='green.500' />
-                          </Flex>
-                        ) :
-                        data = (
-                          <Flex align='center' justifyContent='center'>
-                            <Icon as={MdCancel} width='20px' height='20px' color="red.500" />
-                          </Flex>
-                        )
+                      data = cell.value ? (
+                        <Flex align="center" justifyContent="center">
+                          <Icon as={MdCheckCircle} width="20px" height="20px" color="green.500" />
+                        </Flex>
+                      ) : (
+                        <Flex align="center" justifyContent="center">
+                          <Icon as={MdCancel} width="20px" height="20px" color="red.500" />
+                        </Flex>
+                      );
                     } else if (cell.column.Header === "Giảm giá") {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}%
                         </Text>
                       );
                     } else if (cell.column.Header === "Hành động") {
                       data = (
-                        <Flex gap='5px'>
+                        <Flex gap="5px">
                           <Button onClick={() => displayEditModal(cell.row.cells)}>
-                            <Icon as={MdEdit} width='20px' height='20px' color='#00a8ff' />
+                            <Icon as={MdEdit} width="20px" height="20px" color="#00a8ff" />
                           </Button>
                           <Button onClick={() => displayDeleteModal(cell.row.cells[0].value, cell.value)}>
-                            <Icon as={MdDelete} width='20px' height='20px' color='red' />
+                            <Icon as={MdDelete} width="20px" height="20px" color="red" />
                           </Button>
                         </Flex>
-
                       );
-                    } else if (cell.column.Header === "Giá nhập (đồng)" || cell.column.Header === "Giá bán (đồng)") {
+                    } else if (
+                      cell.column.Header === "Giá nhập (đồng)" ||
+                      cell.column.Header === "Giá bán (đồng)"
+                    ) {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value.toLocaleString('vi-VN')}
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                          {cell.value.toLocaleString("vi-VN")}
                         </Text>
                       );
                     } else if (cell.column.Header === "Số lượng") {
-
-                      if (cell.value === 0) {
-                        data = (
-                          <Text color={'red.500'} fontSize='sm' fontWeight='700'>
-                            Hết hàng
-                          </Text>
-                        )
-                      } else {
-                        data = (
-                          <Text color={'green.500'} fontSize='sm' fontWeight='700'>
-                            {cell.value}
-                          </Text>
-                        )
-                      }
-
-
+                      data = cell.value === 0 ? (
+                        <Text color={"red.500"} fontSize="sm" fontWeight="700">
+                          Hết hàng
+                        </Text>
+                      ) : (
+                        <Text color={"green.500"} fontSize="sm" fontWeight="700">
+                          {cell.value}
+                        </Text>
+                      );
                     } else {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                       );
                     }
+
+                    // Thêm trường input để nhập thông tin sản phẩm
+                    if (cell.column.Header === "Thông tin sản phẩm") {
+                      data = (
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                          {cell.value}
+                        </Text>
+                      );
+                    }
+
                     return (
                       <Td
                         {...cell.getCellProps()}
                         key={index}
                         fontSize={{ sm: "14px" }}
                         minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                        borderColor='transparent'>
+                        borderColor="transparent"
+                      >
                         {data}
                       </Td>
                     );
                   })}
                 </Tr>
               );
-            })}
+            })
+          )}
         </Tbody>
+
       </Table>
       <>
         <ModalTemp

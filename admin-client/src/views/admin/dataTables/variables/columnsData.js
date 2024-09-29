@@ -32,6 +32,10 @@ export const columnsDataDevelopment = [
     accessor: "discountTime",
   },
   {
+    Header: "Thông tin sản phẩm",
+    accessor: "description",
+  },
+  {
     Header: "Combo",
     accessor: "isCombo",
   },
