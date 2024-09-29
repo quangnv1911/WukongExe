@@ -345,20 +345,20 @@ const ModalTemp = (props) => {
                                 />
                             </FormControl>
                             <FormControl mt={4}>
-                                <FormLabel>Giá Bán (đồng)</FormLabel>
+                                <FormLabel>Giảm giá (%)</FormLabel>
                                 <Input
                                     type="number"
-                                    placeholder='10000'
-                                    name="sellPrice"
+                                    placeholder='10'
+                                    name="discount"
                                     onChange={handleInputChange}
-                                    value={formData?.sellPrice}
+                                    value={formData?.discount}
                                 />
                             </FormControl>
                             <FormControl mt={4}>
                                 <FormLabel>Thông tin sản phẩm</FormLabel>
                                 <Input
                                     type="text"
-                                    placeholder='10'
+                                    placeholder='Thông tin sản phẩm'
                                     name="description"
                                     onChange={handleInputChange}
                                     value={formData?.description}
