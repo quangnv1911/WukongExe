@@ -91,12 +91,12 @@ function ListProduct() {
 
   return (
     <>
-      <div className="row h-auto " style={{ margin: "40px 20%" }}>
+      <div className="row h-auto " style={{ margin: "40px 15%" }}>
         <div
           className="col-sm-12 py-2 px-3 text-center"
           style={{ backgroundColor: "#ffcb03", color: "#063e57" }}
         >
-          <h3 className="fw-bold">COMBO Wukong Food</h3>
+          <h3 className="fw-bold">COMBO Wukong</h3>
         </div>
       </div>
       <div className="row h-auto pb-4 d-flex justify-content-center">
@@ -286,12 +286,12 @@ function ListProduct() {
         </div>
       </div>
 
-      <div className="row h-auto " style={{ margin: "40px 20%" }}>
+      <div className="row h-auto " style={{ margin: "40px 15%" }}>
         <div
           className="col-sm-12 py-2 px-3 text-center"
           style={{ backgroundColor: "#ffcb03", color: "#063e57" }}
         >
-          <h3 className="fw-bold">ĐỒ ĂN VẶT Wukong Food</h3>
+          <h3 className="fw-bold">ĐỒ ĂN VẶT Wukong</h3>
         </div>
       </div>
 
@@ -514,12 +514,12 @@ function ListProduct() {
         </div>
       </div>
 
-      <div className="row h-auto " style={{ margin: "40px 20%" }}>
+      <div className="row h-auto " style={{ margin: "40px 15%" }}>
         <div
           className="col-sm-12 py-2 px-3 text-center"
           style={{ backgroundColor: "#ffcb03", color: "#063e57" }}
         >
-          <h3 className="fw-bold">NƯỚC UỐNG Wukong Food</h3>
+          <h3 className="fw-bold">NƯỚC UỐNG Wukong</h3>
         </div>
       </div>
 
