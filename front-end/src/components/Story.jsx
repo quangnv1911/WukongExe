@@ -33,20 +33,24 @@ function Story() {
                 <button
                   className="d-flex align-items-center p-1 pe-2 rounded-5"
                   style={{
+                    minWidth: '150px',
                     width: "auto",
                     fontSize: "15px",
                     border: "1px solid #ffcb03",
                     backgroundColor: "#ffcb03",
                   }}
                 >
-                  <FaFacebook className="mx-2" style={{ color: "black" }} />
+                  <FaFacebook
+                    className="mx-2 w-7"
+                    style={{ color: "black", fontSize: "1.25rem" }}
+                  />
                   <label className="fw-semibold" style={{ color: "black" }}>
                     <a
                       style={{
                         color: "black",
                         textDecoration: "none",
                       }}
-                      href="https://www.facebook.com/profile.php?id=61565933736328"
+                      href="https://www.facebook.com/messages/t/441061339089907"
                       target="_blank"
                     >
                       Chat Facebook
@@ -56,13 +60,17 @@ function Story() {
                 <button
                   className="d-flex align-items-center p-1 pe-2 my-2 rounded-5"
                   style={{
+                    minWidth: '150px',
                     width: "auto",
                     fontSize: "15px",
                     border: "1px solid #ffcb03",
                     backgroundColor: "#ffcb03",
                   }}
                 >
-                  <SiZalo className="mx-2" style={{ color: "black" }} />
+                  <SiZalo
+                    className="mx-2"
+                    style={{ color: "black", fontSize: "1.25rem" }}
+                  />
                   <label className="fw-semibold" style={{ color: "black" }}>
                     081 825 1203
                   </label>
@@ -70,13 +78,17 @@ function Story() {
                 <button
                   className="d-flex align-items-center p-1 pe-2 rounded-5"
                   style={{
+                    minWidth: '150px',
                     width: "auto",
                     fontSize: "15px",
                     border: "1px solid #ffcb03",
                     backgroundColor: "#ffcb03",
                   }}
                 >
-                  <FaPhoneAlt className="mx-2" style={{ color: "black" }} />
+                  <FaPhoneAlt
+                    className="mx-2"
+                    style={{ color: "black", fontSize: "1.25rem" }}
+                  />
                   <label className="fw-semibold" style={{ color: "black" }}>
                     081 825 1203
                   </label>
